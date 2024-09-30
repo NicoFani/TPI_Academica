@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    internal class Plans
+    public class Plans
     {
         int _idPlan;
         string _planDescription;

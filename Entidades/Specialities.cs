@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    internal class Specialities
+    public class Specialities
     {
         int _idSpeciality;
         string _specialityDescription;
