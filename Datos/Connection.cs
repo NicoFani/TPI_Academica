@@ -11,14 +11,14 @@ namespace Datos
     {
         public static SqlConnection Connect()
         {
-            SqlConnection conn = new SqlConnection("Server=Nico;Database=tp2_net;Integrated Security=True;");
+            SqlConnection conn = new SqlConnection("Server=Nico;Database=tp2_net;Integrated Security=True;TrustServerCertificate=True;");
             conn.Open();
             return conn;
         }
 
         public void CloseConnection()
         {
-            SqlConnection conn = new SqlConnection("Server=Nico;Database=tp2_net;Integrated Security=True;");
+            SqlConnection conn = new SqlConnection("Server=Nico;Database=tp2_net;Integrated Security=True;TrustServerCertificate=True;");
             conn.Close();
             conn = null;
         }
