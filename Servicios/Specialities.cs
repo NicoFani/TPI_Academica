@@ -19,13 +19,12 @@ namespace Servicios
             SqlConnection conn = Connect();
             using (conn)
             {
-                conn.Open();
                 SqlCommand comm = new SqlCommand();
                 using(comm)
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "INSERT INTO Specialities (SpecialityDescription) VALUES (@SpecialityDescription); SELECT SCOPE_IDENTITY()";
+                    comm.CommandText = "INSERT INTO especialidades (desc_especialidad) VALUES (@SpecialityDescription); SELECT SCOPE_IDENTITY()";
 
                     comm.Parameters.AddWithValue("@IdSpeciality", idSpeciality);
                     comm.Parameters.AddWithValue("@SpecialityDescription", specialityDescription);
@@ -38,7 +37,6 @@ namespace Servicios
             SqlConnection conn = Connect();
             using (conn)
             {
-                conn.Open();
                 SqlCommand comm = new SqlCommand();
                 using (comm)
                 {
@@ -58,37 +56,35 @@ namespace Servicios
             SqlConnection conn = Connect();
             using (conn)
             {
-                conn.Open();
                 SqlCommand comm = new SqlCommand();
                 using (comm)
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "DELETE FROM Specialities WHERE IdSpeciality = @IdSpeciality";
+                    comm.CommandText = "DELETE FROM especialidades WHERE id_especialidad = @IdSpeciality";
 
                     comm.Parameters.AddWithValue("@IdSpeciality", idSpeciality);
                     comm.ExecuteNonQuery();
                 }
             }
         }
-        public List<Entidades.Specialities> GetAllSpecialities()
+        public List<Datos.Model.Specialities> GetAllSpecialities()
         {
-            List<Entidades.Specialities> specialities = new List<Entidades.Specialities>();
+            List<Datos.Model.Specialities> specialities = new List<Datos.Model.Specialities>();
             SqlConnection conn = Connect();
             using (conn)
             {
-                conn.Open();
                 SqlCommand comm = new SqlCommand();
                 using (comm)
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "SELECT * FROM Specialities";
+                    comm.CommandText = "SELECT * FROM especialidades";
 
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read())
                     {
-                        Entidades.Specialities speciality = new Entidades.Specialities((int)dr["IdSpeciality"], dr["SpecialityDescription"].ToString());
+                        Datos.Model.Specialities speciality = new Datos.Model.Specialities((int)dr["id_especialidad"], dr["desc_especialidad"].ToString());
                         specialities.Add(speciality);
                     }
                     return specialities;

@@ -72,9 +72,9 @@ namespace Servicios
                 }
             }
         }
-        public List<Entidades.Plans> GetAllPlans()
+        public List<Datos.Model.Plans> GetAllPlans()
         {
-            List<Entidades.Plans> plans = new List<Entidades.Plans>();
+            List<Datos.Model.Plans> plans = new List<Datos.Model.Plans>();
             SqlConnection conn = Connect();
             using (conn)
             {
@@ -88,7 +88,7 @@ namespace Servicios
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read())
                     {
-                        Entidades.Plans plan = new Entidades.Plans((int)dr["IdPlan"], dr["PlanDescription"].ToString(), (int)dr["IdSpeciality"]);
+                        Datos.Model.Plans plan = new Datos.Model.Plans((int)dr["IdPlan"], dr["PlanDescription"].ToString(), (int)dr["IdSpeciality"]);
                         plans.Add(plan);
                     }
                     return plans;
