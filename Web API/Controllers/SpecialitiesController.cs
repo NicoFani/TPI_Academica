@@ -14,7 +14,7 @@ var app = builder.Build();
 
 app.MapGet("/specialities", () =>
 {
-    Servicios.Specialities specialitiesService = new Servicios.Specialities();
+    Servicios.SpecialitiesService specialitiesService = new Servicios.SpecialitiesService();
     return specialitiesService.GetAllSpecialities();
 });
 

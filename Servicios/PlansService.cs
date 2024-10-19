@@ -10,7 +10,7 @@ using Datos;
 
 namespace Servicios
 {
-    public class Plans: Connection
+    public class PlansService: Connection
     {
         public int AddPlan(string planDescription, int idSpeciality)
         {

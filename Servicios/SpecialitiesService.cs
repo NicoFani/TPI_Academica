@@ -11,7 +11,7 @@ using Datos;
 
 namespace Servicios
 {
-    public class Specialities: Connection
+    public class SpecialitiesService: Connection
     {
         public int AddSpeciality(string specialityDescription)
         {
