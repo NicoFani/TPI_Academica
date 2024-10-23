@@ -8,10 +8,10 @@ using Datos.Model;
 
 namespace Datos.Context
 {
-    internal class ComissionsContext: DbContext
+    public class ComissionsContext : DbContext
     {
-        internal DbSet<Comissions> Comissions { get; set; }
-        internal ComissionsContext()
+        public DbSet<Comissions> Comissions { get; set; } // Changed 'internal' to 'public'
+        public ComissionsContext() // Changed 'internal' to 'public'
         {
             Database.EnsureCreated();
         }

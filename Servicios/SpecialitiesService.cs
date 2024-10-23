@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Datos;
+using Datos.Model;
 
 
 namespace Servicios
@@ -90,6 +91,24 @@ namespace Servicios
                     return specialities;
                 }
             }
-        }   
+        }
+        public Specialities? GetSpecialityById(int id)
+        {
+            SqlConnection conn = Connect();
+            using (conn) {
+                SqlCommand comm = new SqlCommand();
+                using (comm) {
+                    comm.Connection = conn;
+                    comm.CommandType = CommandType.Text;
+                    comm.CommandText = "SELECT * FROM especialidades WHERE id_especialidad = @IdSpeciality";
+                    SqlDataReader dr = comm.ExecuteReader();
+                    while (dr.Read()) {
+                        Datos.Model.Specialities speciality = new Datos.Model.Specialities((int)dr["id_especialidad"], dr["desc_especialidad"].ToString());
+                        return speciality;
+                    }
+                    return null;
+                }
+            }
+        }
     }
 }

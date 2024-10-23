@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using Datos;
+using Datos.Model;
 
 namespace Servicios
 {
@@ -95,5 +96,21 @@ namespace Servicios
                 }
             }
         }
-    }
+        public Plans? GetPlanById(int id) {
+            SqlConnection conn = Connect();
+            using (conn) {
+                conn.Open();
+                SqlCommand comm = new SqlCommand();
+                using (comm) {
+                    comm.Connection = conn;
+                    comm.CommandType = CommandType.Text;
+                    comm.CommandText = "SELECT * FROM Plans WHERE IdPlan = @IdPlan";
+                    comm.Parameters.AddWithValue("@IdPlan", id);
+                    SqlDataReader dr = comm.ExecuteReader();
+                    while (dr.Read()) {
+                        Datos.Model.Plans plan = new Datos.Model.Plans((int)dr["IdPlan"], dr["PlanDescription"].ToString(), (int)dr["IdSpeciality"]);
+                        return plan;
+                    }
+                    return null;
+                }
 }
