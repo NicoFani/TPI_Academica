@@ -13,6 +13,7 @@ namespace Datos.Model
         int _weeklyHours;
         int _totalHours;
         int _idPlan;
+        
         public int IdSubject { get { return _idSubject; } set { _idSubject = value; } }
         public string SubjectDescription { get { return _subjectDescription; } set { _subjectDescription = value; } }
         public int WeeklyHours { get { return _weeklyHours; } set { _weeklyHours = value; } }
