@@ -11,14 +11,14 @@ namespace Datos
     {
         public static SqlConnection Connect()
         {
-            SqlConnection conn = new SqlConnection("Server=Nico;Database=tp2_net;Integrated Security=True;TrustServerCertificate=True;");
+            SqlConnection conn = new SqlConnection("Data Source=DESKTOP-EJOQVME\\SQLEXPRESS;Initial Catalog=tp2_net;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
             conn.Open();
             return conn;
         }
 
         public void CloseConnection()
         {
-            SqlConnection conn = new SqlConnection("Server=Nico;Database=tp2_net;Integrated Security=True;TrustServerCertificate=True;");
+            SqlConnection conn = new SqlConnection("Data Source=DESKTOP-EJOQVME\\SQLEXPRESS;Initial Catalog=tp2_net;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
             conn.Close();
             conn = null;
         }

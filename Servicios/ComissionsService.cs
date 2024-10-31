@@ -33,16 +33,16 @@ namespace Servicios
         public void UpdateComission(Comissions Comission)
         {
             using var context = new ComissionsContext();
-            Comissions? comissionToUpdate = context.Comissions.Find(Comission.IdCommission);
+            Comissions? comissionToUpdate = context.Comissions.Find(Comission.id_comision);
             if (comissionToUpdate == null)
             {
                 throw new Exception("Comission not found");
             }
             else
             {
-                comissionToUpdate.CommissionDescription = Comission.CommissionDescription;
-                comissionToUpdate.SpecialityYear = Comission.SpecialityYear;
-                comissionToUpdate.IdPlan = Comission.IdPlan;
+                comissionToUpdate.desc_comision = Comission.desc_comision;
+                comissionToUpdate.anio_especialidad = Comission.anio_especialidad;
+                comissionToUpdate.id_plan = Comission.id_plan;
                 context.SaveChanges();
             }
         }
