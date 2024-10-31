@@ -1,6 +1,6 @@
 ﻿namespace UI.Desktop
 {
-    partial class comissionsList
+    partial class specialityList
     {
         /// <summary>
         /// Required designer variable.
@@ -28,55 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            comissionDataGridView = new DataGridView();
+            dataGridView1 = new DataGridView();
             deleteButton = new Button();
             updateButton = new Button();
             addButton = new Button();
-            ((System.ComponentModel.ISupportInitialize)comissionDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // comissionDataGridView
+            // dataGridView1
             // 
-            comissionDataGridView.AllowUserToOrderColumns = true;
-            comissionDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            comissionDataGridView.Location = new Point(12, 12);
-            comissionDataGridView.Name = "comissionDataGridView";
-            comissionDataGridView.ReadOnly = true;
-            comissionDataGridView.RowHeadersWidth = 51;
-            comissionDataGridView.Size = new Size(776, 327);
-            comissionDataGridView.TabIndex = 0;
+            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(12, 12);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(776, 302);
+            dataGridView1.TabIndex = 0;
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(694, 376);
+            deleteButton.Location = new Point(694, 379);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(94, 29);
             deleteButton.TabIndex = 1;
             deleteButton.Text = "Eliminar";
             deleteButton.UseVisualStyleBackColor = true;
-            deleteButton.Click += deleteButton_Click;
             // 
             // updateButton
             // 
-            updateButton.Location = new Point(569, 376);
+            updateButton.Location = new Point(552, 379);
             updateButton.Name = "updateButton";
             updateButton.Size = new Size(94, 29);
             updateButton.TabIndex = 2;
             updateButton.Text = "Modificar";
             updateButton.UseVisualStyleBackColor = true;
-            updateButton.Click += updateButton_Click;
             // 
             // addButton
             // 
-            addButton.Location = new Point(444, 376);
+            addButton.Location = new Point(417, 379);
             addButton.Name = "addButton";
             addButton.Size = new Size(94, 29);
             addButton.TabIndex = 3;
             addButton.Text = "Agregar";
             addButton.UseVisualStyleBackColor = true;
-            addButton.Click += addButton_Click;
             // 
-            // comissionsList
+            // specialityList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -84,17 +81,16 @@
             Controls.Add(addButton);
             Controls.Add(updateButton);
             Controls.Add(deleteButton);
-            Controls.Add(comissionDataGridView);
-            Name = "comissionsList";
-            Text = "comissionsList";
-            Load += Comissions_Load;
-            ((System.ComponentModel.ISupportInitialize)comissionDataGridView).EndInit();
+            Controls.Add(dataGridView1);
+            Name = "specialityList";
+            Text = "specialityList";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView comissionDataGridView;
+        private DataGridView dataGridView1;
         private Button deleteButton;
         private Button updateButton;
         private Button addButton;
