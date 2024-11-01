@@ -7,11 +7,12 @@ using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Datos;
+using Datos.Models;
 
 
 namespace Servicios
 {
-    public class SpecialitiesService: Connection
+    public class EspecialidadeService: Connection
     {
         public int AddSpeciality(string specialityDescription)
         {
@@ -68,9 +69,9 @@ namespace Servicios
                 }
             }
         }
-        public List<Datos.Model.Specialities> GetAllSpecialities()
+        public List<Especialidade> GetAllEspecialidade()
         {
-            List<Datos.Model.Specialities> specialities = new List<Datos.Model.Specialities>();
+            List<Especialidade> Especialidade = new List<Especialidade>();
             SqlConnection conn = Connect();
             using (conn)
             {
@@ -84,10 +85,10 @@ namespace Servicios
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read())
                     {
-                        Datos.Model.Specialities speciality = new Datos.Model.Specialities((int)dr["id_especialidad"], dr["desc_especialidad"].ToString());
-                        specialities.Add(speciality);
+                        Especialidade speciality = new Especialidade { IdEspecialidad = (int)dr["id_especialidad"], DescEspecialidad = dr["desc_especialidad"].ToString() };
+                        Especialidade.Add(speciality);
                     }
-                    return specialities;
+                    return Especialidade;
                 }
             }
         }   
