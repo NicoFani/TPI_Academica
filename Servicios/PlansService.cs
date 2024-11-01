@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
-using Datos;
-using Datos.Model;
+using Datos.Models;
 
 namespace Servicios
 {
-    public class PlansService: Connection
+    public class PlaneService(string connectionString)
     {
         public int AddPlan(string planDescription, int idSpeciality)
         {
             int idPlan = 0;
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 conn.Open();
@@ -25,7 +19,7 @@ namespace Servicios
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "INSERT INTO Plans (PlanDescription, IdSpeciality) VALUES (@PlanDescription, @IdSpeciality); SELECT SCOPE_IDENTITY()";
+                    comm.CommandText = "INSERT INTO Planes (PlanDescription, IdSpeciality) VALUES (@PlanDescription, @IdSpeciality); SELECT SCOPE_IDENTITY()";
 
                     comm.Parameters.AddWithValue("@IdPlan", idPlan);
                     comm.Parameters.AddWithValue("@PlanDescription", planDescription);
@@ -36,7 +30,8 @@ namespace Servicios
         }
         public void UpdatePlan(int idPlan, string planDescription, int idSpeciality)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 conn.Open();
@@ -57,7 +52,8 @@ namespace Servicios
         }
         public void DeletePlan(int idPlan)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 conn.Open();
@@ -66,17 +62,18 @@ namespace Servicios
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "DELETE FROM Plans WHERE IdPlan = @IdPlan";
+                    comm.CommandText = "DELETE FROM Planes WHERE IdPlan = @IdPlan";
 
                     comm.Parameters.AddWithValue("@IdPlan", idPlan);
                     comm.ExecuteNonQuery();
                 }
             }
         }
-        public List<Datos.Model.Plans> GetAllPlans()
+        public List<Plane> GetAllPlane()
         {
-            List<Datos.Model.Plans> plans = new List<Datos.Model.Plans>();
-            SqlConnection conn = Connect();
+            List<Plane> plane = new List<Plane>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 conn.Open();
@@ -85,30 +82,31 @@ namespace Servicios
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "SELECT * FROM Plans";
+                    comm.CommandText = "SELECT * FROM Planes";
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read())
                     {
-                        Datos.Model.Plans plan = new Datos.Model.Plans((int)dr["IdPlan"], dr["PlanDescription"].ToString(), (int)dr["IdSpeciality"]);
-                        plans.Add(plan);
+                        Plane plan = new Plane { IdPlan = (int)dr["IdPlan"], DescPlan = dr["PlanDescription"].ToString(), IdEspecialidad = (int)dr["IdSpeciality"] };
+                        plane.Add(plan);
                     }
-                    return plans;
+                    return plane;
                 }
             }
         }
-        public Plans? GetPlanById(int id) {
-            SqlConnection conn = Connect();
+        public Plane? GetPlanById(int id) {
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn) {
                 conn.Open();
                 SqlCommand comm = new SqlCommand();
                 using (comm) {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "SELECT * FROM Plans WHERE IdPlan = @IdPlan";
+                    comm.CommandText = "SELECT * FROM Plane WHERE IdPlan = @IdPlan";
                     comm.Parameters.AddWithValue("@IdPlan", id);
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read()) {
-                        Datos.Model.Plans plan = new Datos.Model.Plans((int)dr["IdPlan"], dr["PlanDescription"].ToString(), (int)dr["IdSpeciality"]);
+                        Plane plan = new Plane { IdPlan = (int)dr["IdPlan"], DescPlan = dr["PlanDescription"].ToString(), IdEspecialidad = (int)dr["IdSpeciality"] };
                         return plan;
                     }
                     return null;

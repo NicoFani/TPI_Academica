@@ -1,4 +1,4 @@
-using Datos.Model;
+using Datos.Models;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 
@@ -8,20 +8,20 @@ namespace Web_API.Controllers
     [Route("[controller]")]
     public class SpecialitiesController : ControllerBase
     {
-        private readonly SpecialitiesService _specialityService;
+        private readonly EspecialidadesService _specialityService;
 
-        public SpecialitiesController(SpecialitiesService specialityService)
+        public SpecialitiesController(IConfiguration configuration)
         {
-            _specialityService = specialityService;
+            _specialityService = new EspecialidadesService(configuration.GetConnectionString("defaultConnection")!);
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Specialities>> GetAllSpecialities()
+        public ActionResult<IEnumerable<Especialidade>> GetAllSpecialities()
         {
-            var specialities = _specialityService.GetAllSpecialities();
-            return Ok(specialities);
+            var especialidade = _specialityService.GetAllEspecialidade();
+            return Ok(especialidade);
         }
         [HttpGet("{id}")]
-        public ActionResult<Specialities> GetSpecialityById(int id)
+        public ActionResult<Especialidade> GetSpecialityById(int id)
         {
             try
             {

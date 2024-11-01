@@ -1,4 +1,5 @@
-﻿using Datos.Model;
+﻿using Datos;
+using Datos.Models;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 
@@ -8,20 +9,22 @@ namespace Web_API.Controllers
     [Route("[controller]")]
     public class ComissionsController : ControllerBase
     {
-        private readonly ComissionsService _comissionService;
+        private readonly Context _context;
+        private readonly ComisionesService _comissionService;
 
-        public ComissionsController(ComissionsService comissionService)
+        public ComissionsController(Context context)
         {
-            _comissionService = comissionService;
+            _context = context;
+            _comissionService = new ComisionesService(context);
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Comissions>> GetAllComissions()
+        public ActionResult<IEnumerable<Comisione>> GetAllComissions()
         {
             var comissions = _comissionService.GetAllComissions();
             return Ok(comissions);
         }
         [HttpGet("{id}")]
-        public ActionResult<Comissions> GetComissionById(int id)
+        public ActionResult<Comisione> GetComissionById(int id)
         {
             try
             {
@@ -34,7 +37,7 @@ namespace Web_API.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddComission(Comissions comission)
+        public ActionResult AddComission(Comisione comission)
         {
             try
             {
@@ -47,7 +50,7 @@ namespace Web_API.Controllers
             }
         }
         [HttpPut]
-        public ActionResult UpdateComission(Comissions comission)
+        public ActionResult UpdateComission(Comisione comission)
         {
             try
             {

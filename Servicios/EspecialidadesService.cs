@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
 using Datos;
-using Datos.Model;
+using Datos.Models;
 
 
 namespace Servicios
 {
-    public class SpecialitiesService: Connection
+    public class EspecialidadesService(string connectionString)
     {
         public int AddSpeciality(string specialityDescription)
         {
             int idSpeciality = 0;
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -35,7 +30,8 @@ namespace Servicios
         }
         public void UpdateSpeciality(int idSpeciality, string specialityDescription)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -54,7 +50,8 @@ namespace Servicios
         }
         public void DeleteSpeciality(int idSpeciality)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -69,10 +66,11 @@ namespace Servicios
                 }
             }
         }
-        public List<Datos.Model.Specialities> GetAllSpecialities()
+        public List<Especialidade> GetAllEspecialidade()
         {
-            List<Datos.Model.Specialities> specialities = new List<Datos.Model.Specialities>();
-            SqlConnection conn = Connect();
+            List<Especialidade> especialidades = new List<Especialidade>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -85,16 +83,17 @@ namespace Servicios
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read())
                     {
-                        Datos.Model.Specialities speciality = new Datos.Model.Specialities((int)dr["id_especialidad"], dr["desc_especialidad"].ToString());
-                        specialities.Add(speciality);
+                        Especialidade speciality = new Especialidade { IdEspecialidad = (int)dr["id_especialidad"], DescEspecialidad = dr["desc_especialidad"].ToString() };
+                        especialidades.Add(speciality);
                     }
-                    return specialities;
+                    return especialidades;
                 }
             }
         }
-        public Specialities? GetSpecialityById(int id)
+        public Especialidade? GetSpecialityById(int id)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn) {
                 SqlCommand comm = new SqlCommand();
                 using (comm) {
@@ -103,7 +102,7 @@ namespace Servicios
                     comm.CommandText = "SELECT * FROM especialidades WHERE id_especialidad = @IdSpeciality";
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read()) {
-                        Datos.Model.Specialities speciality = new Datos.Model.Specialities((int)dr["id_especialidad"], dr["desc_especialidad"].ToString());
+                        Especialidade speciality = new Especialidade { IdEspecialidad = (int)dr["id_especialidad"], DescEspecialidad = dr["desc_especialidad"].ToString() };
                         return speciality;
                     }
                     return null;
