@@ -37,7 +37,10 @@ namespace Servicios {
             } else {
                 return false;
             }
+        }
 
+        public Persona? SignIn(string nombreUsuario, string clave) {
+            return context.Personas.FirstOrDefault(p => p.NombreUsuario == nombreUsuario && p.Clave == clave);
         }
     }
 }
