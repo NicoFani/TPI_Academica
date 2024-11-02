@@ -15,7 +15,7 @@ namespace Web_API.Controllers {
             _context = context;
             _alInService = new AlumnosInscripcionesService(context);
         }
-        [HttpGet(Name ="Get All Alumnos Inscripciones")]
+        [HttpGet(Name = "Get All Alumnos Inscripciones")]
         public IActionResult GetAlumnosInscripciones() {
             return Ok(_alInService.GetAlumnosInscripciones());
         }
@@ -34,16 +34,20 @@ namespace Web_API.Controllers {
         }
         [HttpPost(Name = "Add Alumno Inscripcion")]
         public IActionResult AddAlumnoInscripcion(AlumnosInscripcione alIn) {
-            _alInService.AddAlumnoInscripcion(alIn);
-            return CreatedAtRoute("Get Alumno Inscripcion", new { id = alIn.IdInscripcion }, alIn);
+            bool success = _alInService.AddAlumnoInscripcion(alIn);
+            if (!success) {
+                return BadRequest();
+            } else {
+                return CreatedAtRoute("Get Alumno Inscripcion", new { id = alIn.IdInscripcion }, alIn);
+            }
         }
         [HttpPut(Name = "Update Alumno Inscripcion")]
         public IActionResult UpdateAlumnoInscripcion(int id, AlumnosInscripcione alIn) {
             if (id != alIn.IdInscripcion) {
                 return BadRequest();
             } else {
-                _alInService.UpdateAlumnoInscripcion(alIn);
-                return Ok();
+                bool success = _alInService.UpdateAlumnoInscripcion(alIn);
+                return success ? NoContent() : NotFound();
             }
         }
         [HttpDelete("{id}", Name = "Delete Alumno Inscripcion")]
