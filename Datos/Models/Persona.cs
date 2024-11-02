@@ -21,17 +21,13 @@ public partial class Persona
 
     public int? Legajo { get; set; }
 
-    public int TipoPersona { get; set; }
+    public string TipoPersona { get; set; } = null!;
 
     public int IdPlan { get; set; }
 
     public string NombreUsuario { get; set; } = null!;
 
     public string Clave { get; set; } = null!;
-
-    public bool? Habilitado { get; set; }
-
-    public bool? CambiaClave { get; set; }
 
     public virtual ICollection<AlumnosInscripcione> AlumnosInscripciones { get; set; } = new List<AlumnosInscripcione>();
 

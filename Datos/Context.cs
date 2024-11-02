@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Datos.Models;
 using Microsoft.EntityFrameworkCore;
+using Datos.Models;
 
 namespace Datos;
 
-public partial class Context : DbContext
-{
-    public Context()
-    {
+public partial class Context : DbContext {
+    public Context() {
     }
-
     public Context(DbContextOptions<Context> options)
-        : base(options)
-    {
+        : base(options) {
     }
 
     public virtual DbSet<AlumnosInscripcione> AlumnosInscripciones { get; set; }
@@ -32,12 +28,10 @@ public partial class Context : DbContext
 
     public virtual DbSet<Plane> Planes { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.UseCollation("Modern_Spanish_CI_AS");
 
-        modelBuilder.Entity<AlumnosInscripcione>(entity =>
-        {
+        modelBuilder.Entity<AlumnosInscripcione>(entity => {
             entity.HasKey(e => e.IdInscripcion);
 
             entity.ToTable("alumnos_inscripciones");
@@ -62,8 +56,7 @@ public partial class Context : DbContext
                 .HasConstraintName("FK_alumnos_inscripciones_cursos");
         });
 
-        modelBuilder.Entity<Comisione>(entity =>
-        {
+        modelBuilder.Entity<Comisione>(entity => {
             entity.HasKey(e => e.IdComision);
 
             entity.ToTable("comisiones");
@@ -82,8 +75,7 @@ public partial class Context : DbContext
                 .HasConstraintName("FK_comisiones_planes");
         });
 
-        modelBuilder.Entity<Curso>(entity =>
-        {
+        modelBuilder.Entity<Curso>(entity => {
             entity.HasKey(e => e.IdCurso);
 
             entity.ToTable("cursos");
@@ -105,8 +97,7 @@ public partial class Context : DbContext
                 .HasConstraintName("FK_cursos_materias");
         });
 
-        modelBuilder.Entity<DocentesCurso>(entity =>
-        {
+        modelBuilder.Entity<DocentesCurso>(entity => {
             entity.HasKey(e => e.IdDictado);
 
             entity.ToTable("docentes_cursos");
@@ -127,8 +118,7 @@ public partial class Context : DbContext
                 .HasConstraintName("FK_docentes_cursos_personas");
         });
 
-        modelBuilder.Entity<Especialidade>(entity =>
-        {
+        modelBuilder.Entity<Especialidade>(entity => {
             entity.HasKey(e => e.IdEspecialidad);
 
             entity.ToTable("especialidades");
@@ -140,8 +130,7 @@ public partial class Context : DbContext
                 .HasColumnName("desc_especialidad");
         });
 
-        modelBuilder.Entity<Materia>(entity =>
-        {
+        modelBuilder.Entity<Materia>(entity => {
             entity.HasKey(e => e.IdMateria);
 
             entity.ToTable("materias");
@@ -161,8 +150,7 @@ public partial class Context : DbContext
                 .HasConstraintName("FK_materias_planes");
         });
 
-        modelBuilder.Entity<Persona>(entity =>
-        {
+        modelBuilder.Entity<Persona>(entity => {
             entity.HasKey(e => e.IdPersona);
 
             entity.ToTable("personas");
@@ -172,7 +160,6 @@ public partial class Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("apellido");
-            entity.Property(e => e.CambiaClave).HasColumnName("cambia_clave");
             entity.Property(e => e.Clave)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -188,7 +175,6 @@ public partial class Context : DbContext
             entity.Property(e => e.FechaNac)
                 .HasColumnType("datetime")
                 .HasColumnName("fecha_nac");
-            entity.Property(e => e.Habilitado).HasColumnName("habilitado");
             entity.Property(e => e.IdPlan).HasColumnName("id_plan");
             entity.Property(e => e.Legajo).HasColumnName("legajo");
             entity.Property(e => e.Nombre)
@@ -203,7 +189,10 @@ public partial class Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
-            entity.Property(e => e.TipoPersona).HasColumnName("tipo_persona");
+            entity.Property(e => e.TipoPersona)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("tipo_persona");
 
             entity.HasOne(d => d.IdPlanNavigation).WithMany(p => p.Personas)
                 .HasForeignKey(d => d.IdPlan)
@@ -211,8 +200,7 @@ public partial class Context : DbContext
                 .HasConstraintName("FK_personas_planes");
         });
 
-        modelBuilder.Entity<Plane>(entity =>
-        {
+        modelBuilder.Entity<Plane>(entity => {
             entity.HasKey(e => e.IdPlan);
 
             entity.ToTable("planes");
