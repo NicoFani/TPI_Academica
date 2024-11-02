@@ -8,10 +8,10 @@ namespace Web_API.Controllers {
     [Route("[controller]")]
     [ApiController]
     public class PersonasController : ControllerBase {
-        private readonly Datos.Context _context;
+        private readonly Context _context;
         private readonly PersonasService _personasService;
 
-        public PersonasController(Datos.Context context) {
+        public PersonasController(Context context) {
             _context = context;
             _personasService = new PersonasService(context);
         }
