@@ -19,7 +19,7 @@ public partial class Curso
 
     public virtual ICollection<DocentesCurso> DocentesCursos { get; set; } = new List<DocentesCurso>();
 
-    public virtual Comisione IdComisionNavigation { get; set; } = null!;
+    public virtual Comisione? IdComisionNavigation { get; set; }
 
-    public virtual Materia IdMateriaNavigation { get; set; } = null!;
+    public virtual Materia? IdMateriaNavigation { get; set; }
 }
