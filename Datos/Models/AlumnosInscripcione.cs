@@ -15,7 +15,7 @@ public partial class AlumnosInscripcione
 
     public int? Nota { get; set; }
 
-    public virtual Persona IdAlumnoNavigation { get; set; } = null!;
+    public virtual Persona? IdAlumnoNavigation { get; set; }
 
-    public virtual Curso IdCursoNavigation { get; set; } = null!;
+    public virtual Curso? IdCursoNavigation { get; set; }
 }
