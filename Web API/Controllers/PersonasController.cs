@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Datos;
 using Datos.Models;
 using Servicios;
+using Servicios.Utils;
 
 namespace Web_API.Controllers {
     [Route("[controller]")]
@@ -15,7 +15,6 @@ namespace Web_API.Controllers {
             _context = context;
             _personasService = new PersonasService(context);
         }
-
         [HttpGet(Name = "Get Personas")]
         public IActionResult GetPersonas() {
             return Ok(_personasService.GetPersonas());
@@ -25,7 +24,6 @@ namespace Web_API.Controllers {
             var persona = _personasService.GetPersona(id);
             return persona == null ? NotFound() : Ok(persona);
         }
-
         [HttpPost(Name = "Add Persona")]
         public ActionResult AddPersona(Persona persona) {
             _personasService.AddPersona(persona);
@@ -41,7 +39,6 @@ namespace Web_API.Controllers {
                 return Ok();
             }
         }
-
         [HttpDelete("{id}", Name = "Delete Persona")]
         public IActionResult DeletePersona(int id) {
             if (_personasService.DeletePersona(id)) {
@@ -53,7 +50,11 @@ namespace Web_API.Controllers {
         [HttpPut("signIn", Name = "SignIn")]
         public IActionResult SignIn(string nombreUsuario, string clave) {
             var persona = _personasService.SignIn(nombreUsuario, clave);
-            return persona == null ? NotFound() : Ok(persona);
+            if (persona != null) {
+                return Ok(JWTService.GenerateToken(persona));
+            } else {
+                return NotFound();
+            }
         }
     }
 }
