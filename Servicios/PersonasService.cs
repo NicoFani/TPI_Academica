@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 namespace Servicios {
-    public class PersonasService(Datos.Context context) {
+    public class PersonasService(Context context) {
         public void AddPersona(Persona persona) {
             context.Personas.Add(persona);
             context.SaveChanges();
