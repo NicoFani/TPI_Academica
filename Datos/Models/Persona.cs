@@ -32,6 +32,5 @@ public partial class Persona
     public virtual ICollection<AlumnosInscripcione> AlumnosInscripciones { get; set; } = new List<AlumnosInscripcione>();
 
     public virtual ICollection<DocentesCurso> DocentesCursos { get; set; } = new List<DocentesCurso>();
-
-    public virtual Plane IdPlanNavigation { get; set; } = null!;
+    public virtual Plane? IdPlanNavigation { get; set; }
 }
