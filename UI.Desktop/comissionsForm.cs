@@ -1,4 +1,4 @@
-﻿using Datos.Model;
+﻿using Datos.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace UI.Desktop
 {
     public partial class comissionsForm : Form
     {
-        private Comissions comission;
+        private Comisione comission;
         private ErrorProvider errorProvider = new ErrorProvider();
         //public comissionsForm()
         //{
@@ -22,7 +22,7 @@ namespace UI.Desktop
         //}
 
 
-        public Comissions Comission
+        public Comisione Comission
         {
             get { return comission; }
             set
@@ -42,7 +42,7 @@ namespace UI.Desktop
 
             if (this.ValidateComission())
             {
-                this.Comission.desc_comision = textBox1.Text;
+                this.Comission.DescComision = textBox1.Text;
 
                 if (this.EditMode)
                 {
@@ -61,9 +61,9 @@ namespace UI.Desktop
         }
         private void SetComission()
         {
-            this.textBox1.Text = this.Comission.desc_comision;
-            this.textBox2.Text = this.Comission.anio_especialidad.ToString();
-            this.textBox3.Text = this.Comission.id_plan.ToString();
+            this.textBox1.Text = this.Comission.DescComision;
+            this.textBox2.Text = this.Comission.AnioEspecialidad.ToString();
+            this.textBox3.Text = this.Comission.IdPlan.ToString();
             //this.comboBox1.SelectedValue = this.Comission.IdPlan; ((VER))
         }
         // Metodo para cargar los planes en el combobox

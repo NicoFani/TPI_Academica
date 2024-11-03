@@ -1,4 +1,4 @@
-﻿using Datos.Model;
+﻿using Datos.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,7 +61,7 @@ namespace UI.Desktop
         private void addButton_Click(object sender, EventArgs e)
         {
             comissionsForm comissionForm = new comissionsForm();
-            Comissions newComission = new Comissions();
+            Comisione newComission = new Comisione();
             comissionForm.Comission = newComission;
             comissionForm.ShowDialog();
             this.GetAllAndLoad();
@@ -71,9 +71,9 @@ namespace UI.Desktop
         {
             comissionsForm comissionForm = new comissionsForm();
             int id;
-            id = this.SelectedItem().id_comision;
+            id = this.SelectedItem().IdComision;
 
-            Comissions comission = await ComissionApiClient.GetComissionAsync(id);
+            Comisione comission = await ComissionApiClient.GetComissionAsync(id);
 
             comissionForm.EditMode = true;
             comissionForm.Comission = comission;
@@ -86,16 +86,16 @@ namespace UI.Desktop
         {
             int id;
 
-            id = this.SelectedItem().id_comision;
+            id = this.SelectedItem().IdComision;
             await ComissionApiClient.DeleteAsync(id);
             this.GetAllAndLoad();
         }
 
-        private Comissions SelectedItem()
+        private Comisione SelectedItem()
         {
-            Comissions comission;
+            Comisione comission;
 
-            comission = (Comissions)comissionDataGridView.SelectedRows[0].DataBoundItem;
+            comission = (Comisione)comissionDataGridView.SelectedRows[0].DataBoundItem;
 
             return comission;
         }

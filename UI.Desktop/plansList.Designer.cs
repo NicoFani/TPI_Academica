@@ -1,6 +1,6 @@
 ﻿namespace UI.Desktop
 {
-    partial class specialityList
+    partial class plansList
     {
         /// <summary>
         /// Required designer variable.
@@ -37,22 +37,17 @@
             // 
             // dataGridView1
             // 
-            dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(10, 9);
-            dataGridView1.Margin = new Padding(3, 2, 3, 2);
+            dataGridView1.Location = new Point(12, 12);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(679, 226);
+            dataGridView1.Size = new Size(776, 271);
             dataGridView1.TabIndex = 0;
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(607, 284);
-            deleteButton.Margin = new Padding(3, 2, 3, 2);
+            deleteButton.Location = new Point(713, 322);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(82, 22);
+            deleteButton.Size = new Size(75, 23);
             deleteButton.TabIndex = 1;
             deleteButton.Text = "Eliminar";
             deleteButton.UseVisualStyleBackColor = true;
@@ -60,10 +55,9 @@
             // 
             // updateButton
             // 
-            updateButton.Location = new Point(483, 284);
-            updateButton.Margin = new Padding(3, 2, 3, 2);
+            updateButton.Location = new Point(608, 322);
             updateButton.Name = "updateButton";
-            updateButton.Size = new Size(82, 22);
+            updateButton.Size = new Size(75, 23);
             updateButton.TabIndex = 2;
             updateButton.Text = "Modificar";
             updateButton.UseVisualStyleBackColor = true;
@@ -71,28 +65,26 @@
             // 
             // addButton
             // 
-            addButton.Location = new Point(365, 284);
-            addButton.Margin = new Padding(3, 2, 3, 2);
+            addButton.Location = new Point(499, 322);
             addButton.Name = "addButton";
-            addButton.Size = new Size(82, 22);
+            addButton.Size = new Size(75, 23);
             addButton.TabIndex = 3;
             addButton.Text = "Agregar";
             addButton.UseVisualStyleBackColor = true;
             addButton.Click += addButton_Click;
             // 
-            // specialityList
+            // plansList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(800, 375);
             Controls.Add(addButton);
             Controls.Add(updateButton);
             Controls.Add(deleteButton);
             Controls.Add(dataGridView1);
-            Margin = new Padding(3, 2, 3, 2);
-            Name = "specialityList";
-            Text = "specialityList";
-            Load += specialities_Load;
+            Name = "plansList";
+            Text = "plansList";
+            Load += plans_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
