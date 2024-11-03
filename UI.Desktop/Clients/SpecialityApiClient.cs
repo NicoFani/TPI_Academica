@@ -52,7 +52,6 @@ namespace UI.Desktop.Clients
         {
             try
             {
-                MessageBox.Show($"id parametro: {id} - id speciality: {speciality.IdEspecialidad}"); // ACA LLEGA ID 0 EN AMBOS PARAMETROS
                 HttpResponseMessage response = await client.PutAsJsonAsync($"specialities/{id}", speciality);
                 if (!response.IsSuccessStatusCode)
                 {

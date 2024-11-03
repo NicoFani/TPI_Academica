@@ -49,7 +49,6 @@ namespace Web_API.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateSpeciality(int id, [FromBody] Especialidade speciality)
         {
-            Console.WriteLine($"id parametro: {id} - id speciality: {speciality.IdEspecialidad}"); // ACA LLEGA ID 0 EN AMBOS PARAMETROS
             if (id != speciality.IdEspecialidad)
             {
                 return BadRequest($"La id: {id} es distinta de la id del objeto> {speciality.IdEspecialidad}");

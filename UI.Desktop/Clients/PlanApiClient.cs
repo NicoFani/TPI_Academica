@@ -32,7 +32,6 @@ namespace UI.Desktop.Clients
         }
         public static async Task<Plane?> GetPlanAsync(int id)
         {
-            Console.WriteLine($"Intentando obtener el plan con URL: plans/{id}");
             HttpResponseMessage response = await client.GetAsync($"plans/{id}");
 
             if (response.IsSuccessStatusCode)
@@ -59,7 +58,6 @@ namespace UI.Desktop.Clients
 
         public static async Task UpdateAsync(int id, Plane plan)
         {
-            MessageBox.Show($"id parametro: {id} - id speciality: {plan.IdPlan}");
             HttpResponseMessage response = await client.PutAsJsonAsync($"plans/{plan.IdPlan}", plan);
             response.EnsureSuccessStatusCode();
         }

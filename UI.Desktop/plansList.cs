@@ -58,11 +58,6 @@ namespace UI.Desktop
 
             Plane plan = await PlanApiClient.GetPlanAsync(id);
 
-            if (plan == null)
-            {
-                MessageBox.Show("No se pudo obtener el plan");
-            }
-
             planForm.EditMode = true;
             planForm.Plan = plan;
             planForm.ShowDialog();

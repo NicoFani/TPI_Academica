@@ -39,9 +39,6 @@ namespace UI.Desktop
                 this.Comission.AnioEspecialidad = int.Parse(textBox2.Text);
                 this.Comission.IdPlan = (int)comboBox1.SelectedValue;
 
-                // Log the data being sent
-                Console.WriteLine($"DescComision: {this.Comission.DescComision}, AnioEspecialidad: {this.Comission.AnioEspecialidad}, IdPlan: {this.Comission.IdPlan}");
-
                 if (this.EditMode)
                 {
                     await ComissionApiClient.UpdateAsync(this.Comission);
@@ -92,31 +89,10 @@ namespace UI.Desktop
         private async void LoadPlanes()
         {
             var planes = await PlanApiClient.GetPlansAsync();
-            if (planes == null || !planes.Any())
-            {
-                MessageBox.Show("No se encontraron planes.");
-                return;
-            }
-
-            // Verificar el contenido de planes
-            foreach (var plan in planes)
-            {
-                Console.WriteLine($"Plan: {plan.DescPlan}, ID: {plan.IdPlan}");
-            }
 
             this.comboBox1.DataSource = planes.ToList();
             this.comboBox1.DisplayMember = "DescPlan";
             this.comboBox1.ValueMember = "IdPlan";
-
-            // Verificar el estado del comboBox1
-            if (this.comboBox1.Items.Count > 0)
-            {
-                Console.WriteLine("El comboBox1 ha sido enlazado correctamente.");
-            }
-            else
-            {
-                Console.WriteLine("El comboBox1 no tiene elementos.");
-            }
         }
 
         private void comissionsForm_Load(object sender, EventArgs e)

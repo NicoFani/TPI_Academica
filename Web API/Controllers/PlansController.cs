@@ -58,7 +58,6 @@ namespace Web_API.Controllers
         {
             try
             {
-                Console.WriteLine($"id parametro: {id} - id speciality: {plan.IdPlan}");
                 _planService.UpdatePlan(plan.IdPlan, plan.DescPlan, plan.IdEspecialidad);
                 return Ok("Plan updated");
             }

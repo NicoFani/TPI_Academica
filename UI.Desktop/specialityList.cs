@@ -58,13 +58,6 @@ namespace UI.Desktop
 
             Especialidade speciality = await SpecialityApiClient.GetSpecialityAsync(id);
 
-            if (speciality == null)
-            {
-                MessageBox.Show("No se pudo obtener la especialidad");
-            }
-
-            MessageBox.Show($"En SpecialityList -- id parametro: {id}"); // ACA MUESTRA EL ID SELECCIONADO, SIN EMBARGO NO MUESTRA EL DE LA ESPECIALIDAD ENCONTRADA
-
             specialityForm.EditMode = true;
             specialityForm.Speciality = speciality;
 
