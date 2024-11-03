@@ -11,7 +11,7 @@ public partial class DocentesCurso
 
     public int IdDocente { get; set; }
 
-    public int Cargo { get; set; }
+    public string Cargo { get; set; } = null!;
 
     public virtual Curso? IdCursoNavigation { get; set; }
 
