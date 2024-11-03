@@ -19,6 +19,10 @@ namespace Servicios {
             return context.Personas.ToList();
         }
 
+        public IEnumerable<Persona> GetPersonasByTipo(string tipo) {
+            return context.Personas.Where(p => p.TipoPersona == tipo).ToList();
+        }
+
         public Persona? GetPersona(int id) {
             return context.Personas.Find(id);
         }
