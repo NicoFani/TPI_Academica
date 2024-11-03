@@ -19,6 +19,10 @@ namespace Web_API.Controllers {
         public IActionResult GetPersonas() {
             return Ok(_personasService.GetPersonas());
         }
+        [HttpGet("tipo/{tipo}", Name = "Get Personas By Tipo")]
+        public IActionResult GetPersonasByTipo(string tipo) {
+            return Ok(_personasService.GetPersonasByTipo(tipo));
+        }
         [HttpGet("{id}", Name = "Get Persona")]
         public IActionResult GetPersona(int id) {
             var persona = _personasService.GetPersona(id);
