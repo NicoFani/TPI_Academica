@@ -34,11 +34,11 @@ namespace Web_API.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddSpeciality(string specialityDescription)
+        public ActionResult AddSpeciality(Especialidade speciality)
         {
             try
             {
-                _specialityService.AddSpeciality(specialityDescription);
+                _specialityService.AddSpeciality(speciality.DescEspecialidad);
                 return Ok("Speciality added");
             }
             catch (System.Exception e)
@@ -47,11 +47,11 @@ namespace Web_API.Controllers
             }
         }
         [HttpPut]
-        public ActionResult UpdateSpeciality(int id, string specialityDescription)
+        public ActionResult UpdateSpeciality(int id, Especialidade speciality)
         {
             try
             {
-                _specialityService.UpdateSpeciality(id, specialityDescription);
+                _specialityService.UpdateSpeciality(id, speciality.DescEspecialidad);
                 return Ok("Speciality updated");
             }
             catch (System.Exception e)
