@@ -1,4 +1,4 @@
-﻿using Datos.Model;
+﻿using Datos.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,31 +21,31 @@ namespace UI.Desktop.Clients
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public static async Task<IEnumerable<Comissions>> GetComissionsAsync()
+        public static async Task<IEnumerable<Comisione>> GetComissionsAsync()
         {
-            IEnumerable<Comissions> comissions = null;
+            IEnumerable<Comisione> comissions = null;
             HttpResponseMessage response = await client.GetAsync("comissions");
 
             if (response.IsSuccessStatusCode)
             {
-                comissions = await response.Content.ReadFromJsonAsync<IEnumerable<Comissions>>();
+                comissions = await response.Content.ReadFromJsonAsync<IEnumerable<Comisione>>();
             }
             return comissions;
         }
 
 
-        public static async Task<Comissions> GetComissionAsync(int id)
+        public static async Task<Comisione> GetComissionAsync(int id)
         {
-            Comissions comission = null;
+            Comisione comission = null;
             HttpResponseMessage response = await client.GetAsync($"comissions/{id}");
 
             if (response.IsSuccessStatusCode)
             {
-                comission = await response.Content.ReadFromJsonAsync<Comissions>();
+                comission = await response.Content.ReadFromJsonAsync<Comisione>();
             }
             return comission;
         }
-        public static async Task AddAsync(Comissions comission)
+        public static async Task AddAsync(Comisione comission)
         {
             try
             {
@@ -65,11 +65,16 @@ namespace UI.Desktop.Clients
             }
         }
 
-        public static async Task UpdateAsync(Comissions comission)
+        public static async Task UpdateAsync(Comisione comission)
         {
             HttpResponseMessage response = await client.PutAsJsonAsync($"Comissions", comission);
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorContent = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {errorContent}");
+            }
         }
+
         public static async Task DeleteAsync(int id)
         {
             HttpResponseMessage response = await client.DeleteAsync($"Comissions/{id}");
