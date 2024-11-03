@@ -39,8 +39,7 @@ namespace Servicios
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    // VER
-                    comm.CommandText = "VER";
+                    comm.CommandText = "UPDATE Especialidades SET desc_especialidad = @SpecialityDescription WHERE id_especialidad = @IdSpeciality";
 
                     comm.Parameters.AddWithValue("@IdSpeciality", idSpeciality);
                     comm.Parameters.AddWithValue("@SpecialityDescription", specialityDescription);
