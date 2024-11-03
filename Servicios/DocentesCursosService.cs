@@ -31,10 +31,20 @@ namespace Servicios
             return context.DocentesCursos.Include(ai => ai.IdDocenteNavigation).Include(ai => ai.IdCursoNavigation).FirstOrDefault(ai => ai.IdDictado == id);
         }
 
-        public void AddDocenteCurso(DocentesCurso docenteCurso)
+        public bool AddDocenteCurso(DocentesCurso docenteCurso)
         {
-            context.DocentesCursos.Add(docenteCurso);
-            context.SaveChanges();
+            Curso? curso = context.Cursos.Find(docenteCurso.IdCurso);
+            Persona? docente = context.Personas.Find(docenteCurso.IdDocente);
+            if (curso == null || docente == null || docente.TipoPersona != "Profesor")
+            {
+                return false;
+            }
+            else
+            {
+                context.DocentesCursos.Add(docenteCurso);
+                context.SaveChanges();
+                return true;
+            }
         }
 
         public void UpdateDocenteCurso(DocentesCurso docenteCurso)
@@ -59,3 +69,4 @@ namespace Servicios
         }
     }
 }
+

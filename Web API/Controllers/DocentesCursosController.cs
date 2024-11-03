@@ -40,10 +40,14 @@ namespace Web_API.Controllers
             return alIn == null ? NotFound() : Ok(alIn);
         }
         [HttpPost(Name = "Add Docente Curso")]
-        public IActionResult AddDocenteCurso(DocentesCurso alIn)
+        public IActionResult AddDocenteCurso(DocentesCurso doCur)
         {
-            _alInService.AddDocenteCurso(alIn);
-            return CreatedAtRoute("Get Docente Curso", new { id = alIn.IdDictado }, alIn);
+            bool success = _alInService.AddDocenteCurso(doCur);
+            if (!success) {
+                return BadRequest();
+            } else {  
+                return CreatedAtRoute("Get Docente Curso", new { id = doCur.IdDictado }, doCur);
+            }
         }
         [HttpPut(Name = "Update Docente Curso")]
         public IActionResult UpdateDocenteCurso(int id, DocentesCurso alIn)
