@@ -53,12 +53,13 @@ namespace Web_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpPut]
-        public ActionResult UpdatePlan(int idPlan, Plane plan)
+        [HttpPut("{id}")]
+        public ActionResult UpdatePlan(int id, [FromBody] Plane plan)
         {
             try
             {
-                _planService.UpdatePlan(plan);
+                Console.WriteLine($"id parametro: {id} - id speciality: {plan.IdPlan}");
+                _planService.UpdatePlan(plan.IdPlan, plan.DescPlan, plan.IdEspecialidad);
                 return Ok("Plan updated");
             }
             catch (System.Exception e)

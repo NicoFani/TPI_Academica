@@ -59,12 +59,10 @@ namespace UI.Desktop.Clients
 
         public static async Task UpdateAsync(int id, Plane plan)
         {
-
-            HttpResponseMessage response = await client.PutAsJsonAsync($"plans/{id}", plan);
+            MessageBox.Show($"id parametro: {id} - id speciality: {plan.IdPlan}");
+            HttpResponseMessage response = await client.PutAsJsonAsync($"plans/{plan.IdPlan}", plan);
             response.EnsureSuccessStatusCode();
         }
-
-
 
         public static async Task DeleteAsync(int id)
         {

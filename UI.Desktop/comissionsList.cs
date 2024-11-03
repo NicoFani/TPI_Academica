@@ -54,10 +54,6 @@ namespace UI.Desktop
             }
         }
 
-
-
-
-
         private void addButton_Click(object sender, EventArgs e)
         {
             comissionsForm comissionForm = new comissionsForm();
@@ -74,6 +70,13 @@ namespace UI.Desktop
             id = this.SelectedItem().IdComision;
 
             Comisione comission = await ComissionApiClient.GetComissionAsync(id);
+
+            if (comission == null)
+            {
+                MessageBox.Show("Comisión no encontrada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
 
             comissionForm.EditMode = true;
             comissionForm.Comission = comission;

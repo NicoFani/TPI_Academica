@@ -26,16 +26,17 @@ namespace UI.Desktop
         {
             var plans = await PlanApiClient.GetPlansAsync();
 
-            if (plans != null && plans.Any())
+            this.dataGridView1.DataSource = null;
+            this.dataGridView1.DataSource = plans.ToList();
+
+            if (this.dataGridView1.Rows.Count > 0)
             {
-                this.dataGridView1.DataSource = plans.ToList();
                 this.dataGridView1.Rows[0].Selected = true;
                 this.deleteButton.Enabled = true;
                 this.updateButton.Enabled = true;
             }
             else
             {
-                this.dataGridView1.DataSource = null;
                 this.deleteButton.Enabled = false;
                 this.updateButton.Enabled = false;
             }
@@ -51,31 +52,23 @@ namespace UI.Desktop
         }
         private async void updateButton_Click(object sender, EventArgs e)
         {
-            var selectedPlan = SelectedItem();
-            if (selectedPlan == null)
-            {
-                MessageBox.Show("No se ha seleccionado ningún plan.");
-                return;
-            }
+            plansForm planForm = new plansForm();
+            int id;
+            id = this.SelectedItem().IdPlan;
 
-            Console.WriteLine($"ID seleccionado: {selectedPlan.IdPlan}");
-
-            int id = selectedPlan.IdPlan;
             Plane plan = await PlanApiClient.GetPlanAsync(id);
+
             if (plan == null)
             {
-                MessageBox.Show($"No se encontró el plan con ID {id} en la API.");
-                return;
+                MessageBox.Show("No se pudo obtener el plan");
             }
 
-            plansForm planForm = new plansForm
-            {
-                EditMode = true,
-                Plan = plan
-            };
-
+            planForm.EditMode = true;
+            planForm.Plan = plan;
             planForm.ShowDialog();
             this.GetAllAndLoad();
+            var selectedPlan = SelectedItem();
+
         }
 
         private async void deleteButton_Click(object sender, EventArgs e)
@@ -88,13 +81,11 @@ namespace UI.Desktop
         }
         private Plane SelectedItem()
         {
-            if (dataGridView1.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Seleccione un plan de la lista.");
-                return null;
-            }
+            Plane plan;
 
-            return (Plane)dataGridView1.SelectedRows[0].DataBoundItem;
+            plan = (Plane)dataGridView1.SelectedRows[0].DataBoundItem;
+
+            return plan;
         }
 
 

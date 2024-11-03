@@ -99,6 +99,7 @@ namespace Servicios
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
                     comm.CommandText = "SELECT * FROM especialidades WHERE id_especialidad = @IdSpeciality";
+                    comm.Parameters.AddWithValue("@IdSpeciality", id);
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read()) {
                         Especialidade speciality = new Especialidade { IdEspecialidad = (int)dr["id_especialidad"], DescEspecialidad = dr["desc_especialidad"].ToString() };

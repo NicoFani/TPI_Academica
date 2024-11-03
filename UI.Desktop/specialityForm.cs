@@ -44,7 +44,7 @@ namespace UI.Desktop
                 this.Speciality.DescEspecialidad = this.descTextBox.Text;
                 if (this.EditMode)
                 {
-                    await SpecialityApiClient.UpdateAsync(this.Speciality);
+                    await SpecialityApiClient.UpdateAsync(Speciality.IdEspecialidad, Speciality);
                 }
                 else
                 {

@@ -49,19 +49,19 @@ namespace Web_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpPut]
-        public ActionResult UpdateComission(Comisione comission)
+        [HttpPut("{id}")]
+        public ActionResult UpdateComission(int id, [FromBody] Comisione comission)
         {
-            try
+            if (id != comission.IdComision)
+            {
+                return BadRequest($"La id: {id} es distinta de la id del objeto: {comission.IdComision}");
+            } else
             {
                 _comissionService.UpdateComission(comission);
                 return Ok("Comission updated");
             }
-            catch (System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
         }
+
         [HttpDelete("{id}")]
         public ActionResult DeleteComission(int id) {
             try

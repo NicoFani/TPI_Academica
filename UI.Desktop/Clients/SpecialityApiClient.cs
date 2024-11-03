@@ -48,11 +48,12 @@ namespace UI.Desktop.Clients
                 response.EnsureSuccessStatusCode();
 
         }
-        public static async Task UpdateAsync(Especialidade speciality)
+        public static async Task UpdateAsync(int id, Especialidade speciality)
         {
             try
             {
-                HttpResponseMessage response = await client.PutAsJsonAsync($"specialities/{speciality.IdEspecialidad}", speciality);
+                MessageBox.Show($"id parametro: {id} - id speciality: {speciality.IdEspecialidad}"); // ACA LLEGA ID 0 EN AMBOS PARAMETROS
+                HttpResponseMessage response = await client.PutAsJsonAsync($"specialities/{id}", speciality);
                 if (!response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();

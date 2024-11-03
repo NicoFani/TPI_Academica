@@ -65,15 +65,28 @@ namespace UI.Desktop.Clients
             }
         }
 
+
         public static async Task UpdateAsync(Comisione comission)
         {
-            HttpResponseMessage response = await client.PutAsJsonAsync($"Comissions", comission);
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                string errorContent = await response.Content.ReadAsStringAsync();
-                throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {errorContent}");
+                HttpResponseMessage response = await client.PutAsJsonAsync($"comissions/{comission.IdComision}", comission);
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error al actualizar la comisión: {response.StatusCode} - {errorContent}");
+                }
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                // Log the exception details
+                Console.WriteLine($"Request error: {e.Message}");
+                throw;
             }
         }
+
+
 
         public static async Task DeleteAsync(int id)
         {

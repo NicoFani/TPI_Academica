@@ -48,7 +48,7 @@ namespace UI.Desktop
 
                 if (this.EditMode)
                 {
-                    await PlanApiClient.UpdateAsync(Plan.IdPlan, this.Plan);
+                    await PlanApiClient.UpdateAsync(Plan.IdPlan,Plan);
                 }
                 else
                 {

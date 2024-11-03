@@ -14,6 +14,7 @@ namespace Servicios
         {
             
             Comisione? comissionToDelete = context.Comisiones.Find(id);
+            
             if (comissionToDelete == null)
             {
                 throw new Exception("Comission not found");
@@ -23,18 +24,15 @@ namespace Servicios
                 context.SaveChanges();
             }
         }
-        public void UpdateComission(Comisione Comission)
+        public void UpdateComission(Comisione comission)
         {
-            Comisione? comissionToUpdate = context.Comisiones.Find(Comission.IdComision);
-            if (comissionToUpdate == null)
+            Comisione? comissionToUpdate = context.Comisiones.Find(comission.IdComision);
+
+            if (comissionToUpdate != null)
             {
-                throw new Exception("Comission not found");
-            }
-            else
-            {
-                comissionToUpdate.DescComision = Comission.DescComision;
-                comissionToUpdate.AnioEspecialidad = Comission.AnioEspecialidad;
-                comissionToUpdate.IdPlan = Comission.IdPlan;
+                comissionToUpdate.DescComision = comission.DescComision;
+                comissionToUpdate.AnioEspecialidad =comission.AnioEspecialidad;
+                comissionToUpdate.IdPlan = comission.IdPlan;
                 context.SaveChanges();
             }
         }

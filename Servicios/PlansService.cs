@@ -22,7 +22,7 @@ namespace Servicios
             }
         }
 
-        public void UpdatePlan(Plane plan)
+        public void UpdatePlan(int idPlan, string descPlan, int idSpeciality)
         {
             try
             {
@@ -33,9 +33,9 @@ namespace Servicios
                     string query = "UPDATE Planes SET desc_plan = @PlanDescription, id_especialidad = @IdSpeciality WHERE id_plan = @IdPlan";
                     SqlCommand cmd = new SqlCommand(query, conn);
 
-                    cmd.Parameters.AddWithValue("@PlanDescription", plan.DescPlan);
-                    cmd.Parameters.AddWithValue("@IdSpeciality", plan.IdEspecialidad);
-                    cmd.Parameters.AddWithValue("@IdPlan", plan.IdPlan);
+                    cmd.Parameters.AddWithValue("@PlanDescription", descPlan);
+                    cmd.Parameters.AddWithValue("@IdSpeciality", idSpeciality);
+                    cmd.Parameters.AddWithValue("@IdPlan", idPlan);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();

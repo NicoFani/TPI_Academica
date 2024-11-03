@@ -28,7 +28,7 @@ namespace UI.Desktop
 
 
             this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = specialities;
+            this.dataGridView1.DataSource = specialities.ToList();
 
             if (this.dataGridView1.Rows.Count > 0)
             {
@@ -57,6 +57,13 @@ namespace UI.Desktop
             id = this.SelectedItem().IdEspecialidad;
 
             Especialidade speciality = await SpecialityApiClient.GetSpecialityAsync(id);
+
+            if (speciality == null)
+            {
+                MessageBox.Show("No se pudo obtener la especialidad");
+            }
+
+            MessageBox.Show($"En SpecialityList -- id parametro: {id}"); // ACA MUESTRA EL ID SELECCIONADO, SIN EMBARGO NO MUESTRA EL DE LA ESPECIALIDAD ENCONTRADA
 
             specialityForm.EditMode = true;
             specialityForm.Speciality = speciality;

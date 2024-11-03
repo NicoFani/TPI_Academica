@@ -46,17 +46,17 @@ namespace Web_API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        [HttpPut]
-        public ActionResult UpdateSpeciality(int id, Especialidade speciality)
+        [HttpPut("{id}")]
+        public ActionResult UpdateSpeciality(int id, [FromBody] Especialidade speciality)
         {
-            try
+            Console.WriteLine($"id parametro: {id} - id speciality: {speciality.IdEspecialidad}"); // ACA LLEGA ID 0 EN AMBOS PARAMETROS
+            if (id != speciality.IdEspecialidad)
             {
-                _specialityService.UpdateSpeciality(id, speciality.DescEspecialidad);
+                return BadRequest($"La id: {id} es distinta de la id del objeto> {speciality.IdEspecialidad}");
+            } else
+            {
+                _specialityService.UpdateSpeciality(speciality.IdEspecialidad, speciality.DescEspecialidad);
                 return Ok("Speciality updated");
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e.Message);
             }
         }
         [HttpDelete("{id}")]
