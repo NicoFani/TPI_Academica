@@ -53,7 +53,7 @@ namespace UI.Desktop {
             } else {
                 bool success = await PersonasApiClient.SignIn(username, password);
                 if (success) {
-                    frmMain formMain = new frmMain();
+                    frmAdminMenu formMain = new frmAdminMenu();
                     formMain.FormClosed += (s, args) => this.Close();
                     formMain.Show();
                     this.Hide();
