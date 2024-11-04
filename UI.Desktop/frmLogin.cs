@@ -1,4 +1,5 @@
 using UI.Desktop.Clients;
+
 namespace UI.Desktop {
     public partial class frmLogin : Form {
         public frmLogin() {
@@ -44,27 +45,36 @@ namespace UI.Desktop {
             formRegistro.Show();
         }
 
-        private async void signInBtn_Click(object sender, EventArgs e) {
+        private async void signInBtn_Click(object sender, EventArgs e)
+        {
             string username = usuarioInput.Text;
             string password = claveInput.Text;
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
                 MessageBox.Show("Debe completar todos los campos");
                 return;
-            } else {
+            }
+            else
+            {
                 bool success = await PersonasApiClient.SignIn(username, password);
-                if (success) {
+                if (success)
+                {
                     frmMain formMain = new frmMain();
                     formMain.FormClosed += (s, args) => this.Close();
                     formMain.Show();
                     this.Hide();
-                } else {
+                }
+                else
+                {
                     MessageBox.Show("Asegurese de haber introducido bien su nombre de usuario y contraseña, además debe ser administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void frmLogin_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
+        private void frmLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
                 signInBtn_Click(sender, e);
             }
         }
