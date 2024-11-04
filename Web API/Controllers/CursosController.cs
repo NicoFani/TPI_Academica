@@ -23,6 +23,16 @@ namespace Web_API.Controllers
         {
             return Ok(_cursosService.GetCursos());
         }
+        [HttpGet("materia/{materia}", Name = "Get Cursos By Materia")]
+        public IActionResult GetCursosByMateria(int materia)
+        {
+            return Ok(_cursosService.GetCursosByMateria(materia));
+        }
+        [HttpGet("comision/{comision}", Name = "Get Cursos By Comision")]
+        public IActionResult GetCursosByComision(int comision)
+        {
+            return Ok(_cursosService.GetCursosByComision(comision));
+        }
         [HttpGet("{id}", Name = "Get Curso")]
         public IActionResult GetCurso(int id)
         {
@@ -37,18 +47,19 @@ namespace Web_API.Controllers
         }
 
         [HttpPut(Name = "Update Curso")]
-        public IActionResult UpdateCurso(int id, Curso curso)
+        public IActionResult UpdateCurso(int id, Curso curs)
         {
-            if (id != curso.IdCurso)
+            if (id != curs.IdCurso)
             {
                 return BadRequest();
             }
             else
             {
-                _cursosService.UpdateCurso(curso);
-                return Ok();
+                bool success = _cursosService.UpdateCurso(curs);
+                return success ? NoContent() : NotFound();
             }
         }
+
         [HttpDelete("{id}", Name = "Delete Curso")]
         public IActionResult DeleteCurso(int id)
         {

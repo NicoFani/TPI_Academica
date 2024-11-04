@@ -23,15 +23,36 @@ namespace Servicios
             return context.Cursos.ToList();
         }
 
+        public IEnumerable<Curso> GetCursosByMateria(int materia)
+        {
+            return context.Cursos.Where(p => p.IdMateria == materia).ToList();
+        }
+
+        public IEnumerable<Curso> GetCursosByComision(int comision)
+        {
+            return context.Cursos.Where(p => p.IdComision == comision).ToList();
+        }
+
         public Curso? GetCurso(int id)
         {
             return context.Cursos.Find(id);
         }
 
-        public void UpdateCurso(Curso curso)
+        public bool UpdateCurso(Curso curs)
         {
-            context.Cursos.Update(curso);
-            context.SaveChanges();
+            Curso? old = context.Cursos.Where(cur => cur.IdCurso == curs.IdCurso).First();
+            // no permite cambiar materia y comision
+            if (old == null || old.IdCurso != curs.IdCurso || old.IdMateria != curs.IdMateria || old.IdComision != curs.IdComision)
+            {
+                return false;
+            }
+            else
+            {
+                context.Entry(old).State = EntityState.Detached;
+                context.Cursos.Update(curs);
+                context.SaveChanges();
+                return true;
+            }
         }
 
         public bool DeleteCurso(int id)
