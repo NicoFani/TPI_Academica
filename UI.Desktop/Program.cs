@@ -12,7 +12,7 @@ namespace UI.Desktop
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            Application.Run(new materiasList());
+            Application.Run(new frmLogin());
         }
     }
 }

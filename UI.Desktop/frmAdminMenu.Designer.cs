@@ -166,6 +166,7 @@
             materiasButton.TabIndex = 3;
             materiasButton.Text = "Materias";
             materiasButton.UseVisualStyleBackColor = true;
+            materiasButton.Click += materiasButton_Click;
             // 
             // comisionesButton
             // 
