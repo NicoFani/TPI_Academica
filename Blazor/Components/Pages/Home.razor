@@ -1,0 +1,30 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+@if (result != null)
+{
+    <ul>
+        @foreach (clientSwagger.Especialidade speciality in result)
+        {
+            <li>@speciality.IdEspecialidad - @speciality.DescEspecialidad</li>
+        }
+    </ul>
+}
+
+@code {
+    private ICollection<clientSwagger.Especialidade> result;
+    private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
+
+    private async Task Refresh()
+    {
+        result = await client.SpecialitiesAllAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Refresh();
+    }
+}
