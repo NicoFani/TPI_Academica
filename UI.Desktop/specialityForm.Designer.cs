@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             descTextBox = new TextBox();
             label1 = new Label();
             acceptButton = new Button();
@@ -80,7 +79,7 @@
             Controls.Add(label1);
             Controls.Add(descTextBox);
             Name = "specialityForm";
-            Text = "Especialidad";
+            Text = "Datos de Especialidad";
             ResumeLayout(false);
             PerformLayout();
         }

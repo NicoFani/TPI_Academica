@@ -15,6 +15,8 @@ namespace UI.Desktop {
         public personasList(string tipoPersona) {
             _tipoPersona = tipoPersona;
             InitializeComponent();
+            string title = tipoPersona == "Alumno" ? "Alumnos" : "Profesores";
+            this.FindForm().Text = $"Lista de {title}";
         }
 
         private void addButton_Click(object sender, EventArgs e) {
