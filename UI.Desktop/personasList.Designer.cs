@@ -86,7 +86,7 @@
             Controls.Add(deleteButton);
             Controls.Add(DataGridView);
             Name = "personasList";
-            Text = "personasList";
+            Text = "Lista de Personas";
             Load += personasList_Load;
             ((System.ComponentModel.ISupportInitialize)DataGridView).EndInit();
             ResumeLayout(false);

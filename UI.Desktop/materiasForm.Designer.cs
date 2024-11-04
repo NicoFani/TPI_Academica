@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             textBox1 = new TextBox();
             label1 = new Label();
             textBox2 = new TextBox();
@@ -141,7 +140,7 @@
             Controls.Add(label1);
             Controls.Add(textBox1);
             Name = "materiasForm";
-            Text = "Materias";
+            Text = "Datos de Materias";
             Load += materiasForm_Load;
             Click += materiasForm_Load;
             ResumeLayout(false);

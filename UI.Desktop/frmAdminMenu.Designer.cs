@@ -153,6 +153,7 @@
             cursosButton.TabIndex = 4;
             cursosButton.Text = "Cursos";
             cursosButton.UseVisualStyleBackColor = true;
+            cursosButton.Click += cursosButton_Click;
             // 
             // materiasButton
             // 
@@ -217,7 +218,7 @@
             ClientSize = new Size(1096, 581);
             Controls.Add(panel1);
             Name = "frmAdminMenu";
-            Text = "frmAdminMenu";
+            Text = "Menu";
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

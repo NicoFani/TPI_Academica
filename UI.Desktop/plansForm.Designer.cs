@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             textBox1 = new TextBox();
             label1 = new Label();
             label2 = new Label();
@@ -101,7 +100,7 @@
             Controls.Add(label1);
             Controls.Add(textBox1);
             Name = "plansForm";
-            Text = "plansForm";
+            Text = "Datos de Planes";
             Load += plansForm_Load;
             ResumeLayout(false);
             PerformLayout();

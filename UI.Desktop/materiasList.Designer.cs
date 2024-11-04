@@ -84,7 +84,7 @@
             Controls.Add(deleteButton);
             Controls.Add(dataGridView1);
             Name = "materiasList";
-            Text = "materiasList";
+            Text = "Lista de Materias";
             Load += Materias_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

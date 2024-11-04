@@ -19,12 +19,14 @@ namespace UI.Desktop {
         public personasForm(string tipo) {
             _tipoPersona = tipo;
             InitializeComponent();
+            this.FindForm().Text = $"Datos de {tipo}";
         }
 
         public personasForm(string tipo, int idPersona) {
             InitializeComponent();
             _tipoPersona = tipo;
             _idPersona = idPersona;
+            this.FindForm().Text = $"Datos de {tipo}";
         }
 
         private async void personasForm_Load(object sender, EventArgs e) {

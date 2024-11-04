@@ -317,7 +317,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "personasForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Personas";
+            Text = "Datos de Persona";
             Load += personasForm_Load;
             KeyDown += personasForm_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

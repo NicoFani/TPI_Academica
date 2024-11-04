@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             label1 = new Label();
@@ -126,7 +125,7 @@
             Controls.Add(textBox1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "comissionsForm";
-            Text = "Datos Comisión";
+            Text = "Datos de Comisión";
             Load += comissionsForm_Load;
             ResumeLayout(false);
             PerformLayout();
