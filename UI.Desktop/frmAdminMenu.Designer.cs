@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent() {
             panel1 = new Panel();
+            profesoresBtn = new Button();
             cerrarSesionButton = new Button();
             pictureBox1 = new PictureBox();
             docentesCursosButton = new Button();
@@ -36,7 +37,7 @@
             cursosButton = new Button();
             materiasButton = new Button();
             comisionesButton = new Button();
-            personasButton = new Button();
+            alumnosBtn = new Button();
             inscripcionesButton = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -45,6 +46,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(24, 119, 242);
+            panel1.Controls.Add(profesoresBtn);
             panel1.Controls.Add(cerrarSesionButton);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(docentesCursosButton);
@@ -53,12 +55,26 @@
             panel1.Controls.Add(cursosButton);
             panel1.Controls.Add(materiasButton);
             panel1.Controls.Add(comisionesButton);
-            panel1.Controls.Add(personasButton);
+            panel1.Controls.Add(alumnosBtn);
             panel1.Controls.Add(inscripcionesButton);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(258, 582);
             panel1.TabIndex = 0;
+            // 
+            // profesoresBtn
+            // 
+            profesoresBtn.FlatAppearance.BorderSize = 0;
+            profesoresBtn.FlatStyle = FlatStyle.Flat;
+            profesoresBtn.Font = new Font("Segoe UI", 11F);
+            profesoresBtn.ForeColor = Color.GhostWhite;
+            profesoresBtn.Location = new Point(3, 229);
+            profesoresBtn.Name = "profesoresBtn";
+            profesoresBtn.Size = new Size(252, 29);
+            profesoresBtn.TabIndex = 9;
+            profesoresBtn.Text = "Profesores";
+            profesoresBtn.UseVisualStyleBackColor = true;
+            profesoresBtn.Click += profesoresBtn_Click;
             // 
             // cerrarSesionButton
             // 
@@ -103,7 +119,7 @@
             planesButton.FlatStyle = FlatStyle.Flat;
             planesButton.Font = new Font("Segoe UI", 11F);
             planesButton.ForeColor = Color.GhostWhite;
-            planesButton.Location = new Point(3, 369);
+            planesButton.Location = new Point(3, 439);
             planesButton.Name = "planesButton";
             planesButton.Size = new Size(252, 29);
             planesButton.TabIndex = 6;
@@ -117,7 +133,7 @@
             especialidadesButton.FlatStyle = FlatStyle.Flat;
             especialidadesButton.Font = new Font("Segoe UI", 11F);
             especialidadesButton.ForeColor = Color.GhostWhite;
-            especialidadesButton.Location = new Point(6, 334);
+            especialidadesButton.Location = new Point(6, 369);
             especialidadesButton.Name = "especialidadesButton";
             especialidadesButton.Size = new Size(249, 29);
             especialidadesButton.TabIndex = 5;
@@ -131,7 +147,7 @@
             cursosButton.FlatStyle = FlatStyle.Flat;
             cursosButton.Font = new Font("Segoe UI", 11F);
             cursosButton.ForeColor = Color.GhostWhite;
-            cursosButton.Location = new Point(3, 299);
+            cursosButton.Location = new Point(3, 334);
             cursosButton.Name = "cursosButton";
             cursosButton.Size = new Size(252, 29);
             cursosButton.TabIndex = 4;
@@ -144,7 +160,7 @@
             materiasButton.FlatStyle = FlatStyle.Flat;
             materiasButton.Font = new Font("Segoe UI", 11F);
             materiasButton.ForeColor = Color.GhostWhite;
-            materiasButton.Location = new Point(6, 264);
+            materiasButton.Location = new Point(6, 299);
             materiasButton.Name = "materiasButton";
             materiasButton.Size = new Size(249, 29);
             materiasButton.TabIndex = 3;
@@ -157,7 +173,7 @@
             comisionesButton.FlatStyle = FlatStyle.Flat;
             comisionesButton.Font = new Font("Segoe UI", 11F);
             comisionesButton.ForeColor = Color.GhostWhite;
-            comisionesButton.Location = new Point(3, 229);
+            comisionesButton.Location = new Point(3, 264);
             comisionesButton.Name = "comisionesButton";
             comisionesButton.Size = new Size(252, 29);
             comisionesButton.TabIndex = 2;
@@ -165,18 +181,19 @@
             comisionesButton.UseVisualStyleBackColor = true;
             comisionesButton.Click += comisionesButton_Click;
             // 
-            // personasButton
+            // alumnosBtn
             // 
-            personasButton.FlatAppearance.BorderSize = 0;
-            personasButton.FlatStyle = FlatStyle.Flat;
-            personasButton.Font = new Font("Segoe UI", 11F);
-            personasButton.ForeColor = Color.GhostWhite;
-            personasButton.Location = new Point(3, 194);
-            personasButton.Name = "personasButton";
-            personasButton.Size = new Size(252, 29);
-            personasButton.TabIndex = 1;
-            personasButton.Text = "Personas";
-            personasButton.UseVisualStyleBackColor = true;
+            alumnosBtn.FlatAppearance.BorderSize = 0;
+            alumnosBtn.FlatStyle = FlatStyle.Flat;
+            alumnosBtn.Font = new Font("Segoe UI", 11F);
+            alumnosBtn.ForeColor = Color.GhostWhite;
+            alumnosBtn.Location = new Point(3, 194);
+            alumnosBtn.Name = "alumnosBtn";
+            alumnosBtn.Size = new Size(252, 29);
+            alumnosBtn.TabIndex = 1;
+            alumnosBtn.Text = "Alumnos";
+            alumnosBtn.UseVisualStyleBackColor = true;
+            alumnosBtn.Click += alumnosBtn_Click;
             // 
             // inscripcionesButton
             // 
@@ -212,11 +229,12 @@
         private Button cursosButton;
         private Button materiasButton;
         private Button comisionesButton;
-        private Button personasButton;
+        private Button alumnosBtn;
         private Button docentesCursosButton;
         private Button planesButton;
         private Button especialidadesButton;
         private PictureBox pictureBox1;
         private Button cerrarSesionButton;
+        private Button profesoresBtn;
     }
 }
