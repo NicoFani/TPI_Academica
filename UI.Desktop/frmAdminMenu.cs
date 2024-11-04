@@ -37,5 +37,20 @@ namespace UI.Desktop {
             _loginForm.Show();
             this.Hide();
         }
+
+        private void profesoresBtn_Click(object sender, EventArgs e) {
+            personasList profesoresList = new personasList("Profesor");
+            profesoresList.ShowDialog();
+        }
+
+        private void alumnosBtn_Click(object sender, EventArgs e) {
+            personasList alumnosList = new personasList("Alumno");
+            alumnosList.ShowDialog();
+        }
+
+        private void materiasButton_Click(object sender, EventArgs e) {
+            materiasList materiasList = new materiasList();
+            materiasList.ShowDialog();
+        }
     }
 }

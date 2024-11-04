@@ -12,7 +12,8 @@ namespace UI.Desktop
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            Application.Run(new cursosList());
+            Application.Run(new frmLogin());
+
         }
     }
 }
