@@ -13,6 +13,7 @@ namespace UI.Desktop
             ApplicationConfiguration.Initialize();
 
             Application.Run(new frmLogin());
+
         }
     }
 }
