@@ -11,13 +11,7 @@ namespace UI.Desktop.Clients
 {
     public class PlanApiClient
     {
-        private static HttpClient client = new HttpClient();
-        static PlanApiClient()
-        {
-            client.BaseAddress = new Uri("https://localhost:7039");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
+        private static HttpClient client = ConnectionApiClient.Instance.Client;
 
         public static async Task<IEnumerable<Plane>> GetPlansAsync()
         {
