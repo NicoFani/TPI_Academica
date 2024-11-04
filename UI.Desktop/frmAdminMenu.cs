@@ -17,14 +17,23 @@ namespace UI.Desktop
             InitializeComponent();
         }
 
-        private void altasToolStripMenuItem_Click(object sender, EventArgs e)
+        private void especialidadesButton_Click(object sender, EventArgs e)
         {
-
+            specialityList specialityList = new specialityList();
+            specialityList.ShowDialog();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void planesButton_Click(object sender, EventArgs e)
         {
-
+            plansList plansList = new plansList();
+            plansList.ShowDialog();
         }
+
+        private void comisionesButton_Click(object sender, EventArgs e)
+        {
+            comissionsList comissionsList = new comissionsList();
+            comissionsList.ShowDialog();
+        }
+
     }
 }

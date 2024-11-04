@@ -56,16 +56,16 @@ namespace Web_API.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdatePlan(int id, [FromBody] Plane plan)
         {
-            try
+            if (id == plan.IdPlan)
             {
                 _planService.UpdatePlan(plan.IdPlan, plan.DescPlan, plan.IdEspecialidad);
                 return Ok("Plan updated");
-            }
-            catch (System.Exception e)
+            } else
             {
-                return BadRequest(e.Message);
-            }
+                return BadRequest();
+            }                
         }
+
         [HttpDelete("{id}")]
         public ActionResult DeletePlan(int id)
         {

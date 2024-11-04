@@ -83,7 +83,7 @@
             Controls.Add(deleteButton);
             Controls.Add(dataGridView1);
             Name = "plansList";
-            Text = "plansList";
+            Text = "Lista de planes";
             Load += plans_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
