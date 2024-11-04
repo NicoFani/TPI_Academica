@@ -93,6 +93,7 @@
             MainMenuStrip = menuStrip1;
             Name = "frmMain";
             Text = "Form1";
+            //Load += this.frmMain_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

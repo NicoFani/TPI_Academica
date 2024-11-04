@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
 using Datos;
 using Datos.Models;
@@ -12,12 +6,13 @@ using Datos.Models;
 
 namespace Servicios
 {
-    public class EspecialidadeService: Connection
+    public class EspecialidadesService(string connectionString)
     {
         public int AddSpeciality(string specialityDescription)
         {
             int idSpeciality = 0;
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -35,7 +30,8 @@ namespace Servicios
         }
         public void UpdateSpeciality(int idSpeciality, string specialityDescription)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -43,8 +39,7 @@ namespace Servicios
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    // VER
-                    comm.CommandText = "VER";
+                    comm.CommandText = "UPDATE Especialidades SET desc_especialidad = @SpecialityDescription WHERE id_especialidad = @IdSpeciality";
 
                     comm.Parameters.AddWithValue("@IdSpeciality", idSpeciality);
                     comm.Parameters.AddWithValue("@SpecialityDescription", specialityDescription);
@@ -54,7 +49,8 @@ namespace Servicios
         }
         public void DeleteSpeciality(int idSpeciality)
         {
-            SqlConnection conn = Connect();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -71,8 +67,9 @@ namespace Servicios
         }
         public List<Especialidade> GetAllEspecialidade()
         {
-            List<Especialidade> Especialidade = new List<Especialidade>();
-            SqlConnection conn = Connect();
+            List<Especialidade> especialidades = new List<Especialidade>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
             using (conn)
             {
                 SqlCommand comm = new SqlCommand();
@@ -86,11 +83,31 @@ namespace Servicios
                     while (dr.Read())
                     {
                         Especialidade speciality = new Especialidade { IdEspecialidad = (int)dr["id_especialidad"], DescEspecialidad = dr["desc_especialidad"].ToString() };
-                        Especialidade.Add(speciality);
+                        especialidades.Add(speciality);
                     }
-                    return Especialidade;
+                    return especialidades;
                 }
             }
-        }   
+        }
+        public Especialidade? GetSpecialityById(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            using (conn) {
+                SqlCommand comm = new SqlCommand();
+                using (comm) {
+                    comm.Connection = conn;
+                    comm.CommandType = CommandType.Text;
+                    comm.CommandText = "SELECT * FROM especialidades WHERE id_especialidad = @IdSpeciality";
+                    comm.Parameters.AddWithValue("@IdSpeciality", id);
+                    SqlDataReader dr = comm.ExecuteReader();
+                    while (dr.Read()) {
+                        Especialidade speciality = new Especialidade { IdEspecialidad = (int)dr["id_especialidad"], DescEspecialidad = dr["desc_especialidad"].ToString() };
+                        return speciality;
+                    }
+                    return null;
+                }
+            }
+        }
     }
 }

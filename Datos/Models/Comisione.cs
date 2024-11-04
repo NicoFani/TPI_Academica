@@ -13,7 +13,8 @@ public partial class Comisione
 
     public int IdPlan { get; set; }
 
-    public virtual ICollection<Curso> Cursos { get; set; } = new List<Curso>();
+    public virtual ICollection<Curso>? Cursos { get; set; } = new List<Curso>();
 
     public virtual Plane? IdPlanNavigation { get; set; }
+
 }
