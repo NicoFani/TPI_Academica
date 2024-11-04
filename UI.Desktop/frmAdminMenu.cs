@@ -47,5 +47,10 @@ namespace UI.Desktop {
             personasList alumnosList = new personasList("Alumno");
             alumnosList.ShowDialog();
         }
+
+        private void materiasButton_Click(object sender, EventArgs e) {
+            materiasList materiasList = new materiasList();
+            materiasList.ShowDialog();
+        }
     }
 }
