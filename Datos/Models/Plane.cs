@@ -13,7 +13,7 @@ public partial class Plane
 
     public virtual ICollection<Comisione> Comisiones { get; set; } = new List<Comisione>();
 
-    public virtual Especialidade? IdEspecialidadNavigation { get; set; } = null!;
+    public virtual Especialidade? IdEspecialidadNavigation { get; set; }
 
     public virtual ICollection<Materia> Materia { get; set; } = new List<Materia>();
 

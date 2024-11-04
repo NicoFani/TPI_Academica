@@ -17,5 +17,5 @@ public partial class Materia
 
     public virtual ICollection<Curso> Cursos { get; set; } = new List<Curso>();
 
-    public virtual Plane IdPlanNavigation { get; set; } = null!;
+    public virtual Plane? IdPlanNavigation { get; set; }
 }
