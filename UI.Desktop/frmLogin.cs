@@ -2,8 +2,11 @@ using UI.Desktop.Clients;
 
 namespace UI.Desktop {
     public partial class frmLogin : Form {
+        private frmAdminMenu _adminMenu;
         public frmLogin() {
             InitializeComponent();
+            _adminMenu = new frmAdminMenu(this);
+            _adminMenu.FormClosed += (s, args) => this.Close();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) {
@@ -38,15 +41,7 @@ namespace UI.Desktop {
 
         }
 
-        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e) {
-            frmRegister formRegistro = new frmRegister();
-            frmLogin formLogin = new frmLogin();
-            formLogin.Close();
-            formRegistro.Show();
-        }
-
-        private async void signInBtn_Click(object sender, EventArgs e)
-        {
+        private async void signInBtn_Click(object sender, EventArgs e) {
             string username = usuarioInput.Text;
             string password = claveInput.Text;
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -57,16 +52,14 @@ namespace UI.Desktop {
             else
             {
                 bool success = await PersonasApiClient.SignIn(username, password);
-                if (success)
-                {
-                    frmMain formMain = new frmMain();
-                    formMain.FormClosed += (s, args) => this.Close();
-                    formMain.Show();
+
+                if (success) {
+                    _adminMenu.Show();
                     this.Hide();
                 }
                 else
                 {
-                    MessageBox.Show("Asegurese de haber introducido bien su nombre de usuario y contraseÒa, adem·s debe ser administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Asegurese de haber introducido bien su nombre de usuario y contrase√±a, adem√°s debe ser administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
