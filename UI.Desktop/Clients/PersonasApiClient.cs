@@ -6,23 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Servicios.Utils;
 
-namespace UI.Desktop.Clients {
-    public class PersonasApiClient {
+namespace UI.Desktop.Clients
+{
+    public class PersonasApiClient
+    {
         private static HttpClient _client = ConnectionApiClient.Instance.Client;
 
-        public static async Task<bool> SignIn(string user, string password) {
+        public static async Task<bool> SignIn(string user, string password)
+        {
             var response = await _client.PostAsync($"personas/signIn?nombreUsuario={user}&clave={password}", null);
-            if (response.IsSuccessStatusCode) {
+            if (response.IsSuccessStatusCode)
+            {
                 string token = await response.Content.ReadAsStringAsync();
                 token = token.Replace("\"", "");
                 var decoToken = JWTService.DecodeToken(token);
-                if (decoToken["valid"] == "true" && decoToken["TipoPersona"] == "Admin") {
+                if (decoToken["valid"] == "true" && decoToken["TipoPersona"] == "Admin")
+                {
                     ConnectionApiClient.Instance.SetBearerToken(token);
                     return true;
-                } else {
+                }
+                else
+                {
                     return false;
                 }
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }

@@ -32,11 +32,12 @@ namespace Web_API.Controllers
         [HttpPost(Name = "Add Materia")]
         public ActionResult AddMateria(Materia materia)
         {
+            Console.WriteLine(materia);
             _materiasService.AddMateria(materia);
             return CreatedAtRoute("Get Materia", new { id = materia.IdMateria }, materia);
         }
 
-        [HttpPut(Name = "Update Materia")]
+        [HttpPut("{id}", Name = "Update Materia")]
         public IActionResult UpdateMateria(int id, Materia materia)
         {
             if (id != materia.IdMateria)
