@@ -46,16 +46,16 @@ namespace Web_API.Controllers
             return CreatedAtRoute("Get Curso", new { id = curso.IdCurso }, curso);
         }
 
-        [HttpPut(Name = "Update Curso")]
-        public IActionResult UpdateCurso(int id, Curso curs)
+        [HttpPut("{id}", Name = "Update Curso")]
+        public IActionResult UpdateCurso(int id, Curso curso)
         {
-            if (id != curs.IdCurso)
+            if (id != curso.IdCurso)
             {
                 return BadRequest();
             }
             else
             {
-                bool success = _cursosService.UpdateCurso(curs);
+                bool success = _cursosService.UpdateCurso(curso);
                 return success ? NoContent() : NotFound();
             }
         }
