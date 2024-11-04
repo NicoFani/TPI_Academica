@@ -7,33 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Desktop.Clients;
 
-namespace UI.Desktop
-{
-    public partial class frmAdminMenu : Form
-    {
-        public frmAdminMenu()
-        {
+namespace UI.Desktop {
+    public partial class frmAdminMenu : Form {
+        private frmLogin _loginForm;
+        public frmAdminMenu(frmLogin loginForm) {
+            _loginForm = loginForm;
             InitializeComponent();
         }
 
-        private void especialidadesButton_Click(object sender, EventArgs e)
-        {
+        private void especialidadesButton_Click(object sender, EventArgs e) {
             specialityList specialityList = new specialityList();
             specialityList.ShowDialog();
         }
 
-        private void planesButton_Click(object sender, EventArgs e)
-        {
+        private void planesButton_Click(object sender, EventArgs e) {
             plansList plansList = new plansList();
             plansList.ShowDialog();
         }
 
-        private void comisionesButton_Click(object sender, EventArgs e)
-        {
+        private void comisionesButton_Click(object sender, EventArgs e) {
             comissionsList comissionsList = new comissionsList();
             comissionsList.ShowDialog();
         }
 
+        private void cerrarSesionButton_Click(object sender, EventArgs e) {
+            ConnectionApiClient.Instance.RemoveBearerToken();
+            _loginForm.Show();
+            this.Hide();
+        }
     }
 }

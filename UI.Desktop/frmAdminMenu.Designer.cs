@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             panel1 = new Panel();
             cerrarSesionButton = new Button();
             pictureBox1 = new PictureBox();
@@ -73,6 +72,7 @@
             cerrarSesionButton.TabIndex = 8;
             cerrarSesionButton.Text = "Cerrar Sesión";
             cerrarSesionButton.UseVisualStyleBackColor = true;
+            cerrarSesionButton.Click += cerrarSesionButton_Click;
             // 
             // pictureBox1
             // 
