@@ -34,7 +34,7 @@ namespace Web_API.Controllers {
             return CreatedAtRoute("Get Persona", new { id = persona.IdPersona }, persona);
         }
 
-        [HttpPut(Name = "Update Persona")]
+        [HttpPut("{id}",Name = "Update Persona")]
         public IActionResult UpdatePersona(int id, Persona persona) {
             if (id != persona.IdPersona) {
                 return BadRequest();
