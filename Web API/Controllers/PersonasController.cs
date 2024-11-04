@@ -51,7 +51,7 @@ namespace Web_API.Controllers {
                 return NotFound();
             }
         }
-        [HttpPut("signIn", Name = "SignIn")]
+        [HttpPost("signIn", Name = "SignIn")]
         public IActionResult SignIn(string nombreUsuario, string clave) {
             var persona = _personasService.SignIn(nombreUsuario, clave);
             if (persona != null) {

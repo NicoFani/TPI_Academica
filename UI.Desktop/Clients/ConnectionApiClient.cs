@@ -28,6 +28,14 @@ namespace UI.Desktop.Clients {
             }
         }
 
+        public void SetBearerToken(string token) {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        public void RemoveBearerToken() {
+            _client.DefaultRequestHeaders.Authorization = null;
+        }
+
         public void Dispose() {
             _client.Dispose();
         }

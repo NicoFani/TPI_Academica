@@ -26,5 +26,23 @@ namespace Servicios.Utils {
             var token = tokenHandler.CreateToken(tokenDesc);
             return tokenHandler.WriteToken(token);
         }
+
+        public static IDictionary<string, string> DecodeToken(string token) {
+            var handler = new JwtSecurityTokenHandler();
+            var dictionary = new Dictionary<string, string> {
+                { "valid", "false" }
+            };
+            if (handler.CanReadToken(token)) {
+                var jwtToken = handler.ReadJwtToken(token);
+                var claims = jwtToken.Claims;
+
+                foreach (var claim in claims) {
+                    dictionary[claim.Type] = claim.Value;
+                }
+                dictionary["valid"] = "true";
+            }
+
+            return dictionary;
+        }
     }
 }
