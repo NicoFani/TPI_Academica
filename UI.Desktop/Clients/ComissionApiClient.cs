@@ -14,13 +14,8 @@ namespace UI.Desktop.Clients
 {
     public class ComissionApiClient
     {
-        private static HttpClient client = new HttpClient();
-        static ComissionApiClient()
-        {
-            client.BaseAddress = new Uri("http://localhost:5127");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
+        private static HttpClient client = ConnectionApiClient.Instance.Client;
+
         public static async Task<IEnumerable<Comisione>> GetComissionsAsync()
         {
             IEnumerable<Comisione> comissions = null;

@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             comissionDataGridView = new DataGridView();
             deleteButton = new Button();
             updateButton = new Button();
@@ -44,6 +43,7 @@
             comissionDataGridView.Name = "comissionDataGridView";
             comissionDataGridView.ReadOnly = true;
             comissionDataGridView.RowHeadersWidth = 51;
+            comissionDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             comissionDataGridView.Size = new Size(679, 245);
             comissionDataGridView.TabIndex = 0;
             // 
