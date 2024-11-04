@@ -39,18 +39,20 @@
             // 
             comissionDataGridView.AllowUserToOrderColumns = true;
             comissionDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            comissionDataGridView.Location = new Point(12, 12);
+            comissionDataGridView.Location = new Point(10, 9);
+            comissionDataGridView.Margin = new Padding(3, 2, 3, 2);
             comissionDataGridView.Name = "comissionDataGridView";
             comissionDataGridView.ReadOnly = true;
             comissionDataGridView.RowHeadersWidth = 51;
-            comissionDataGridView.Size = new Size(776, 327);
+            comissionDataGridView.Size = new Size(679, 245);
             comissionDataGridView.TabIndex = 0;
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(694, 376);
+            deleteButton.Location = new Point(607, 282);
+            deleteButton.Margin = new Padding(3, 2, 3, 2);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(94, 29);
+            deleteButton.Size = new Size(82, 22);
             deleteButton.TabIndex = 1;
             deleteButton.Text = "Eliminar";
             deleteButton.UseVisualStyleBackColor = true;
@@ -58,9 +60,10 @@
             // 
             // updateButton
             // 
-            updateButton.Location = new Point(569, 376);
+            updateButton.Location = new Point(498, 282);
+            updateButton.Margin = new Padding(3, 2, 3, 2);
             updateButton.Name = "updateButton";
-            updateButton.Size = new Size(94, 29);
+            updateButton.Size = new Size(82, 22);
             updateButton.TabIndex = 2;
             updateButton.Text = "Modificar";
             updateButton.UseVisualStyleBackColor = true;
@@ -68,9 +71,10 @@
             // 
             // addButton
             // 
-            addButton.Location = new Point(444, 376);
+            addButton.Location = new Point(388, 282);
+            addButton.Margin = new Padding(3, 2, 3, 2);
             addButton.Name = "addButton";
-            addButton.Size = new Size(94, 29);
+            addButton.Size = new Size(82, 22);
             addButton.TabIndex = 3;
             addButton.Text = "Agregar";
             addButton.UseVisualStyleBackColor = true;
@@ -78,15 +82,16 @@
             // 
             // comissionsList
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(700, 338);
             Controls.Add(addButton);
             Controls.Add(updateButton);
             Controls.Add(deleteButton);
             Controls.Add(comissionDataGridView);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "comissionsList";
-            Text = "comissionsList";
+            Text = "Lista de comisiones";
             Load += Comissions_Load;
             ((System.ComponentModel.ISupportInitialize)comissionDataGridView).EndInit();
             ResumeLayout(false);
