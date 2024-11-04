@@ -153,6 +153,7 @@
             cursosButton.TabIndex = 4;
             cursosButton.Text = "Cursos";
             cursosButton.UseVisualStyleBackColor = true;
+            cursosButton.Click += cursosButton_Click;
             // 
             // materiasButton
             // 
