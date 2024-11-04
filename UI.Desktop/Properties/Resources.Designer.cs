@@ -59,5 +59,35 @@ namespace UI.Desktop.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _271_imagen_750x480xrecortarSuperior {
+            get {
+                object obj = ResourceManager.GetObject("271_imagen_750x480xrecortarSuperior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _271_imagen_750x480xrecortarSuperior1 {
+            get {
+                object obj = ResourceManager.GetObject("271_imagen_750x480xrecortarSuperior1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logo_utn {
+            get {
+                object obj = ResourceManager.GetObject("logo_utn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

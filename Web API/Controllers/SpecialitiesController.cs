@@ -51,7 +51,7 @@ namespace Web_API.Controllers
         {
             if (id != speciality.IdEspecialidad)
             {
-                return BadRequest($"La id: {id} es distinta de la id del objeto> {speciality.IdEspecialidad}");
+                return BadRequest();
             } else
             {
                 _specialityService.UpdateSpeciality(speciality.IdEspecialidad, speciality.DescEspecialidad);

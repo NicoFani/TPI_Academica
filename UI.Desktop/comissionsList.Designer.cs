@@ -91,7 +91,7 @@
             Controls.Add(comissionDataGridView);
             Margin = new Padding(3, 2, 3, 2);
             Name = "comissionsList";
-            Text = "comissionsList";
+            Text = "Lista de comisiones";
             Load += Comissions_Load;
             ((System.ComponentModel.ISupportInitialize)comissionDataGridView).EndInit();
             ResumeLayout(false);

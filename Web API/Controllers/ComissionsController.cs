@@ -54,7 +54,7 @@ namespace Web_API.Controllers
         {
             if (id != comission.IdComision)
             {
-                return BadRequest($"La id: {id} es distinta de la id del objeto: {comission.IdComision}");
+                return BadRequest();
             } else
             {
                 _comissionService.UpdateComission(comission);

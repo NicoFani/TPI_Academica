@@ -37,6 +37,7 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(10, 9);
             dataGridView1.Margin = new Padding(3, 2, 3, 2);
@@ -91,7 +92,7 @@
             Controls.Add(dataGridView1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "specialityList";
-            Text = "specialityList";
+            Text = "Lista de especialidades";
             Load += specialities_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
