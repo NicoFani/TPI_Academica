@@ -26,18 +26,15 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             pictureBox1 = new PictureBox();
             label1 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            usuarioInput = new TextBox();
+            claveInput = new TextBox();
             label2 = new Label();
-            button1 = new Button();
-            linkLabel1 = new LinkLabel();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
+            signInBtn = new Button();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -46,9 +43,10 @@
             pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.BackgroundImageLayout = ImageLayout.Center;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(207, 155);
+            pictureBox1.Location = new Point(86, 78);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(353, 123);
+            pictureBox1.Size = new Size(309, 92);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -58,109 +56,87 @@
             // 
             label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
-            label1.Location = new Point(207, 315);
+            label1.Location = new Point(86, 198);
             label1.Name = "label1";
-            label1.Size = new Size(59, 20);
+            label1.Size = new Size(47, 15);
             label1.TabIndex = 2;
             label1.Text = "Usuario";
             label1.Click += label1_Click;
             // 
-            // textBox1
+            // usuarioInput
             // 
-            textBox1.Anchor = AnchorStyles.None;
-            textBox1.Location = new Point(207, 338);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(353, 27);
-            textBox1.TabIndex = 3;
+            usuarioInput.Anchor = AnchorStyles.None;
+            usuarioInput.Location = new Point(86, 216);
+            usuarioInput.Margin = new Padding(3, 2, 3, 2);
+            usuarioInput.Name = "usuarioInput";
+            usuarioInput.Size = new Size(309, 23);
+            usuarioInput.TabIndex = 3;
             // 
-            // textBox2
+            // claveInput
             // 
-            textBox2.Anchor = AnchorStyles.None;
-            textBox2.Location = new Point(207, 415);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(353, 27);
-            textBox2.TabIndex = 5;
+            claveInput.Anchor = AnchorStyles.None;
+            claveInput.Location = new Point(86, 273);
+            claveInput.Margin = new Padding(3, 2, 3, 2);
+            claveInput.Name = "claveInput";
+            claveInput.Size = new Size(309, 23);
+            claveInput.TabIndex = 5;
             // 
             // label2
             // 
             label2.Anchor = AnchorStyles.None;
             label2.AutoSize = true;
-            label2.Location = new Point(207, 392);
+            label2.Location = new Point(86, 256);
             label2.Name = "label2";
-            label2.Size = new Size(83, 20);
+            label2.Size = new Size(67, 15);
             label2.TabIndex = 4;
             label2.Text = "Contraseña";
             // 
-            // button1
+            // signInBtn
             // 
-            button1.Anchor = AnchorStyles.None;
-            button1.BackColor = SystemColors.MenuHighlight;
-            button1.FlatAppearance.BorderColor = Color.White;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = SystemColors.ButtonHighlight;
-            button1.Location = new Point(207, 512);
-            button1.Name = "button1";
-            button1.Size = new Size(353, 29);
-            button1.TabIndex = 6;
-            button1.Text = "Iniciar sesión";
-            button1.UseVisualStyleBackColor = false;
+            signInBtn.Anchor = AnchorStyles.None;
+            signInBtn.BackColor = SystemColors.MenuHighlight;
+            signInBtn.FlatAppearance.BorderColor = Color.White;
+            signInBtn.FlatAppearance.BorderSize = 0;
+            signInBtn.FlatStyle = FlatStyle.Flat;
+            signInBtn.ForeColor = SystemColors.ButtonHighlight;
+            signInBtn.Location = new Point(86, 346);
+            signInBtn.Margin = new Padding(3, 2, 3, 2);
+            signInBtn.Name = "signInBtn";
+            signInBtn.Size = new Size(309, 31);
+            signInBtn.TabIndex = 6;
+            signInBtn.Text = "Iniciar sesión";
+            signInBtn.UseVisualStyleBackColor = false;
+            signInBtn.Click += signInBtn_Click;
             // 
-            // linkLabel1
+            // label3
             // 
-            linkLabel1.Anchor = AnchorStyles.None;
-            linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(207, 553);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(233, 20);
-            linkLabel1.TabIndex = 9;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "¿No tienes una cuenta? Registrate";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked_1;
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(102, 20);
+            label3.Name = "label3";
+            label3.Size = new Size(275, 40);
+            label3.TabIndex = 7;
+            label3.Text = "ADMINISTRADORES";
             // 
-            // radioButton1
+            // frmLogin
             // 
-            radioButton1.Anchor = AnchorStyles.None;
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(207, 463);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(82, 24);
-            radioButton1.TabIndex = 10;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Alumno";
-            radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            radioButton2.Anchor = AnchorStyles.None;
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(295, 463);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(85, 24);
-            radioButton2.TabIndex = 11;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Profesor";
-            radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // frmMain
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(785, 674);
-            Controls.Add(radioButton2);
-            Controls.Add(radioButton1);
-            Controls.Add(linkLabel1);
-            Controls.Add(button1);
-            Controls.Add(textBox2);
+            ClientSize = new Size(496, 431);
+            Controls.Add(label3);
+            Controls.Add(signInBtn);
+            Controls.Add(claveInput);
             Controls.Add(label2);
-            Controls.Add(textBox1);
+            Controls.Add(usuarioInput);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
-            Name = "frmMain";
+            KeyPreview = true;
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "frmLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Academica";
-            WindowState = FormWindowState.Maximized;
             Load += frmMain_Load;
+            KeyDown += frmLogin_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -169,12 +145,10 @@
         #endregion
         private PictureBox pictureBox1;
         private Label label1;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox usuarioInput;
+        private TextBox claveInput;
         private Label label2;
-        private Button button1;
-        private LinkLabel linkLabel1;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
+        private Button signInBtn;
+        private Label label3;
     }
 }
