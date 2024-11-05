@@ -23,18 +23,37 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            logOutBtn = new Button();
             SuspendLayout();
+            // 
+            // logOutBtn
+            // 
+            logOutBtn.BackColor = Color.Black;
+            logOutBtn.FlatAppearance.BorderColor = Color.Black;
+            logOutBtn.FlatStyle = FlatStyle.Popup;
+            logOutBtn.Font = new Font("Segoe UI", 11F);
+            logOutBtn.ForeColor = Color.GhostWhite;
+            logOutBtn.Location = new Point(12, 12);
+            logOutBtn.Name = "logOutBtn";
+            logOutBtn.Size = new Size(126, 31);
+            logOutBtn.TabIndex = 0;
+            logOutBtn.Text = "Cerrar Sesión";
+            logOutBtn.UseVisualStyleBackColor = false;
+            logOutBtn.Click += cerrarSesionButton_Click;
             // 
             // CursosProfesorList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(logOutBtn);
             Name = "CursosProfesorList";
             Text = "Cursos Asignados";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Button logOutBtn;
     }
 }
