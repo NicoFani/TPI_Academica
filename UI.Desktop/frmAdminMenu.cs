@@ -14,8 +14,9 @@ using Datos.Models;
 namespace UI.Desktop {
     public partial class frmAdminMenu : Form {
         private frmLogin _loginForm;
-        private IEnumerable<Plane> _planes;
-        private IEnumerable<Especialidade> _especialidades;
+        private IEnumerable<Plane> _planes = [];
+        private IEnumerable<Especialidade> _especialidades = [];
+        private IEnumerable<Materia> _materias = [];
 
         public frmAdminMenu(frmLogin loginForm) {
             _loginForm = loginForm;
@@ -70,29 +71,38 @@ namespace UI.Desktop {
         private async void GetAll() {
             _planes = await PlanApiClient.GetPlansAsync();
             _especialidades = await SpecialityApiClient.GetSpecialitiesAsync();
-
+            _materias = await MateriasApiClient.GetMateriasByYearAsync("2022");
+            yearInput.Text = "2022";
             LoadPlanesGraph();
+            LoadMateriasGraph();
         }
 
-        private void LoadPlanesGraph() {
-            planesGraph.Series.Clear();
-            planesGraph.Titles.Clear();
-            Title title = planesGraph.Titles.Add("Cantidad de alumnos por plan");
+        private void SetGraphProperties(Chart chart, string titleGeneral, string titleX, string titleY) {
+            chart.Series.Clear();
+            chart.Titles.Clear();
+            Title title = chart.Titles.Add(titleGeneral);
             title.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             title.ForeColor = Color.Black;
 
-            ChartArea chartArea = planesGraph.ChartAreas[0];
+            chart.Legends["Legend1"].Font = new Font("Segoe UI", 8, FontStyle.Bold);
+            chart.Legends["Legend1"].ForeColor = Color.DarkSlateGray;
+
+            ChartArea chartArea = chart.ChartAreas[0];
             chartArea.BackColor = Color.WhiteSmoke;
 
-            chartArea.AxisX.Title = "Planes";
+            chartArea.AxisX.Title = titleX;
             chartArea.AxisX.LabelStyle.Enabled = false;
-            chartArea.AxisX.TitleFont = new Font("Segoe UI", 10, FontStyle.Bold);
-            chartArea.AxisX.MajorGrid.LineColor = Color.LightGray;
+            chartArea.AxisX.TitleFont = new Font("Segoe UI", 8, FontStyle.Bold);
+            chartArea.AxisX.MajorGrid.LineColor = Color.DarkSlateGray;
 
-            chartArea.AxisY.Title = "Cantidad de alumnos";
-            chartArea.AxisY.TitleFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            chartArea.AxisY.Title = titleY;
+            chartArea.AxisY.TitleFont = new Font("Segoe UI", 8, FontStyle.Bold);
             chartArea.AxisY.LabelStyle.Interval = 1;
-            chartArea.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartArea.AxisY.MajorGrid.LineColor = Color.DarkSlateGray;
+        }
+
+        private void LoadPlanesGraph() {
+            SetGraphProperties(planesGraph, "Cantidad de alumnos por plan", "Planes", "Cantidad de alumnos");
 
             foreach (var plan in _planes) {
                 string especialidad = _especialidades.FirstOrDefault(e => e.IdEspecialidad == plan.IdEspecialidad)?.DescEspecialidad!;
@@ -103,9 +113,31 @@ namespace UI.Desktop {
                 serie.Label = plan.CantidadAlumnos.ToString();
                 serie.Font = new Font("Segoe UI", 8, FontStyle.Bold);
             }
+        }
+        private void LoadMateriasGraph() {
+            SetGraphProperties(materiasGraph, "Cantidad de alumnos por materia en un determinado año", "Materias", "Cantidad de alumnos");
 
-            planesGraph.Legends["Legend1"].Font = new Font("Segoe UI", 8, FontStyle.Bold);
-            planesGraph.Legends["Legend1"].ForeColor = Color.DarkSlateGray;
+            foreach (var materia in _materias) {
+                Plane plan = _planes.FirstOrDefault(p => p.IdPlan == materia.IdPlan)!;
+                string descEspecialidad = _especialidades.FirstOrDefault(e => e.IdEspecialidad == plan.IdEspecialidad)!.DescEspecialidad!;
+
+                Series serie = materiasGraph.Series.Add($"{materia.DescMateria} - {descEspecialidad} {plan.DescPlan}");
+                serie.ChartType = SeriesChartType.Column;
+                serie.Points.Add(materia.CantidadAlumnos!.Value);
+                serie["PointWidth"] = "0.6";
+                serie.Label = materia.CantidadAlumnos.ToString();
+                serie.Font = new Font("Segoe UI", 8, FontStyle.Bold);
+            }
+        }
+
+        private async void LoadMaterias() {
+            string year = yearInput.Text;
+            _materias = await MateriasApiClient.GetMateriasByYearAsync(year);
+            LoadMateriasGraph();
+        }
+
+        private void reloadBtn_Click(object sender, EventArgs e) {
+            LoadMaterias();
         }
     }
 }
