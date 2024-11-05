@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Datos.Models;
 
@@ -18,4 +19,8 @@ public partial class Materia
     public virtual ICollection<Curso> Cursos { get; set; } = new List<Curso>();
 
     public virtual Plane? IdPlanNavigation { get; set; }
+
+    // para getAll by year, se usa en reportes
+    [NotMapped]
+    public int? CantidadAlumnos { get; set; }
 }

@@ -27,6 +27,10 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             panel1 = new Panel();
             profesoresBtn = new Button();
             cerrarSesionButton = new Button();
@@ -39,8 +43,15 @@
             comisionesButton = new Button();
             alumnosBtn = new Button();
             inscripcionesButton = new Button();
+            planesGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            materiasGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            label1 = new Label();
+            yearInput = new TextBox();
+            reloadBtn = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)planesGraph).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)materiasGraph).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -59,7 +70,7 @@
             panel1.Controls.Add(inscripcionesButton);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(258, 582);
+            panel1.Size = new Size(244, 768);
             panel1.TabIndex = 0;
             // 
             // profesoresBtn
@@ -68,9 +79,9 @@
             profesoresBtn.FlatStyle = FlatStyle.Flat;
             profesoresBtn.Font = new Font("Segoe UI", 11F);
             profesoresBtn.ForeColor = Color.GhostWhite;
-            profesoresBtn.Location = new Point(3, 229);
+            profesoresBtn.Location = new Point(3, 234);
             profesoresBtn.Name = "profesoresBtn";
-            profesoresBtn.Size = new Size(252, 29);
+            profesoresBtn.Size = new Size(238, 29);
             profesoresBtn.TabIndex = 9;
             profesoresBtn.Text = "Profesores";
             profesoresBtn.UseVisualStyleBackColor = true;
@@ -82,9 +93,9 @@
             cerrarSesionButton.FlatStyle = FlatStyle.Flat;
             cerrarSesionButton.Font = new Font("Segoe UI", 11F);
             cerrarSesionButton.ForeColor = Color.GhostWhite;
-            cerrarSesionButton.Location = new Point(3, 540);
+            cerrarSesionButton.Location = new Point(3, 574);
             cerrarSesionButton.Name = "cerrarSesionButton";
-            cerrarSesionButton.Size = new Size(252, 29);
+            cerrarSesionButton.Size = new Size(241, 29);
             cerrarSesionButton.TabIndex = 8;
             cerrarSesionButton.Text = "Cerrar Sesión";
             cerrarSesionButton.UseVisualStyleBackColor = true;
@@ -93,7 +104,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources._271_imagen_750x480xrecortarSuperior1;
-            pictureBox1.Location = new Point(12, 25);
+            pictureBox1.Location = new Point(6, 25);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(230, 89);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -106,7 +117,7 @@
             docentesCursosButton.FlatStyle = FlatStyle.Flat;
             docentesCursosButton.Font = new Font("Segoe UI", 11F);
             docentesCursosButton.ForeColor = Color.GhostWhite;
-            docentesCursosButton.Location = new Point(3, 404);
+            docentesCursosButton.Location = new Point(3, 409);
             docentesCursosButton.Name = "docentesCursosButton";
             docentesCursosButton.Size = new Size(252, 29);
             docentesCursosButton.TabIndex = 7;
@@ -119,7 +130,7 @@
             planesButton.FlatStyle = FlatStyle.Flat;
             planesButton.Font = new Font("Segoe UI", 11F);
             planesButton.ForeColor = Color.GhostWhite;
-            planesButton.Location = new Point(3, 439);
+            planesButton.Location = new Point(3, 444);
             planesButton.Name = "planesButton";
             planesButton.Size = new Size(252, 29);
             planesButton.TabIndex = 6;
@@ -133,7 +144,7 @@
             especialidadesButton.FlatStyle = FlatStyle.Flat;
             especialidadesButton.Font = new Font("Segoe UI", 11F);
             especialidadesButton.ForeColor = Color.GhostWhite;
-            especialidadesButton.Location = new Point(6, 369);
+            especialidadesButton.Location = new Point(6, 374);
             especialidadesButton.Name = "especialidadesButton";
             especialidadesButton.Size = new Size(249, 29);
             especialidadesButton.TabIndex = 5;
@@ -147,7 +158,7 @@
             cursosButton.FlatStyle = FlatStyle.Flat;
             cursosButton.Font = new Font("Segoe UI", 11F);
             cursosButton.ForeColor = Color.GhostWhite;
-            cursosButton.Location = new Point(3, 334);
+            cursosButton.Location = new Point(3, 339);
             cursosButton.Name = "cursosButton";
             cursosButton.Size = new Size(252, 29);
             cursosButton.TabIndex = 4;
@@ -161,9 +172,9 @@
             materiasButton.FlatStyle = FlatStyle.Flat;
             materiasButton.Font = new Font("Segoe UI", 11F);
             materiasButton.ForeColor = Color.GhostWhite;
-            materiasButton.Location = new Point(6, 299);
+            materiasButton.Location = new Point(6, 304);
             materiasButton.Name = "materiasButton";
-            materiasButton.Size = new Size(249, 29);
+            materiasButton.Size = new Size(238, 29);
             materiasButton.TabIndex = 3;
             materiasButton.Text = "Materias";
             materiasButton.UseVisualStyleBackColor = true;
@@ -175,9 +186,9 @@
             comisionesButton.FlatStyle = FlatStyle.Flat;
             comisionesButton.Font = new Font("Segoe UI", 11F);
             comisionesButton.ForeColor = Color.GhostWhite;
-            comisionesButton.Location = new Point(3, 264);
+            comisionesButton.Location = new Point(3, 269);
             comisionesButton.Name = "comisionesButton";
-            comisionesButton.Size = new Size(252, 29);
+            comisionesButton.Size = new Size(238, 29);
             comisionesButton.TabIndex = 2;
             comisionesButton.Text = "Comisiones";
             comisionesButton.UseVisualStyleBackColor = true;
@@ -189,9 +200,9 @@
             alumnosBtn.FlatStyle = FlatStyle.Flat;
             alumnosBtn.Font = new Font("Segoe UI", 11F);
             alumnosBtn.ForeColor = Color.GhostWhite;
-            alumnosBtn.Location = new Point(3, 194);
+            alumnosBtn.Location = new Point(3, 199);
             alumnosBtn.Name = "alumnosBtn";
-            alumnosBtn.Size = new Size(252, 29);
+            alumnosBtn.Size = new Size(238, 29);
             alumnosBtn.TabIndex = 1;
             alumnosBtn.Text = "Alumnos";
             alumnosBtn.UseVisualStyleBackColor = true;
@@ -203,25 +214,95 @@
             inscripcionesButton.FlatStyle = FlatStyle.Flat;
             inscripcionesButton.Font = new Font("Segoe UI", 11F);
             inscripcionesButton.ForeColor = Color.GhostWhite;
-            inscripcionesButton.Location = new Point(3, 159);
+            inscripcionesButton.Location = new Point(3, 164);
             inscripcionesButton.Name = "inscripcionesButton";
-            inscripcionesButton.Size = new Size(252, 29);
+            inscripcionesButton.Size = new Size(238, 29);
             inscripcionesButton.TabIndex = 0;
             inscripcionesButton.Text = "Inscripciones";
             inscripcionesButton.UseVisualStyleBackColor = true;
+            // 
+            // planesGraph
+            // 
+            chartArea1.Name = "ChartArea1";
+            planesGraph.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            planesGraph.Legends.Add(legend1);
+            planesGraph.Location = new Point(264, 12);
+            planesGraph.Name = "planesGraph";
+            planesGraph.Size = new Size(988, 265);
+            planesGraph.TabIndex = 1;
+            planesGraph.Text = "planes";
+            // 
+            // materiasGraph
+            // 
+            chartArea2.Name = "ChartArea1";
+            materiasGraph.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            materiasGraph.Legends.Add(legend2);
+            materiasGraph.Location = new Point(264, 338);
+            materiasGraph.Name = "materiasGraph";
+            materiasGraph.Size = new Size(988, 265);
+            materiasGraph.TabIndex = 2;
+            materiasGraph.Text = "materias";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 11F);
+            label1.ForeColor = Color.GhostWhite;
+            label1.Location = new Point(1037, 308);
+            label1.Name = "label1";
+            label1.Size = new Size(36, 20);
+            label1.TabIndex = 3;
+            label1.Text = "Año";
+            // 
+            // yearInput
+            // 
+            yearInput.Font = new Font("Segoe UI", 11F);
+            yearInput.Location = new Point(1079, 305);
+            yearInput.Name = "yearInput";
+            yearInput.PlaceholderText = "2022";
+            yearInput.Size = new Size(85, 27);
+            yearInput.TabIndex = 4;
+            yearInput.TextAlign = HorizontalAlignment.Right;
+            // 
+            // reloadBtn
+            // 
+            reloadBtn.BackColor = Color.GhostWhite;
+            reloadBtn.FlatAppearance.BorderSize = 0;
+            reloadBtn.FlatStyle = FlatStyle.Flat;
+            reloadBtn.Font = new Font("Segoe UI", 11F);
+            reloadBtn.ForeColor = Color.Black;
+            reloadBtn.Location = new Point(1175, 304);
+            reloadBtn.Name = "reloadBtn";
+            reloadBtn.Size = new Size(77, 29);
+            reloadBtn.TabIndex = 10;
+            reloadBtn.Text = "Aceptar";
+            reloadBtn.UseVisualStyleBackColor = false;
+            reloadBtn.Click += reloadBtn_Click;
             // 
             // frmAdminMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MidnightBlue;
-            ClientSize = new Size(1096, 581);
+            ClientSize = new Size(1264, 615);
+            Controls.Add(reloadBtn);
+            Controls.Add(yearInput);
+            Controls.Add(label1);
+            Controls.Add(materiasGraph);
+            Controls.Add(planesGraph);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "frmAdminMenu";
             Text = "Menu";
+            Load += frmAdminMenu_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)planesGraph).EndInit();
+            ((System.ComponentModel.ISupportInitialize)materiasGraph).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -238,5 +319,10 @@
         private PictureBox pictureBox1;
         private Button cerrarSesionButton;
         private Button profesoresBtn;
+        private System.Windows.Forms.DataVisualization.Charting.Chart planesGraph;
+        private System.Windows.Forms.DataVisualization.Charting.Chart materiasGraph;
+        private Label label1;
+        private TextBox yearInput;
+        private Button reloadBtn;
     }
 }
