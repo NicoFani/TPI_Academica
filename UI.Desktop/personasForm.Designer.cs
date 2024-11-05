@@ -123,6 +123,7 @@
             contraseñaInput.Location = new Point(15, 281);
             contraseñaInput.Margin = new Padding(3, 2, 3, 2);
             contraseñaInput.Name = "contraseñaInput";
+            contraseñaInput.PasswordChar = '*';
             contraseñaInput.Size = new Size(307, 23);
             contraseñaInput.TabIndex = 4;
             // 

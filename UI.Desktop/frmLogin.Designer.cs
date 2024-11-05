@@ -78,6 +78,7 @@
             claveInput.Location = new Point(86, 273);
             claveInput.Margin = new Padding(3, 2, 3, 2);
             claveInput.Name = "claveInput";
+            claveInput.PasswordChar = '*';
             claveInput.Size = new Size(309, 23);
             claveInput.TabIndex = 5;
             // 
