@@ -23,6 +23,23 @@ namespace Servicios
             return context.Materias.ToList();
         }
 
+        public IEnumerable<Materia> GetMateriasByYear(int year) {
+            var query = from insc in context.AlumnosInscripciones
+                        join cur in context.Cursos on insc.IdCurso equals cur.IdCurso
+                        join mat in context.Materias on cur.IdMateria equals mat.IdMateria
+                        where cur.AnioCalendario == year
+                        group insc by new {mat.IdMateria, mat.DescMateria, mat.HsSemanales, mat.HsTotales, mat.IdPlan} into g
+                        select new Materia {
+                            IdMateria = g.Key.IdMateria,
+                            DescMateria = g.Key.DescMateria,
+                            HsSemanales = g.Key.HsSemanales,
+                            HsTotales = g.Key.HsTotales,
+                            IdPlan = g.Key.IdPlan,
+                            CantidadAlumnos = g.Count()
+                        };
+            return query.ToList();
+        }
+
         public Materia? GetMateria(int id)
         {
             return context.Materias.Find(id);

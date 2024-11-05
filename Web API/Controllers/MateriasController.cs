@@ -23,6 +23,10 @@ namespace Web_API.Controllers
         {
             return Ok(_materiasService.GetMaterias());
         }
+        [HttpGet("year/{year}", Name = "Get Materias by Year")]
+        public IActionResult MateriasByYear(int year) {
+            return Ok(_materiasService.GetMateriasByYear(year));
+        }
         [HttpGet("{id}", Name = "Get Materia")]
         public IActionResult GetMateria(int id)
         {
