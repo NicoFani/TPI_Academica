@@ -42,9 +42,9 @@ namespace UI.Desktop.Clients {
             return personas;
         }
 
-        public static async Task<Persona?> GetPersonaAsync(int id) {
+        public static async Task<Persona?> GetPersonaAsync(int id, bool? inscripcion = null, bool? docente = null) {
             Persona? persona = null;
-            HttpResponseMessage response = await _client.GetAsync($"personas/{id}");
+            HttpResponseMessage response = await _client.GetAsync($"personas/{id}?inscripcion={inscripcion}&docente={docente}");
 
             if (response.IsSuccessStatusCode) {
                 persona = await response.Content.ReadFromJsonAsync<Persona>();

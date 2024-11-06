@@ -57,6 +57,7 @@ namespace UI.Desktop {
                     _adminMenu.Show();
                     this.Hide();
                 } else if (result["valid"] == "true" && result["TipoPersona"] == "Profesor") {
+                    _profesor.SetIDProfesor(int.Parse(result["IdPersona"]));
                     _profesor.Show();
                     this.Hide();
                 } else {
