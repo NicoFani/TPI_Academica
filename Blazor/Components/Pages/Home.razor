@@ -7,21 +7,22 @@
 @if (result != null)
 {
     <ul>
-        @foreach (clientSwagger.Especialidade speciality in result)
+        @foreach (clientSwagger.AlumnosInscripcione speciality in result)
         {
-            <li>@speciality.IdEspecialidad - @speciality.DescEspecialidad</li>
+            <li>@speciality.IdInscripcion - @speciality.Condicion</li>
         }
     </ul>
 }
 
 @code {
-    private ICollection<clientSwagger.Especialidade> result;
+    private ICollection<clientSwagger.AlumnosInscripcione> result;
     private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
 
     private async Task Refresh()
     {
-        result = await client.SpecialitiesAllAsync();
+        result = await client.Get_All_Alumnos_InscripcionesAsync();
     }
+    
 
     protected override async Task OnInitializedAsync()
     {

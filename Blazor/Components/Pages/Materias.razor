@@ -1,0 +1,53 @@
+﻿@page "/materias"
+
+
+<h1>Materias</h1>
+
+@if (inscripciones == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Materia</th>
+                <th>Condicion</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (clientSwagger.AlumnosInscripcione inscripcion in inscripciones)
+            {
+                <tr>
+                    <td>@inscripcion.IdInscripcion</td>
+                    <td>Simulación</td>
+                    <td>@inscripcion.Condicion</td>
+                    <td>@inscripcion.Nota</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
+    private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulación de carga de datos
+        await Task.Delay(1000);
+        inscripciones = await client.Get_All_Alumnos_InscripcionesAsync();
+    }
+}
+
+
+
+
+
+
+
+

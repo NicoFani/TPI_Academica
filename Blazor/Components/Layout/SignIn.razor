@@ -1,0 +1,29 @@
+﻿@page "/login"
+
+<PageTitle>Login</PageTitle>
+
+<!-- Link para estilos css -->
+<link href="wwwroot/app.css" rel="stylesheet" />
+
+<div class="login-container">
+    <h3>Academica</h3>
+    <form>
+        <div class="form-group">
+            <label for="username">Usuario</label>
+            <input id="username" type="text" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn-login">Iniciar sesión</button>
+    </form>
+</div>
+
+
+
+@code {
+
+}
