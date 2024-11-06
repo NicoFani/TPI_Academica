@@ -31,7 +31,7 @@ namespace Servicios {
             }
             if (docente == true) {
                 persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.AlumnosInscripciones).ThenInclude(insc => insc.IdAlumnoNavigation);
-                persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.IdMateriaNavigation);
+                persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation);
                 persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.IdComisionNavigation);
             }
             return persona.FirstOrDefault(p => p.IdPersona == id);
