@@ -1,0 +1,104 @@
+﻿@page "/alta-materia"
+@attribute [StreamRendering]
+
+<PageTitle>Alta Materia</PageTitle>
+
+@if (materias == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <label for="materiaSelect">Seleccione una materia:</label>
+    <InputSelect @bind-Value="materiaSeleccionadaId" class="form-select">
+        <option value="">-- Seleccione una materia --</option>
+        @foreach (var materia in materias)
+        {
+            <option value="@materia.IdMateria">@materia.DescMateria</option>
+        }
+    </InputSelect>
+
+    <p>Materia seleccionada: @materiaSeleccionadaId</p>
+
+    @* Hay que agregar otro select para mostrar las comisiones en las que se dicta la materia seleccionada*@
+}
+
+@code {
+    private int? comisionSeleccionadaId;
+    private string mensaje = "Hola Mundo";
+    private ICollection<clientSwagger.Materia> materias;
+    private ICollection<clientSwagger.Curso> cursosDeMateria;
+    private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
+    private int alumnoLogueadoId = 6; // ID del alumno logueado
+
+    // Propiedad para manejar la materia seleccionada
+    private int? _materiaSeleccionadaId;
+    private int? materiaSeleccionadaId
+    {
+        get => _materiaSeleccionadaId;
+        set
+        {
+            if (_materiaSeleccionadaId != value)
+            {
+                _materiaSeleccionadaId = value;
+                Console.WriteLine($"materiaSeleccionadaId cambiado a: {_materiaSeleccionadaId}"); // Agregado para depuración
+                StateHasChanged(); // Forza la actualización de la UI
+                _ = CargarCursos((int)_materiaSeleccionadaId); // Llama a CargarCursos cuando cambia la selección
+            }
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        materias = await client.Get_MateriasAsync();
+
+        if (materias == null || !materias.Any())
+        {
+            Console.WriteLine("No se han cargado materias.");
+        }
+        else
+        {
+            Console.WriteLine("Materias cargadas correctamente.");
+        }
+    }
+
+    // Método para cargar los cursos de la materia seleccionada
+    private async Task CargarCursos(int idMateria)
+    {
+        Console.WriteLine("Cargando cursos..."); // Para depuración
+        if (idMateria != null)
+        {
+            Console.WriteLine($"Cargando cursos de la materia {idMateria}..."); // Para depuración
+            cursosDeMateria = await client.Get_Cursos_By_MateriaAsync(idMateria);
+            Console.WriteLine($"Cursos cargados: {cursosDeMateria?.Count ?? 0}"); // Para depuración
+        }
+        else
+        {
+            Console.WriteLine("No se seleccionó ninguna materia");
+            cursosDeMateria = null;
+        }
+    }
+
+    // Método para inscribir al alumno
+    private async Task InscribirAlumno()
+    {
+        if (comisionSeleccionadaId.HasValue)
+        {
+            var inscripcion = new clientSwagger.AlumnosInscripcione
+                {
+                    IdAlumno = alumnoLogueadoId,
+                    IdCurso = comisionSeleccionadaId.Value,
+                    Condicion = "Inscripto",
+                    Nota = null
+                };
+
+            await client.Add_Alumno_InscripcionAsync(inscripcion);
+            Console.WriteLine("Inscripción realizada con éxito.");
+        }
+        else
+        {
+            Console.WriteLine("Seleccione una materia y una comisión para continuar.");
+        }
+    }
+}
