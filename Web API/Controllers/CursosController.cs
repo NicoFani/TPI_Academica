@@ -24,7 +24,7 @@ namespace Web_API.Controllers
             return Ok(_cursosService.GetCursos());
         }
         [HttpGet("materia/{materia}", Name = "Get Cursos By Materia")]
-        public IActionResult GetCursosByMateria(int materia)
+        public ActionResult<ICollection<Curso>> GetCursosByMateria(int materia)
         {
             return Ok(_cursosService.GetCursosByMateria(materia));
         }
