@@ -34,7 +34,6 @@
             claveInput = new TextBox();
             label2 = new Label();
             signInBtn = new Button();
-            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -109,22 +108,11 @@
             signInBtn.UseVisualStyleBackColor = false;
             signInBtn.Click += signInBtn_Click;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(102, 20);
-            label3.Name = "label3";
-            label3.Size = new Size(275, 40);
-            label3.TabIndex = 7;
-            label3.Text = "ADMINISTRADORES";
-            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(496, 431);
-            Controls.Add(label3);
             Controls.Add(signInBtn);
             Controls.Add(claveInput);
             Controls.Add(label2);
@@ -150,6 +138,5 @@
         private TextBox claveInput;
         private Label label2;
         private Button signInBtn;
-        private Label label3;
     }
 }
