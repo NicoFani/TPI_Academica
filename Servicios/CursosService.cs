@@ -20,7 +20,7 @@ namespace Servicios
 
         public IEnumerable<Curso> GetCursos()
         {
-            return context.Cursos.ToList();
+            return context.Cursos.Include(c=> c.IdMateriaNavigation).ThenInclude(m=> m!.IdPlanNavigation!.IdEspecialidadNavigation).Include(c => c.IdComisionNavigation).ToList();
         }
 
         public IEnumerable<Curso> GetCursosByMateria(int materia)
