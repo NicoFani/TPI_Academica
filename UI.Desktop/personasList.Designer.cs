@@ -33,6 +33,7 @@
             // DataGridView
             // 
             DataGridView.AllowUserToOrderColumns = true;
+            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataGridView.Location = new Point(12, 11);
             DataGridView.Margin = new Padding(3, 2, 3, 2);
