@@ -34,18 +34,15 @@ namespace UI.Desktop.Profesor {
         private async void CursosProfesorList_Load(object sender, EventArgs e) {
             _profesor = await PersonasApiClient.GetPersonaAsync(_idProfesor, false, true);
             title.Text = $"Bienvenido, {_profesor!.Nombre} {_profesor!.Apellido}";
-            List<InfoToShow> info = [];
-            foreach (var docenteCurso in _profesor.DocentesCursos) {
-                info.Add(new InfoToShow {
-                    idCurso = docenteCurso.IdCurso,
-                    Año = docenteCurso.IdCursoNavigation!.AnioCalendario.ToString(),
-                    Materia = docenteCurso.IdCursoNavigation!.IdMateriaNavigation!.DescMateria,
-                    Comision = docenteCurso.IdCursoNavigation!.IdComisionNavigation!.DescComision,
-                    Especialidad = docenteCurso.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad,
-                    Plan = docenteCurso.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.DescPlan
-                });
-            }
-            DataGridView.DataSource = info;
+
+            DataGridView.DataSource = _profesor.DocentesCursos.Select(dc => new {
+                idCurso = dc.IdCurso,
+                Año = dc.IdCursoNavigation!.AnioCalendario,
+                Materia = dc.IdCursoNavigation!.IdMateriaNavigation!.DescMateria,
+                Comision = dc.IdCursoNavigation!.IdComisionNavigation!.DescComision,
+                Especialidad = dc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad,
+                Plan = dc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.DescPlan
+            }).ToList();
             DataGridView.Columns["idCurso"].Visible = false;
         }
 
@@ -55,15 +52,6 @@ namespace UI.Desktop.Profesor {
             Curso curso = _profesor!.DocentesCursos.First(dc => dc.IdCurso == idCurso).IdCursoNavigation!;
             AlumnosList alumnosList = new AlumnosList(curso);
             alumnosList.ShowDialog();
-        }
-
-        private class InfoToShow {
-            public int idCurso { get; set; }
-            public string Año { get; set; } = null!;
-            public string Materia { get; set; } = null!;
-            public string Comision { get; set; } = null!;
-            public string Especialidad { get; set; } = null!;
-            public string Plan { get; set; } = null!;
         }
     }
 }
