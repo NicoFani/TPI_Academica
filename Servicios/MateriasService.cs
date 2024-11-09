@@ -20,7 +20,7 @@ namespace Servicios
 
         public IEnumerable<Materia> GetMaterias()
         {
-            return context.Materias.ToList();
+            return context.Materias.Include(m=> m.IdPlanNavigation).ToList();
         }
 
         public IEnumerable<Materia> GetMateriasByYear(int year) {
