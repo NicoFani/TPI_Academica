@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class comissionsList : Form
     {
+        private IEnumerable<Comisione> _comissions;
         public comissionsList()
         {
             InitializeComponent();
@@ -27,8 +28,15 @@ namespace UI.Desktop
         {
             try
             {
-                var comissions = await ComissionApiClient.GetComissionsAsync();
-                comissionDataGridView.DataSource = comissions;
+                _comissions = await ComissionApiClient.GetComissionsAsync();
+                comissionDataGridView.DataSource = _comissions.Select(c => new {
+                    idComision = c.IdComision,
+                    Descripcion = c.DescComision,
+                    Año_Especialidad = c.AnioEspecialidad,
+                    Plan = c.IdPlanNavigation?.DescPlan
+
+                }).ToList();
+                comissionDataGridView.Columns["idComision"].Visible = false;
 
                 if (comissionDataGridView.Rows.Count > 0)
                 {
@@ -96,10 +104,9 @@ namespace UI.Desktop
 
         private Comisione SelectedItem()
         {
-            Comisione comission;
-
-            comission = (Comisione)comissionDataGridView.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = comissionDataGridView.SelectedRows[0];
+            int id = (int)row.Cells["idComision"].Value;
+            Comisione comission = _comissions.First(c => c.IdComision == id);
             return comission;
         }
     }
