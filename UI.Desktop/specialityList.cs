@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class specialityList : Form
     {
+        private IEnumerable<Especialidade> _specialities;
         public specialityList()
         {
             InitializeComponent();
@@ -24,11 +25,14 @@ namespace UI.Desktop
         }
         private async void GetAllAndLoad()
         {
-            var specialities = await SpecialityApiClient.GetSpecialitiesAsync();
+            _specialities = await SpecialityApiClient.GetSpecialitiesAsync();
 
 
-            this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = specialities.ToList();
+            dataGridView1.DataSource = _specialities.Select(s => new {
+                idEspecialidad = s.IdEspecialidad,
+                Especialidad = s.DescEspecialidad
+            }).ToList();
+            dataGridView1.Columns["idEspecialidad"].Visible = false;
 
             if (this.dataGridView1.Rows.Count > 0)
             {
@@ -75,10 +79,9 @@ namespace UI.Desktop
         }
         private Especialidade SelectedItem()
         {
-            Especialidade speciality;
-
-            speciality = (Especialidade)dataGridView1.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = (int)row.Cells["idEspecialidad"].Value;
+            Especialidade speciality = _specialities.First(s => s.IdEspecialidad == id);
             return speciality;
         }
     }

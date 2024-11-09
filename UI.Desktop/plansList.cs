@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class plansList : Form
     {
+        private IEnumerable<Plane> _planes;
         public plansList()
         {
             InitializeComponent();
@@ -24,10 +25,16 @@ namespace UI.Desktop
         }
         private async void GetAllAndLoad()
         {
-            var plans = await PlanApiClient.GetPlansAsync();
+            _planes = await PlanApiClient.GetPlansAsync();
 
-            this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = plans.ToList();
+            dataGridView1.DataSource = _planes.Select(p => new {
+                idPlan = p.IdPlan,
+                Plan = p.DescPlan,
+                Especialidad = p.IdEspecialidadNavigation?.DescEspecialidad,
+                CantidadAlumnos = p.CantidadAlumnos
+            }).ToList();
+            dataGridView1.Columns["idPlan"].Visible = false;
+            dataGridView1.Columns["CantidadAlumnos"].HeaderText = "Cantidad de Alumnos";
 
             if (this.dataGridView1.Rows.Count > 0)
             {
@@ -76,14 +83,10 @@ namespace UI.Desktop
         }
         private Plane SelectedItem()
         {
-            Plane plan;
-
-            plan = (Plane)dataGridView1.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = (int)row.Cells["IdPlan"].Value;
+            Plane plan = _planes.First(p => p.IdPlan == id);
             return plan;
         }
-
-
-
     }
 }

@@ -78,12 +78,15 @@ namespace Servicios
                 {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "SELECT pl.id_plan, pl.desc_plan, pl.id_especialidad, COUNT(pe.id_persona) as cantidadAlumnos FROM Planes pl LEFT JOIN personas pe on pl.id_plan = pe.id_plan WHERE pe.tipo_persona = 'Alumno' GROUP BY pl.id_plan, pl.desc_plan, pl.id_especialidad";
+                    comm.CommandText = "SELECT pl.id_plan, pl.desc_plan, pl.id_especialidad, esp.desc_especialidad, COUNT(pe.id_persona) as cantidadAlumnos FROM Planes pl JOIN Especialidades esp on pl.id_especialidad = esp.id_especialidad LEFT JOIN personas pe on pl.id_plan = pe.id_plan WHERE pe.tipo_persona = 'Alumno' GROUP BY pl.id_plan, pl.desc_plan, pl.id_especialidad, esp.desc_especialidad";
                     using (SqlDataReader dr = comm.ExecuteReader())
                     {
                         while (dr.Read())
                         {
-                            Plane plan = new Plane { IdPlan = (int)dr["id_plan"], DescPlan = dr["desc_plan"].ToString(), IdEspecialidad = (int)dr["id_especialidad"], CantidadAlumnos = (int)dr["cantidadAlumnos"] };
+                            Plane plan = new Plane { IdPlan = (int)dr["id_plan"], DescPlan = dr["desc_plan"].ToString(), IdEspecialidad = (int)dr["id_especialidad"], IdEspecialidadNavigation = new Especialidade {
+                                IdEspecialidad = (int)dr["id_especialidad"],
+                                DescEspecialidad = dr["desc_especialidad"].ToString()
+                            }, CantidadAlumnos = (int)dr["cantidadAlumnos"] };
                             plane.Add(plan);
                         }
                     }
