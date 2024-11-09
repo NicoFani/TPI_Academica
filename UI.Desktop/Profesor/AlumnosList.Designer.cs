@@ -55,6 +55,7 @@
             alumnoBtn.TabIndex = 3;
             alumnoBtn.Text = "Asignar estado";
             alumnoBtn.UseVisualStyleBackColor = false;
+            alumnoBtn.Click += alumnoBtn_Click;
             // 
             // title
             // 
