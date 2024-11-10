@@ -41,7 +41,7 @@ namespace Web_API.Controllers {
                 return CreatedAtRoute("Get Alumno Inscripcion", new { id = alIn.IdInscripcion }, alIn);
             }
         }
-        [HttpPut(Name = "Update Alumno Inscripcion")]
+        [HttpPut("{id}", Name = "Update Alumno Inscripcion")]
         public IActionResult UpdateAlumnoInscripcion(int id, AlumnosInscripcione alIn) {
             if (id != alIn.IdInscripcion) {
                 return BadRequest();
