@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class InscripcionesList : Form
     {
+        private IEnumerable<AlumnosInscripcione> _inscripciones;
         public InscripcionesList()
         {
             InitializeComponent();
@@ -26,9 +27,20 @@ namespace UI.Desktop
         {
             try
             {
-                var inscripciones = await AlumnosInscripcionesApiClient.GetAlumnosInscripcionesAsync();
-                dataGridView1.DataSource = inscripciones;
-
+                _inscripciones = await AlumnosInscripcionesApiClient.GetAlumnosInscripcionesAsync();
+                dataGridView1.DataSource = _inscripciones.Select(insc => new {
+                    idInscripcion = insc.IdInscripcion,
+                    Alumno = $"{insc.IdAlumnoNavigation!.Apellido}, {insc.IdAlumnoNavigation.Nombre}",
+                    LegajoAlumno = insc.IdAlumnoNavigation.Legajo,
+                    Condicion = insc.Condicion,
+                    Nota = insc.Nota,
+                    Materia = insc.IdCursoNavigation!.IdMateriaNavigation!.DescMateria,
+                    Comision = insc.IdCursoNavigation!.IdComisionNavigation!.DescComision,
+                    Plan = insc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.DescPlan,
+                    Especialidad = insc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad
+                }).ToList();
+                dataGridView1.Columns["idInscripcion"].Visible = false;
+                dataGridView1.Columns["LegajoAlumno"].HeaderText = "Legajo Alumno";
                 if (dataGridView1.Rows.Count > 0)
                 {
                     dataGridView1.Rows[0].Selected = true;
@@ -85,10 +97,9 @@ namespace UI.Desktop
         }
         private AlumnosInscripcione SelectedItem()
         {
-            AlumnosInscripcione inscripciones;
-
-            inscripciones = (AlumnosInscripcione)dataGridView1.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = (int)row.Cells["IdInscripcion"].Value;
+            AlumnosInscripcione inscripciones = _inscripciones.First(inscripciones => inscripciones.IdInscripcion == id);
             return inscripciones;
         }
     }

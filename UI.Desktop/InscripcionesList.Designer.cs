@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             dataGridView1 = new DataGridView();
             addButton = new Button();
             updateButton = new Button();
@@ -38,21 +37,19 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(14, 16);
-            dataGridView1.Margin = new Padding(3, 4, 3, 4);
+            dataGridView1.Location = new Point(12, 12);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(887, 372);
+            dataGridView1.Size = new Size(776, 279);
             dataGridView1.TabIndex = 1;
             // 
             // addButton
             // 
-            addButton.Location = new Point(519, 469);
-            addButton.Margin = new Padding(3, 4, 3, 4);
+            addButton.Location = new Point(454, 352);
             addButton.Name = "addButton";
-            addButton.Size = new Size(86, 31);
+            addButton.Size = new Size(75, 23);
             addButton.TabIndex = 4;
             addButton.Text = "Agregar";
             addButton.UseVisualStyleBackColor = true;
@@ -60,10 +57,9 @@
             // 
             // updateButton
             // 
-            updateButton.Location = new Point(671, 469);
-            updateButton.Margin = new Padding(3, 4, 3, 4);
+            updateButton.Location = new Point(587, 352);
             updateButton.Name = "updateButton";
-            updateButton.Size = new Size(86, 31);
+            updateButton.Size = new Size(75, 23);
             updateButton.TabIndex = 5;
             updateButton.Text = "Modificar";
             updateButton.UseVisualStyleBackColor = true;
@@ -71,10 +67,9 @@
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(815, 469);
-            deleteButton.Margin = new Padding(3, 4, 3, 4);
+            deleteButton.Location = new Point(713, 352);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(86, 31);
+            deleteButton.Size = new Size(75, 23);
             deleteButton.TabIndex = 6;
             deleteButton.Text = "Eliminar";
             deleteButton.UseVisualStyleBackColor = true;
@@ -82,13 +77,14 @@
             // 
             // InscripcionesList
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 560);
+            ClientSize = new Size(800, 420);
             Controls.Add(deleteButton);
             Controls.Add(updateButton);
             Controls.Add(addButton);
             Controls.Add(dataGridView1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "InscripcionesList";
             Text = "Lista de Inscripciones";
             Load += Inscripciones_Load;
