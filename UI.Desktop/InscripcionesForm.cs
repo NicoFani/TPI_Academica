@@ -101,8 +101,11 @@ namespace UI.Desktop
             comboBox1.DisplayMember = "Apellido";
             comboBox1.ValueMember = "IdPersona";
 
-            comboBox2.DataSource = cursos.ToList();
-            comboBox2.DisplayMember = "IdCurso";
+            comboBox2.DataSource = cursos.Select(c=>new { 
+                IdCurso = c.IdCurso,
+                Curso = $"{c.IdMateriaNavigation!.DescMateria} Com {c.IdComisionNavigation!.DescComision}"
+            }).ToList();
+            comboBox2.DisplayMember = "Curso";
             comboBox2.ValueMember = "IdCurso";
 
             if (this.EditMode)
