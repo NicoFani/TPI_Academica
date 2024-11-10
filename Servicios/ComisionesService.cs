@@ -1,5 +1,7 @@
 ﻿using Datos.Models;
 using Datos;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Servicios
 {
@@ -49,7 +51,7 @@ namespace Servicios
         }
         public IEnumerable<Comisione> GetAllComissions()
         {
-            return context.Comisiones.ToList();
+            return context.Comisiones.Include(c => c.IdPlanNavigation).ToList();
         }
     }
 }

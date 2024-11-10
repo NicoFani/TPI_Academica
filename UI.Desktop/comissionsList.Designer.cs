@@ -37,12 +37,12 @@
             // comissionDataGridView
             // 
             comissionDataGridView.AllowUserToOrderColumns = true;
+            comissionDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             comissionDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             comissionDataGridView.Location = new Point(10, 9);
             comissionDataGridView.Margin = new Padding(3, 2, 3, 2);
             comissionDataGridView.Name = "comissionDataGridView";
             comissionDataGridView.ReadOnly = true;
-            comissionDataGridView.RowHeadersWidth = 51;
             comissionDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             comissionDataGridView.Size = new Size(679, 245);
             comissionDataGridView.TabIndex = 0;
