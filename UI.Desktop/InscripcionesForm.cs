@@ -40,6 +40,8 @@ namespace UI.Desktop
                 this.AlumnosInscripcione.IdAlumno = (int)comboBox1.SelectedValue;
                 this.AlumnosInscripcione.IdCurso = (int)comboBox2.SelectedValue;
                 this.AlumnosInscripcione.Condicion = textBox1.Text;
+                this.AlumnosInscripcione.IdCursoNavigation = null;
+                this.AlumnosInscripcione.IdAlumnoNavigation = null;
 
                 if (this.EditMode)
                 {
