@@ -13,7 +13,7 @@ namespace Servicios
     {
         public IEnumerable<DocentesCurso> GetDocentesCursos()
         {
-            return context.DocentesCursos.Include(ai => ai.IdDocenteNavigation).Include(ai => ai.IdCursoNavigation).ToList();
+            return context.DocentesCursos.Include(ai => ai.IdDocenteNavigation).Include(ai => ai.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation).Include(doCu => doCu.IdCursoNavigation!.IdComisionNavigation).ToList();
         }
 
         public IEnumerable<DocentesCurso> GetDocentesCursosByCurso(int idCurso)
