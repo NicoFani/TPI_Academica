@@ -469,7 +469,6 @@
             "description": "OK"
           }
         }
-
       }
     },
     "/Cursos/materia/{materia}": {
@@ -483,7 +482,6 @@
             "name": "materia",
             "in": "path",
             "required": true,
-
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -502,7 +500,6 @@
         "tags": [
           "Cursos"
         ],
-
         "operationId": "Get Cursos By Comision",
         "parameters": [
           {
@@ -527,7 +524,6 @@
         "tags": [
           "Cursos"
         ],
-
         "operationId": "Get Curso",
         "parameters": [
           {

@@ -8,33 +8,27 @@ using Datos.Models;
 using Microsoft.IdentityModel.Tokens;
 using Servicios.Utils;
 
-namespace UI.Desktop.Clients
-{
-    public class PersonasApiClient
-    {
+namespace UI.Desktop.Clients {
+    public class PersonasApiClient {
         private static HttpClient _client = ConnectionApiClient.Instance.Client;
 
-        public static async Task<bool> SignIn(string user, string password)
-        {
+        public static async Task<IDictionary<string, string>> SignIn(string user, string password) {
+            var badSignIn = new Dictionary<string, string> {
+                { "valid", "false" }
+            };
             var response = await _client.PostAsync($"personas/signIn?nombreUsuario={user}&clave={password}", null);
-            if (response.IsSuccessStatusCode)
-            {
+            if (response.IsSuccessStatusCode) {
                 string token = await response.Content.ReadAsStringAsync();
                 token = token.Replace("\"", "");
                 var decoToken = JWTService.DecodeToken(token);
-                if (decoToken["valid"] == "true" && decoToken["TipoPersona"] == "Admin")
-                {
+                if (decoToken["valid"] == "true" && (decoToken["TipoPersona"] == "Admin" || decoToken["TipoPersona"] == "Profesor")) {
                     ConnectionApiClient.Instance.SetBearerToken(token);
-                    return true;
+                    return decoToken;
+                } else {
+                    return badSignIn;
                 }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
+            } else {
+                return badSignIn;
             }
         }
 
@@ -48,9 +42,9 @@ namespace UI.Desktop.Clients
             return personas;
         }
 
-        public static async Task<Persona?> GetPersonaAsync(int id) {
+        public static async Task<Persona?> GetPersonaAsync(int id, bool? inscripcion = null, bool? docente = null) {
             Persona? persona = null;
-            HttpResponseMessage response = await _client.GetAsync($"personas/{id}");
+            HttpResponseMessage response = await _client.GetAsync($"personas/{id}?inscripcion={inscripcion}&docente={docente}");
 
             if (response.IsSuccessStatusCode) {
                 persona = await response.Content.ReadFromJsonAsync<Persona>();

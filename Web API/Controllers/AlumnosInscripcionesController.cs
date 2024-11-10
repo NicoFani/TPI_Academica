@@ -16,15 +16,15 @@ namespace Web_API.Controllers {
             _alInService = new AlumnosInscripcionesService(context);
         }
         [HttpGet(Name = "Get All Alumnos Inscripciones")]
-        public IActionResult GetAlumnosInscripciones() {
+        public ActionResult<IEnumerable<AlumnosInscripcione>> GetAlumnosInscripciones() {
             return Ok(_alInService.GetAlumnosInscripciones());
         }
         [HttpGet("curso/{idCurso}", Name = "Get Alumnos Inscripciones By Curso")]
-        public IActionResult GetAlumnosInscripcionesByCurso(int idCurso) {
+        public ActionResult<IEnumerable<AlumnosInscripcione>> GetAlumnosInscripcionesByCurso(int idCurso) {
             return Ok(_alInService.GetAlumnosInscripcionesByCurso(idCurso));
         }
         [HttpGet("alumno/{idAlumno}", Name = "Get Alumnos Inscripciones By Alumno")]
-        public IActionResult GetAlumnosInscripcionesByAlumno(int idAlumno) {
+        public ActionResult<IEnumerable<AlumnosInscripcione>> GetAlumnosInscripcionesByAlumno(int idAlumno) {
             return Ok(_alInService.GetAlumnosInscripcionesByAlumno(idAlumno));
         }
         [HttpGet("{id}", Name = "Get Alumno Inscripcion")]

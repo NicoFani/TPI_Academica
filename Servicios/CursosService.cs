@@ -25,8 +25,12 @@ namespace Servicios
 
         public IEnumerable<Curso> GetCursosByMateria(int materia)
         {
-            return context.Cursos.Where(p => p.IdMateria == materia).ToList();
+            IQueryable<Curso> curso = context.Cursos
+                .Include(c => c.IdComisionNavigation); // Aplicar Include a la consulta
+
+            return curso.Where(p => p.IdMateria == materia).ToList();
         }
+
 
         public IEnumerable<Curso> GetCursosByComision(int comision)
         {

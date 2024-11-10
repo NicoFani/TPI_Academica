@@ -1,0 +1,119 @@
+﻿@page "/baja-materia"
+@rendermode InteractiveServer
+
+<PageTitle>Baja Materia</PageTitle>
+
+<!-- Baja Styles -->
+<style>
+    .container-baja {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        max-width: 800px;
+        height: auto;
+        margin: 0 auto;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+
+    select {
+        padding: 0.4rem 0.8rem;
+    }
+
+    .btn-baja {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: red;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    p {
+        color: green;
+        margin-top: 30px;
+    }
+</style>
+
+@if (inscripciones == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container-baja">
+        <div class="container">
+            <label for="inscripciones">Elija una inscripción:</label>
+            <select id="inscripciones" @bind="idInscripcionSeleccionada">
+                <option value="0">-- Seleccione una inscripción --</option>
+                @foreach (var inscripcion in inscripciones)
+                {
+                    @if (inscripcion.Condicion == "Cursando")
+                    {
+                        <option value="@inscripcion.IdInscripcion">Materia: @inscripcion.IdCursoNavigation.IdMateriaNavigation.DescMateria 
+                                                                   Condición: @inscripcion.Condicion
+                        </option>
+                    }
+                    
+                }
+            </select>
+        </div>
+
+        @if (bajaRealizada)
+        {
+            <p>Baja realizada con éxito.</p>
+        }
+
+        <button type="submit" class="btn-baja" @onclick="BajaAlumno">Dar de baja</button>
+
+    </div>
+}
+
+
+@code {
+    private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
+
+    private int idAlumnoLogueado = 6;
+    private int idInscripcionSeleccionada;
+    private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
+    private bool bajaRealizada = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
+    }
+
+    private async Task BajaAlumno()
+    {
+        if (idInscripcionSeleccionada != 0)
+        {
+            try {
+                await client.Delete_Alumno_InscripcionAsync(idInscripcionSeleccionada);
+                bajaRealizada = true;
+            }
+            catch (clientSwagger.ApiException ex) when (ex.StatusCode == 204 || ex.StatusCode == 201)
+            {
+                Console.WriteLine("Inscripción realizada con éxito.");
+                bajaRealizada = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);}
+        }
+    }
+}
