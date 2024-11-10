@@ -16,11 +16,13 @@
 </div>
 
 @code {
+    @inject Blazor.Services.ConnectionService ClientService
+    private clientSwagger.clientSwagger client;
     private ICollection<clientSwagger.AlumnosInscripcione> result;
-    private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
 
     private async Task Refresh()
     {
+        client = ClientService.Client();
         result = await client.Get_All_Alumnos_InscripcionesAsync();
     }
     

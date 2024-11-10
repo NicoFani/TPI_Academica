@@ -86,7 +86,8 @@ else
 
 
 @code {
-    private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
+    @inject Blazor.Services.ConnectionService ClientService
+    private clientSwagger.clientSwagger client;
 
     private int idAlumnoLogueado = 6;
     private int idInscripcionSeleccionada;
@@ -95,6 +96,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        client = ClientService.Client();
         inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
     }
 

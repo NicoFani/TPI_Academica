@@ -1,11 +1,10 @@
 using Blazor.Components;
+using Blazor.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient<clientSwagger.clientSwagger>(client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7039/");
-});
+builder.Services.AddScoped<ConnectionService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
