@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class cursosList : Form
     {
+        private IEnumerable<Curso> _cursos;
         public cursosList()
         {
             InitializeComponent();
@@ -26,8 +27,17 @@ namespace UI.Desktop
         {
             try
             {
-                var cursos = await CursosApiClient.GetCursosAsync();
-                dataGridView1.DataSource = cursos;
+                _cursos = await CursosApiClient.GetCursosAsync();
+                dataGridView1.DataSource = _cursos.Select(c => new {
+                    idCurso = c.IdCurso,
+                    Materia = c.IdMateriaNavigation?.DescMateria,
+                    Comision = c.IdComisionNavigation?.DescComision,
+                    Año = c.AnioCalendario,
+                    Cupo = c.Cupo,
+                    Plan = c.IdMateriaNavigation?.IdPlanNavigation?.DescPlan,
+                    Especialidad = c.IdMateriaNavigation?.IdPlanNavigation?.IdEspecialidadNavigation?.DescEspecialidad
+                }).ToList();
+                dataGridView1.Columns["idCurso"].Visible = false;
 
                 if (dataGridView1.Rows.Count > 0)
                 {
@@ -85,10 +95,9 @@ namespace UI.Desktop
         }
         private Curso SelectedItem()
         {
-            Curso curso;
-
-            curso = (Curso)dataGridView1.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = (int)row.Cells["idCurso"].Value;
+            Curso curso = _cursos.First(c => c.IdCurso == id);
             return curso;
         }
     }

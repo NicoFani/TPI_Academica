@@ -16,11 +16,11 @@ namespace Servicios {
         }
 
         public IEnumerable<Persona> GetPersonas() {
-            return context.Personas.ToList();
+            return context.Personas.Include(p => p.IdPlanNavigation!.IdEspecialidadNavigation).ToList();
         }
 
         public IEnumerable<Persona> GetPersonasByTipo(string tipo) {
-            return context.Personas.Where(p => p.TipoPersona == tipo).ToList();
+            return context.Personas.Where(p => p.TipoPersona == tipo).Include(p => p.IdPlanNavigation!.IdEspecialidadNavigation).ToList();
         }
 
         public Persona? GetPersona(int id, bool? inscripcion, bool? docente) {

@@ -1,5 +1,7 @@
-﻿namespace UI.Desktop {
-    partial class personasList {
+﻿namespace UI.Desktop
+{
+    partial class docentesCursosList
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -23,44 +27,40 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            DataGridView = new DataGridView();
+            dataGridView1 = new DataGridView();
             addButton = new Button();
             updateButton = new Button();
             deleteButton = new Button();
-            ((System.ComponentModel.ISupportInitialize)DataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // DataGridView
+            // dataGridView1
             // 
-            DataGridView.AllowUserToOrderColumns = true;
-            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridView.Location = new Point(12, 11);
-            DataGridView.Margin = new Padding(3, 2, 3, 2);
-            DataGridView.Name = "DataGridView";
-            DataGridView.ReadOnly = true;
-            DataGridView.RowHeadersWidth = 51;
-            DataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            DataGridView.Size = new Size(679, 245);
-            DataGridView.TabIndex = 1;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(12, 12);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(776, 279);
+            dataGridView1.TabIndex = 1;
             // 
             // addButton
             // 
-            addButton.Location = new Point(389, 279);
-            addButton.Margin = new Padding(3, 2, 3, 2);
+            addButton.Location = new Point(465, 309);
             addButton.Name = "addButton";
-            addButton.Size = new Size(82, 22);
-            addButton.TabIndex = 6;
+            addButton.Size = new Size(75, 23);
+            addButton.TabIndex = 4;
             addButton.Text = "Agregar";
             addButton.UseVisualStyleBackColor = true;
             addButton.Click += addButton_Click;
             // 
             // updateButton
             // 
-            updateButton.Location = new Point(499, 279);
-            updateButton.Margin = new Padding(3, 2, 3, 2);
+            updateButton.Location = new Point(582, 309);
             updateButton.Name = "updateButton";
-            updateButton.Size = new Size(82, 22);
+            updateButton.Size = new Size(75, 23);
             updateButton.TabIndex = 5;
             updateButton.Text = "Modificar";
             updateButton.UseVisualStyleBackColor = true;
@@ -68,34 +68,34 @@
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(608, 279);
-            deleteButton.Margin = new Padding(3, 2, 3, 2);
+            deleteButton.Location = new Point(713, 309);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(82, 22);
-            deleteButton.TabIndex = 4;
+            deleteButton.Size = new Size(75, 23);
+            deleteButton.TabIndex = 6;
             deleteButton.Text = "Eliminar";
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
             // 
-            // personasList
+            // docentesCursosList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(702, 324);
-            Controls.Add(addButton);
-            Controls.Add(updateButton);
+            ClientSize = new Size(800, 343);
             Controls.Add(deleteButton);
-            Controls.Add(DataGridView);
-            Name = "personasList";
-            Text = "Lista de Personas";
-            Load += personasList_Load;
-            ((System.ComponentModel.ISupportInitialize)DataGridView).EndInit();
+            Controls.Add(updateButton);
+            Controls.Add(addButton);
+            Controls.Add(dataGridView1);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "docentesCursosList";
+            Text = "Lista de Docentes y Cursos";
+            Load += DocentesCursos_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView DataGridView;
+        private DataGridView dataGridView1;
         private Button addButton;
         private Button updateButton;
         private Button deleteButton;

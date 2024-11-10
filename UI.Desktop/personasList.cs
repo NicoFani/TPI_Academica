@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,13 +25,13 @@ namespace UI.Desktop {
         }
 
         private void updateButton_Click(object sender, EventArgs e) {
-            int id = (int)DataGridView.SelectedRows[0].Cells[0].Value;
+            int id = (int)DataGridView.SelectedRows[0].Cells["idPersona"].Value;
             new personasForm(_tipoPersona, id).ShowDialog();
             GetAllAndLoad();
         }
 
         private async void deleteButton_Click(object sender, EventArgs e) {
-            int id = (int)DataGridView.SelectedRows[0].Cells[0].Value;
+            int id = (int)DataGridView.SelectedRows[0].Cells["idPersona"].Value;
             await PersonasApiClient.DeleteAsync(id);
             GetAllAndLoad();
         }
@@ -42,7 +43,35 @@ namespace UI.Desktop {
         private async void GetAllAndLoad() {
             var personas = await PersonasApiClient.GetPersonasByTipoAsync(_tipoPersona);
 
-            DataGridView.DataSource = personas;
+            var infoShowed = _tipoPersona == "Alumno"
+            ? personas.Select(p => new {
+                idPersona = p.IdPersona,
+                Nombre = p.Nombre,
+                Apellido = p.Apellido,
+                Legajo = p.Legajo,
+                Direccion = p.Direccion,
+                Email = p.Email,
+                Telefono = p.Telefono,
+                FechaNacimiento = p.FechaNac,
+                Usuario = p.NombreUsuario,
+                Plan = p.IdPlanNavigation?.DescPlan,
+                Especialidad = p.IdPlanNavigation?.IdEspecialidadNavigation?.DescEspecialidad
+            }).ToList<object>()
+            : personas.Select(p => new {
+                idPersona = p.IdPersona,
+                Nombre = p.Nombre,
+                Apellido = p.Apellido,
+                Legajo = p.Legajo,
+                Direccion = p.Direccion,
+                Email = p.Email,
+                Telefono = p.Telefono,
+                FechaNacimiento = p.FechaNac,
+                Usuario = p.NombreUsuario
+            }).ToList<object>();
+
+            DataGridView.DataSource = infoShowed;
+            DataGridView.Columns["idPersona"].Visible = false;
+            DataGridView.Columns["FechaNacimiento"].HeaderText = "Fecha de Nacimiento";
 
             if (DataGridView.Rows.Count > 0) {
                 DataGridView.Rows[0].Selected = true;

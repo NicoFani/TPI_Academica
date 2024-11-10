@@ -19,12 +19,12 @@ namespace Web_API.Controllers
             _cursosService = new CursosService(context);
         }
         [HttpGet(Name = "Get Cursos")]
-        public IActionResult Cursos()
+        public ActionResult<IEnumerable<Curso>> Cursos()
         {
             return Ok(_cursosService.GetCursos());
         }
         [HttpGet("materia/{materia}", Name = "Get Cursos By Materia")]
-        public IActionResult GetCursosByMateria(int materia)
+        public ActionResult<ICollection<Curso>> GetCursosByMateria(int materia)
         {
             return Ok(_cursosService.GetCursosByMateria(materia));
         }

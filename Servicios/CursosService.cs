@@ -20,13 +20,17 @@ namespace Servicios
 
         public IEnumerable<Curso> GetCursos()
         {
-            return context.Cursos.ToList();
+            return context.Cursos.Include(c=> c.IdMateriaNavigation).ThenInclude(m=> m!.IdPlanNavigation!.IdEspecialidadNavigation).Include(c => c.IdComisionNavigation).ToList();
         }
 
         public IEnumerable<Curso> GetCursosByMateria(int materia)
         {
-            return context.Cursos.Where(p => p.IdMateria == materia).ToList();
+            IQueryable<Curso> curso = context.Cursos
+                .Include(c => c.IdComisionNavigation); // Aplicar Include a la consulta
+
+            return curso.Where(p => p.IdMateria == materia).ToList();
         }
+
 
         public IEnumerable<Curso> GetCursosByComision(int comision)
         {

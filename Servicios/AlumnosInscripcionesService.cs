@@ -10,16 +10,22 @@ using Microsoft.EntityFrameworkCore;
 namespace Servicios {
     public class AlumnosInscripcionesService(Context context) {
         public IEnumerable<AlumnosInscripcione> GetAlumnosInscripciones() {
-            return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Include(ai => ai.IdCursoNavigation).ToList();
+            return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Include(ai => ai.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!).Include(ai => ai.IdCursoNavigation!.IdComisionNavigation).ToList();
         }
 
         public IEnumerable<AlumnosInscripcione> GetAlumnosInscripcionesByCurso(int idCurso) {
             return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Where(ai => ai.IdCurso == idCurso).ToList();
         }
 
-        public IEnumerable<AlumnosInscripcione> GetAlumnosInscripcionesByAlumno(int idAlumno) {
-            return context.AlumnosInscripciones.Include(ai => ai.IdCursoNavigation).Where(ai => ai.IdAlumno == idAlumno).ToList();
+        public IEnumerable<AlumnosInscripcione> GetAlumnosInscripcionesByAlumno(int idAlumno)
+        {
+            return context.AlumnosInscripciones
+                .Include(ai => ai.IdCursoNavigation)
+                    .ThenInclude(curso => curso.IdMateriaNavigation)
+                .Where(ai => ai.IdAlumno == idAlumno)
+                .ToList();
         }
+
 
         public AlumnosInscripcione? GetAlumnoInscripcion(int id) {
             return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Include(ai => ai.IdCursoNavigation).FirstOrDefault(ai => ai.IdInscripcion == id);
