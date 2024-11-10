@@ -23,6 +23,17 @@ namespace UI.Desktop.Clients
             }
             return inscripciones;
         }
+
+        public static async Task<IEnumerable<AlumnosInscripcione>> GetAlumnosInscripcionesByCursoAsync(int idCurso) {
+            IEnumerable<AlumnosInscripcione> inscripciones = null;
+            HttpResponseMessage response = await client.GetAsync($"alumnosInscripciones/curso/{idCurso}");
+
+            if (response.IsSuccessStatusCode) {
+                inscripciones = await response.Content.ReadFromJsonAsync<IEnumerable<AlumnosInscripcione>>();
+            }
+            return inscripciones;
+        }
+
         public static async Task<AlumnosInscripcione> GetAlumnosInscripcionesAsync(int id)
         {
             AlumnosInscripcione alumnosInscripcione = null;

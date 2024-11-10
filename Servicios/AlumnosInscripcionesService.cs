@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Servicios {
     public class AlumnosInscripcionesService(Context context) {
         public IEnumerable<AlumnosInscripcione> GetAlumnosInscripciones() {
-            return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Include(ai => ai.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!).Include(ai => ai.IdCursoNavigation!.IdComisionNavigation).ToList();
+            return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Include(ai => ai.IdCursoNavigation).ThenInclude(curs => curs!.IdMateriaNavigation).ThenInclude(mat => mat!.IdPlanNavigation).ThenInclude(plan => plan!.IdEspecialidadNavigation).Include(ai => ai.IdCursoNavigation!.IdComisionNavigation).ToList();
         }
 
         public IEnumerable<AlumnosInscripcione> GetAlumnosInscripcionesByCurso(int idCurso) {

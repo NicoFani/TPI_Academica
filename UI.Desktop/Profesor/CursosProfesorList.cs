@@ -14,15 +14,14 @@ namespace UI.Desktop.Profesor {
     public partial class CursosProfesorList : Form {
         private readonly frmLogin _loginForm;
         private Persona? _profesor;
-        private int _idProfesor = 0;
 
         public CursosProfesorList(frmLogin loginForm) {
             _loginForm = loginForm;
             InitializeComponent();
         }
 
-        public void SetIDProfesor(int idProfesor) {
-            _idProfesor = idProfesor;
+        public async Task SetIDProfesor(int idProfesor) {
+            _profesor = await PersonasApiClient.GetPersonaAsync(idProfesor, false, true);
         }
 
         private void cerrarSesionButton_Click(object sender, EventArgs e) {
@@ -32,18 +31,18 @@ namespace UI.Desktop.Profesor {
         }
 
         private async void CursosProfesorList_Load(object sender, EventArgs e) {
-            _profesor = await PersonasApiClient.GetPersonaAsync(_idProfesor, false, true);
-            title.Text = $"Bienvenido, {_profesor!.Nombre} {_profesor!.Apellido}";
-
-            DataGridView.DataSource = _profesor.DocentesCursos.Select(dc => new {
-                idCurso = dc.IdCurso,
-                Año = dc.IdCursoNavigation!.AnioCalendario,
-                Materia = dc.IdCursoNavigation!.IdMateriaNavigation!.DescMateria,
-                Comision = dc.IdCursoNavigation!.IdComisionNavigation!.DescComision,
-                Especialidad = dc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad,
-                Plan = dc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.DescPlan
-            }).ToList();
-            DataGridView.Columns["idCurso"].Visible = false;
+            if (this.Visible == true) {
+                title.Text = $"Bienvenido, {_profesor!.Nombre} {_profesor!.Apellido}";
+                DataGridView.DataSource = _profesor.DocentesCursos.Select(dc => new {
+                    idCurso = dc.IdCurso,
+                    Año = dc.IdCursoNavigation!.AnioCalendario,
+                    Materia = dc.IdCursoNavigation!.IdMateriaNavigation!.DescMateria,
+                    Comision = dc.IdCursoNavigation!.IdComisionNavigation!.DescComision,
+                    Especialidad = dc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad,
+                    Plan = dc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.DescPlan
+                }).ToList();
+                DataGridView.Columns["idCurso"].Visible = false;
+            }
         }
 
         private void alumnosBtn_Click(object sender, EventArgs e) {

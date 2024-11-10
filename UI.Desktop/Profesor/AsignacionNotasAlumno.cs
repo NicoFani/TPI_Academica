@@ -39,7 +39,7 @@ namespace UI.Desktop.Profesor {
             }
         }
 
-        private void aceptarBtn_Click(object sender, EventArgs e) {
+        private async void aceptarBtn_Click(object sender, EventArgs e) {
             string condicion = condicionCombobox.SelectedItem.ToString();
 
             if (condicion == "Cursando") {
@@ -56,7 +56,11 @@ namespace UI.Desktop.Profesor {
 
                 _inscripcion.Nota = condicion == "Aprobado" ? notaAlumno : null;
                 _inscripcion.Condicion = condicion;
-                AlumnosInscripcionesApiClient.UpdateAsync(_inscripcion);
+                // setting these to null to avoid EF Core from trying to update the related entities
+                _inscripcion.IdCursoNavigation = null;
+                _inscripcion.IdAlumnoNavigation = null;
+
+                await AlumnosInscripcionesApiClient.UpdateAsync(_inscripcion);
                 Close();
             }
         }
