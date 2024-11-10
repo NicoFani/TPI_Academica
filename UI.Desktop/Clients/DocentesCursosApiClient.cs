@@ -59,22 +59,8 @@ namespace UI.Desktop.Clients
         }
         public static async Task UpdateAsync(DocentesCurso docenteCurso)
         {
-            try
-            {
-                HttpResponseMessage response = await client.PutAsJsonAsync($"docentesCursos/{docenteCurso.IdCurso}", docenteCurso);
-                if (!response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Error al actualizar el docente y el curso: {response.StatusCode} - {responseBody}");
-                    throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {responseBody}");
-                }
-
-                response.EnsureSuccessStatusCode();
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine($"Request error: {e.Message}");
-            }
+            HttpResponseMessage response = await client.PutAsJsonAsync($"docentesCursos/{docenteCurso.IdDictado}", docenteCurso);
+            response.EnsureSuccessStatusCode();
         }
         public static async Task DeleteAsync(int id)
         {

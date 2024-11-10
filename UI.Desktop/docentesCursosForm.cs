@@ -38,7 +38,8 @@ namespace UI.Desktop
                 this.DocenteCurso.IdCurso = (int)comboBox1.SelectedValue;
                 this.DocenteCurso.IdDocente = (int)comboBox2.SelectedValue;
                 this.DocenteCurso.Cargo = textBox1.Text;
-
+                this.DocenteCurso.IdCursoNavigation = null;
+                this.DocenteCurso.IdDocenteNavigation = null;
                 if (this.EditMode)
                 {
                     await DocentesCursosApiClient.UpdateAsync(DocenteCurso);
