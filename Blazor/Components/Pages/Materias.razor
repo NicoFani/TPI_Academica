@@ -3,7 +3,7 @@
 
 <h1>Materias</h1>
 
-@if (persona == null)
+@if (inscripciones == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -12,18 +12,16 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Materia</th>
                 <th>Condicion</th>
                 <th>Nota</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var inscripcion in persona.AlumnosInscripciones)
+            @foreach (var inscripcion in inscripciones)
             {
                 <tr>
-                    <td>@inscripcion.IdInscripcion</td>
-                    <td>@inscripcion.IdCursoNavigation?.IdMateriaNavigation?.DescMateria</td>
+                    <td>@inscripcion.IdCursoNavigation.IdMateriaNavigation.DescMateria</td>
                     <td>@inscripcion.Condicion</td>
                     <td>@inscripcion.Nota</td>
                 </tr>
@@ -34,13 +32,17 @@ else
 
 @code {
     private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
-    private clientSwagger.Persona persona;
+
+    private int idAlumnoLogueado = 6;
+    private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
+
+    
 
     protected override async Task OnInitializedAsync()
     {
         // Simulación de carga de datos
         await Task.Delay(1000);
-        persona = await client.Get_PersonaAsync(14, true, false);
+        inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
     }
 }
 

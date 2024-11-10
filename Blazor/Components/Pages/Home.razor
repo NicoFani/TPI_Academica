@@ -2,17 +2,18 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<style>
 
-@if (result != null)
-{
-    <ul>
-        @foreach (clientSwagger.AlumnosInscripcione speciality in result)
-        {
-            <li>@speciality.IdInscripcion - @speciality.Condicion</li>
-        }
-    </ul>
-}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Bienvenido a Academica, (Nombre alumno)!</h1>
+            <h4>Para autogestionar tu inscripciones, navegá por el menu lateral</h4>
+        </div>
+    </div>
+</div>
 
 @code {
     private ICollection<clientSwagger.AlumnosInscripcione> result;
@@ -23,7 +24,6 @@
         result = await client.Get_All_Alumnos_InscripcionesAsync();
     }
     
-
     protected override async Task OnInitializedAsync()
     {
         await Refresh();

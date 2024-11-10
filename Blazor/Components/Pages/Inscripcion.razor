@@ -3,50 +3,105 @@
 
 <PageTitle>Alta Materia</PageTitle>
 
+<!-- Inscripcion Styles -->
+<style>
+    .container-inscripcion {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        max-width: 800px;
+        height: auto;
+        margin: 0 auto;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+
+    select {
+        padding: 0.4rem 0.8rem;
+    }
+    .btn-inscripcion {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: #006bb7;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    p {
+        color: green;
+    }
+</style>
+
 @if (materias == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <label for="materias">Elija una materia:</label>
-    <select id="materias" @bind="idMateriaSeleccionada" @bind:after="OnMateriaSelected">
-        <option value="0">-- Seleccione una materia --</option>
-        @foreach (var materia in materias)
+    <div class="container-inscripcion">
+        <div class="container">
+            <label for="materias">Elija una materia:</label>
+            <select id="materias" @bind="idMateriaSeleccionada" @bind:after="OnMateriaSelected">
+                <option value="0">-- Seleccione una materia --</option>
+                @foreach (var materia in materias)
+                {
+                    <option value="@materia.IdMateria">@materia.DescMateria</option>
+                }
+            </select>
+        </div>
+        
+        @if (idMateriaSeleccionada != 0 && cursosDeMateria != null)
         {
-            <option value="@materia.IdMateria">@materia.DescMateria</option>
-        }
-    </select>
-
-    @if (idMateriaSeleccionada != 0 && cursosDeMateria != null)
-    {
-        <label for="comisiones">Elija una comisión:</label>
-        <select id="comisiones" @bind="idComisionSeleccionada" @bind:after="MostrarComsion">
-            <option value="0">-- Seleccione una comisión --</option>
+        <div class="container">
+            <label for="cursos">Elija un curso:</label>
+            <select id="cursos" @bind="idCursoSeleccionado">
+            <option value="0">-- Seleccione un curso --</option>
             @foreach (var curso in cursosDeMateria)
             {
-                <option value="@curso.IdComision">
-                    @curso.IdComisionNavigation.DescComision
+                <option value="@curso.IdCurso">
+                ID Curso: @curso.IdCurso - Comisión: @curso.IdComisionNavigation.DescComision
                 </option>
             }
-        </select>
-    }
+            </select>
+        </div>
+        }
 
+        @if (inscripcionRealizada)
+        {
+            <p>Inscripción realizada con éxito.</p>
+        }
 
+        <button type="submit" class="btn-inscripcion" @onclick="InscribirAlumno">Inscribirse</button>
 
-    <button>Inscribirse</button>
+    </div>
 }
 
 
 @code {
     private clientSwagger.clientSwagger client = new clientSwagger.clientSwagger("https://localhost:7039/", new HttpClient());
-    private int alumnoLogueadoId = 6;
+    private int idAlumnoLogueado = 6;
 
     private ICollection<clientSwagger.Materia> materias;
     private ICollection<clientSwagger.Curso> cursosDeMateria;
 
     private int idMateriaSeleccionada;
-    private int idComisionSeleccionada;
+    private int idCursoSeleccionado;
+    private bool inscripcionRealizada = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,17 +117,44 @@ else
         Console.WriteLine(cursosDeMateria);
     }
 
-    private async Task MostrarComsion()
+    // private async Task MostrarComsion()
+    // {
+    //     // Mostrar materia y comision seleccionadas
+    //     Console.WriteLine($"ID Materia: {idMateriaSeleccionada}, ID Curso: {idCursoSeleccionado}");
+    // }
+    private async Task InscribirAlumno()
     {
-        // Mostrar materia y comision seleccionadas
-        Console.WriteLine($"ID Materia: {idMateriaSeleccionada}, ID Comision: {idComisionSeleccionada}");
-    }
-    private async Task InscribirAlumno() // Metodo para validar los datos que voy a cargar en la inscripcion (Borrar)
-    {
-        Console.WriteLine($"ID Alumno: {alumnoLogueadoId} - ID Curso: {idComisionSeleccionada}");
-    }
+        Console.WriteLine($"ID Alumno: {idAlumnoLogueado} - ID Curso: {idCursoSeleccionado}");
+        if (idCursoSeleccionado != 0)
+        {
+            var inscripcion = new clientSwagger.AlumnosInscripcione
+                {
+                    IdAlumno = idAlumnoLogueado,
+                    IdCurso = idCursoSeleccionado,
+                    Condicion = "Cursando"
+                };
 
-
+            try
+            {
+                await client.Add_Alumno_InscripcionAsync(inscripcion);
+                Console.WriteLine("Inscripción realizada con éxito.");
+            }
+            catch (clientSwagger.ApiException ex) when (ex.StatusCode == 201)
+            {
+                Console.WriteLine("Inscripción realizada con éxito.");
+                inscripcionRealizada = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al inscribir al alumno: {ex.Message}");
+                inscripcionRealizada = false;
+            }
+        }
+        else
+        {
+            Console.WriteLine("Seleccione una materia y una comisión para continuar.");
+        }
+    }
 }
 
 

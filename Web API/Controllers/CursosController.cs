@@ -19,7 +19,7 @@ namespace Web_API.Controllers
             _cursosService = new CursosService(context);
         }
         [HttpGet(Name = "Get Cursos")]
-        public IActionResult Cursos()
+        public ActionResult<IEnumerable<Curso>> Cursos()
         {
             return Ok(_cursosService.GetCursos());
         }
