@@ -30,8 +30,8 @@ else
     </table>
 }
 
+@inject Blazor.Services.ConnectionService ClientService
 @code {
-    @inject Blazor.Services.ConnectionService ClientService
     private clientSwagger.clientSwagger client;
 
     private int idAlumnoLogueado = 6;
