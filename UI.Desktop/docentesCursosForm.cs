@@ -14,15 +14,15 @@ namespace UI.Desktop
 {
     public partial class docentesCursosForm : Form
     {
-        private DocentesCurso docentecurso;
+        private DocentesCurso _docenteCurso;
         private ErrorProvider errorProvider = new ErrorProvider();
 
         public DocentesCurso DocenteCurso
         {
-            get { return DocenteCurso; }
+            get { return _docenteCurso; }
             set
             {
-                DocenteCurso = value;
+                _docenteCurso = value;
                 this.SetDocenteCurso();
             }
         }
@@ -98,7 +98,7 @@ namespace UI.Desktop
 
             comboBox2.DataSource = docentes.ToList();
             comboBox2.DisplayMember = "Apellido";
-            comboBox2.ValueMember = "IdDocente";
+            comboBox2.ValueMember = "IdPersona";
 
             if (this.EditMode)
             {
