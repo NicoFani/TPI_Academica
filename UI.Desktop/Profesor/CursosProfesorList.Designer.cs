@@ -94,7 +94,7 @@
             Controls.Add(logOutBtn);
             Name = "CursosProfesorList";
             Text = "Cursos Asignados";
-            Load += CursosProfesorList_Load;
+            VisibleChanged += CursosProfesorList_Load;
             ((System.ComponentModel.ISupportInitialize)DataGridView).EndInit();
             ResumeLayout(false);
         }
