@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class materiasList : Form
     {
+        private IEnumerable<Materia> _materias;
         public materiasList()
         {
             InitializeComponent();
@@ -26,8 +27,15 @@ namespace UI.Desktop
         {
             try
             {
-                var materias = await MateriasApiClient.GetMateriasAsync();
-                dataGridView1.DataSource = materias;
+                _materias = await MateriasApiClient.GetMateriasAsync();
+                dataGridView1.DataSource = _materias.Select(m => new {
+                    idMateria = m.IdMateria,
+                    descMateria = m.DescMateria,
+                    hsSemanales = m.HsSemanales,
+                    hsTotales = m.HsTotales,
+                    Plan = m.IdPlanNavigation?.DescPlan
+                }).ToList();
+                dataGridView1.Columns["idMateria"].Visible = false;
 
                 if (dataGridView1.Rows.Count > 0)
                 {
@@ -84,10 +92,9 @@ namespace UI.Desktop
         }
         private Materia SelectedItem()
         {
-            Materia materia;
-
-            materia = (Materia)dataGridView1.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = (int)row.Cells["idMateria"].Value;
+            Materia materia = _materias.First(m => m.IdMateria == id);
             return materia;
         }
     }
