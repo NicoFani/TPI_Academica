@@ -21,6 +21,19 @@ builder.Services.AddDbContext<Context>(
     options => options.UseSqlServer(connectionString)
 );
 
+#region CORS
+string MyCors = "MyCors";
+
+builder.Services.AddCors(options => {
+    options.AddPolicy(MyCors, builder => {
+        builder.AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowAnyOrigin();
+    });
+});
+#endregion
+
+
 // exclude repeated references that cause a loop
 builder.Services.AddControllers()
     .AddJsonOptions(options => {
@@ -87,6 +100,7 @@ if (app.Environment.IsDevelopment()) {
     app.UseHttpLogging();
 }
 
+app.UseCors(MyCors);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

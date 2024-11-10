@@ -1,12 +1,16 @@
 using UI.Desktop.Clients;
+using UI.Desktop.Profesor;
 
 namespace UI.Desktop {
     public partial class frmLogin : Form {
         private frmAdminMenu _adminMenu;
+        private CursosProfesorList _profesor;
         public frmLogin() {
             InitializeComponent();
             _adminMenu = new frmAdminMenu(this);
             _adminMenu.FormClosed += (s, args) => this.Close();
+            _profesor = new CursosProfesorList(this);
+            _profesor.FormClosed += (s, args) => this.Close();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) {
@@ -44,30 +48,26 @@ namespace UI.Desktop {
         private async void signInBtn_Click(object sender, EventArgs e) {
             string username = usuarioInput.Text;
             string password = claveInput.Text;
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) {
                 MessageBox.Show("Debe completar todos los campos");
                 return;
-            }
-            else
-            {
-                bool success = await PersonasApiClient.SignIn(username, password);
-
-                if (success) {
+            } else {
+                var result = await PersonasApiClient.SignIn(username, password);
+                if (result["valid"] == "true" && result["TipoPersona"] == "Admin") {
                     _adminMenu.Show();
                     this.Hide();
-                }
-                else
-                {
-                    MessageBox.Show("Asegurese de haber introducido bien su nombre de usuario y contraseña, además debe ser administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } else if (result["valid"] == "true" && result["TipoPersona"] == "Profesor") {
+                    _profesor.SetIDProfesor(int.Parse(result["IdPersona"]));
+                    _profesor.Show();
+                    this.Hide();
+                } else {
+                    MessageBox.Show("Usuario o contraseña inválido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void frmLogin_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
+        private void frmLogin_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
                 signInBtn_Click(sender, e);
             }
         }

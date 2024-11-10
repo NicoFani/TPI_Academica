@@ -19,7 +19,7 @@ namespace Web_API.Controllers
             _materiasService = new MateriasService(context);
         }
         [HttpGet(Name = "Get Materias")]
-        public IActionResult Materias()
+        public ActionResult<IEnumerable<Materia>> Materias()
         {
             return Ok(_materiasService.GetMaterias());
         }

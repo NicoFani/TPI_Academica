@@ -24,8 +24,8 @@ namespace Web_API.Controllers {
             return Ok(_personasService.GetPersonasByTipo(tipo));
         }
         [HttpGet("{id}", Name = "Get Persona")]
-        public IActionResult GetPersona(int id) {
-            var persona = _personasService.GetPersona(id);
+        public ActionResult<Persona?> GetPersona(int id, [FromQuery] bool? inscripcion, [FromQuery] bool? docente) {
+            var persona = _personasService.GetPersona(id, inscripcion, docente);
             return persona == null ? NotFound() : Ok(persona);
         }
         [HttpPost(Name = "Add Persona")]

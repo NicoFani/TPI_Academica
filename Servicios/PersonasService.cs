@@ -23,8 +23,18 @@ namespace Servicios {
             return context.Personas.Where(p => p.TipoPersona == tipo).Include(p => p.IdPlanNavigation!.IdEspecialidadNavigation).ToList();
         }
 
-        public Persona? GetPersona(int id) {
-            return context.Personas.Find(id);
+        public Persona? GetPersona(int id, bool? inscripcion, bool? docente) {
+            IQueryable<Persona> persona = context.Personas;
+            if (inscripcion == true) {
+                persona = persona.Include(p => p.AlumnosInscripciones).ThenInclude(insc => insc.IdCursoNavigation!.IdMateriaNavigation);
+                persona = persona.Include(p => p.AlumnosInscripciones).ThenInclude(insc => insc.IdCursoNavigation!.IdComisionNavigation);
+            }
+            if (docente == true) {
+                persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.AlumnosInscripciones).ThenInclude(insc => insc.IdAlumnoNavigation);
+                persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation);
+                persona = persona.Include(p => p.DocentesCursos).ThenInclude(doc => doc.IdCursoNavigation!.IdComisionNavigation);
+            }
+            return persona.FirstOrDefault(p => p.IdPersona == id);
         }
 
         public void UpdatePersona(Persona persona) {
