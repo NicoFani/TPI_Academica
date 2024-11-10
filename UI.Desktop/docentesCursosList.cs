@@ -14,6 +14,7 @@ namespace UI.Desktop
 {
     public partial class docentesCursosList : Form
     {
+        private IEnumerable<DocentesCurso> _docentesCursos;
         public docentesCursosList()
         {
             InitializeComponent();
@@ -26,8 +27,17 @@ namespace UI.Desktop
         {
             try
             {
-                var docentesCursos = await DocentesCursosApiClient.GetDocentesCursosAsync();
-                dataGridView1.DataSource = docentesCursos;
+                _docentesCursos = await DocentesCursosApiClient.GetDocentesCursosAsync();
+                dataGridView1.DataSource = _docentesCursos.Select(doCu => new {
+                    IdDictado = doCu.IdDictado,
+                    Docente = doCu.IdDocenteNavigation?.Apellido + ", " + doCu.IdDocenteNavigation?.Nombre,
+                    Cargo = doCu.Cargo,
+                    Materia = doCu.IdCursoNavigation?.IdMateriaNavigation!.DescMateria,
+                    Comision = doCu.IdCursoNavigation?.IdComisionNavigation!.DescComision,
+                    Plan = doCu.IdCursoNavigation?.IdMateriaNavigation?.IdPlanNavigation!.DescPlan,
+                    Especialidad = doCu.IdCursoNavigation?.IdMateriaNavigation?.IdPlanNavigation?.IdEspecialidadNavigation!.DescEspecialidad,
+                }).ToList();
+                dataGridView1.Columns["IdDictado"].Visible = false;
 
                 if (dataGridView1.Rows.Count > 0)
                 {
@@ -85,10 +95,9 @@ namespace UI.Desktop
         }
         private DocentesCurso SelectedItem()
         {
-            DocentesCurso docenteCurso;
-
-            docenteCurso = (DocentesCurso)dataGridView1.SelectedRows[0].DataBoundItem;
-
+            DataGridViewRow row = dataGridView1.SelectedRows[0];
+            int id = (int)row.Cells["IdDictado"].Value;
+            DocentesCurso docenteCurso = _docentesCursos.First(doCu => doCu.IdDictado == id);
             return docenteCurso;
         }
     }
