@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos.Models;
+using UI.Desktop.Clients;
 
 namespace UI.Desktop.Profesor {
     public partial class AsignacionNotasAlumno : Form {
@@ -39,11 +40,24 @@ namespace UI.Desktop.Profesor {
         }
 
         private void aceptarBtn_Click(object sender, EventArgs e) {
-            if (int.TryParse(nota.Text, out int notaAlumno)) {
-                _inscripcion.Nota = notaAlumno;
-                _inscripcion.Condicion = condicionCombobox.SelectedItem.ToString();
-            } else {
+            string condicion = condicionCombobox.SelectedItem.ToString();
+
+            if (condicion == "Cursando") {
+                MessageBox.Show("No se puede asignar la condición 'Cursando' a un alumno", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (condicion == "Aprobado" && nota.Text == "") {
+                MessageBox.Show("Debe asignar una nota al alumno para la condición 'Aprobado'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (condicion == "Regular" && nota.Text != "") {
+                MessageBox.Show("No se puede asignar una nota a un alumno con condición 'Regular'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (!int.TryParse(nota.Text, out int notaAlumno) && nota.Text != "") {
                 MessageBox.Show("La nota debe ser un número entero", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if ((notaAlumno < 0 || notaAlumno > 10) && nota.Text != "") {
+                MessageBox.Show("La nota debe ser un número entre 0 y 10", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+
+                _inscripcion.Nota = condicion == "Aprobado" ? notaAlumno : null;
+                _inscripcion.Condicion = condicion;
+                AlumnosInscripcionesApiClient.UpdateAsync(_inscripcion);
+                Close();
             }
         }
     }

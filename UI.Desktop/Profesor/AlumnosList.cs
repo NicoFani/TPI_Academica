@@ -36,6 +36,7 @@ namespace UI.Desktop.Profesor {
             AlumnosInscripcione inscripcion = _curso.AlumnosInscripciones.First(al => al.IdInscripcion == idInscripcion);
             AsignacionNotasAlumno notaForm = new AsignacionNotasAlumno(_curso, inscripcion);
             notaForm.ShowDialog();
+            AlumnosList_Load(sender, e);
         }
     }
 }

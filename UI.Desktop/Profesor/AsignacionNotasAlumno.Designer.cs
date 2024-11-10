@@ -72,7 +72,7 @@
             // condicionText
             // 
             condicionText.Font = new Font("Segoe UI", 11F);
-            condicionText.Location = new Point(184, 135);
+            condicionText.Location = new Point(160, 135);
             condicionText.Name = "condicionText";
             condicionText.Size = new Size(91, 25);
             condicionText.TabIndex = 8;
@@ -82,7 +82,7 @@
             // notaText
             // 
             notaText.Font = new Font("Segoe UI", 11F);
-            notaText.Location = new Point(184, 186);
+            notaText.Location = new Point(160, 186);
             notaText.Name = "notaText";
             notaText.Size = new Size(91, 25);
             notaText.TabIndex = 9;
@@ -97,17 +97,17 @@
             condicionCombobox.Enabled = false;
             condicionCombobox.FormattingEnabled = true;
             condicionCombobox.Items.AddRange(new object[] { "Cursando", "Aprobado", "Regular" });
-            condicionCombobox.Location = new Point(281, 135);
+            condicionCombobox.Location = new Point(257, 135);
             condicionCombobox.Name = "condicionCombobox";
-            condicionCombobox.Size = new Size(126, 23);
+            condicionCombobox.Size = new Size(228, 23);
             condicionCombobox.TabIndex = 10;
             // 
             // nota
             // 
             nota.Enabled = false;
-            nota.Location = new Point(281, 186);
+            nota.Location = new Point(257, 186);
             nota.Name = "nota";
-            nota.Size = new Size(126, 23);
+            nota.Size = new Size(228, 23);
             nota.TabIndex = 11;
             // 
             // AsignacionNotasAlumno
