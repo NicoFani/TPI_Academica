@@ -3024,7 +3024,7 @@ namespace clientSwagger
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task SignInAsync(string nombreUsuario, string clave)
+        public virtual System.Threading.Tasks.Task<string> SignInAsync(string nombreUsuario, string clave)
         {
             return SignInAsync(nombreUsuario, clave, System.Threading.CancellationToken.None);
         }
@@ -3032,7 +3032,7 @@ namespace clientSwagger
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task SignInAsync(string nombreUsuario, string clave, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> SignInAsync(string nombreUsuario, string clave, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3040,8 +3040,9 @@ namespace clientSwagger
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
@@ -3083,7 +3084,9 @@ namespace clientSwagger
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            return;
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            var result_ = (string)System.Convert.ChangeType(responseData_, typeof(string));
+                            return result_;
                         }
                         else
                         {
