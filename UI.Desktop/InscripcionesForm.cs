@@ -97,13 +97,16 @@ namespace UI.Desktop
             var alumnos = await PersonasApiClient.GetPersonasByTipoAsync(tipoPersona);
             var cursos = await CursosApiClient.GetCursosAsync();
 
-            comboBox1.DataSource = alumnos.ToList();
-            comboBox1.DisplayMember = "Apellido";
-            comboBox1.ValueMember = "IdPersona";
+            comboBox1.DataSource = alumnos.Select(a => new {
+                IdAlumno = a.IdPersona,
+                Alumno = $"{a.Apellido}, {a.Nombre}: Leg {a.Legajo}"
+            }).ToList();
+            comboBox1.DisplayMember = "Alumno";
+            comboBox1.ValueMember = "IdAlumno";
 
             comboBox2.DataSource = cursos.Select(c=>new { 
                 IdCurso = c.IdCurso,
-                Curso = $"{c.IdMateriaNavigation!.DescMateria} Com {c.IdComisionNavigation!.DescComision}"
+                Curso = $"Esp {c.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad} Plan {c.IdMateriaNavigation!.IdPlanNavigation!.DescPlan} Com {c.IdComisionNavigation!.DescComision} Mat {c.IdMateriaNavigation!.DescMateria}"
             }).ToList();
             comboBox2.DisplayMember = "Curso";
             comboBox2.ValueMember = "IdCurso";

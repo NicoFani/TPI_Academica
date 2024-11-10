@@ -67,7 +67,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(305, 283);
+            button1.Location = new Point(696, 283);
             button1.Name = "button1";
             button1.Size = new Size(86, 31);
             button1.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(412, 283);
+            button2.Location = new Point(846, 283);
             button2.Name = "button2";
             button2.Size = new Size(86, 31);
             button2.TabIndex = 4;
@@ -90,7 +90,7 @@
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(252, 95);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(246, 28);
+            comboBox1.Size = new Size(680, 28);
             comboBox1.TabIndex = 5;
             // 
             // comboBox2
@@ -98,7 +98,7 @@
             comboBox2.FormattingEnabled = true;
             comboBox2.Location = new Point(252, 157);
             comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(246, 28);
+            comboBox2.Size = new Size(680, 28);
             comboBox2.TabIndex = 6;
             // 
             // textBox1
@@ -106,14 +106,14 @@
             textBox1.Location = new Point(252, 222);
             textBox1.Margin = new Padding(3, 4, 3, 4);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(246, 27);
+            textBox1.Size = new Size(680, 27);
             textBox1.TabIndex = 7;
             // 
             // InscripcionesForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(603, 414);
+            ClientSize = new Size(984, 414);
             Controls.Add(textBox1);
             Controls.Add(comboBox2);
             Controls.Add(comboBox1);
