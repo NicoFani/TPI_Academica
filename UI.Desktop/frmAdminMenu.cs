@@ -29,18 +29,21 @@ namespace UI.Desktop {
         {
             specialityList specialityList = new specialityList();
             specialityList.ShowDialog();
+            GetAll();
         }
 
         private void planesButton_Click(object sender, EventArgs e)
         {
             plansList plansList = new plansList();
             plansList.ShowDialog();
+            GetAll();
         }
 
         private void comisionesButton_Click(object sender, EventArgs e)
         {
             comissionsList comissionsList = new comissionsList();
             comissionsList.ShowDialog();
+            GetAll();
         }
 
         private void cerrarSesionButton_Click(object sender, EventArgs e)
@@ -54,36 +57,42 @@ namespace UI.Desktop {
         {
             personasList profesoresList = new personasList("Profesor");
             profesoresList.ShowDialog();
+            GetAll();
         }
 
         private void alumnosBtn_Click(object sender, EventArgs e)
         {
             personasList alumnosList = new personasList("Alumno");
             alumnosList.ShowDialog();
+            GetAll();
         }
 
         private void materiasButton_Click(object sender, EventArgs e)
         {
             materiasList materiasList = new materiasList();
             materiasList.ShowDialog();
+            GetAll();
         }
 
         private void cursosButton_Click(object sender, EventArgs e)
         {
             cursosList cursosList = new cursosList();
             cursosList.ShowDialog();
+            GetAll();
         }
 
         private void inscripcionesButton_Click(object sender, EventArgs e)
         {
             InscripcionesList inscripcionesList = new InscripcionesList();
             inscripcionesList.ShowDialog();
+            GetAll();
         }
 
         private void docentesCursosButton_Click(object sender, EventArgs e)
         {
             docentesCursosList docentesCursosList = new docentesCursosList();
             docentesCursosList.ShowDialog();
+            GetAll();
         }
 
         private void frmAdminMenu_Load(object sender, EventArgs e)

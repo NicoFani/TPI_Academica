@@ -2,14 +2,10 @@
 using Microsoft.Data.SqlClient;
 using Datos.Models;
 
-namespace Servicios
-{
-    public class PlaneService(string connectionString)
-    {
-        public void AddPlan(Plane plan)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
+namespace Servicios {
+    public class PlaneService(string connectionString) {
+        public void AddPlan(Plane plan) {
+            using (SqlConnection conn = new SqlConnection(connectionString)) {
                 string query = "INSERT INTO Planes (desc_plan, id_especialidad) VALUES (@PlanDescription, @IdSpeciality)";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -22,14 +18,11 @@ namespace Servicios
             }
         }
 
-        public void UpdatePlan(int idPlan, string descPlan, int idSpeciality)
-        {
-            try
-            {
+        public void UpdatePlan(int idPlan, string descPlan, int idSpeciality) {
+            try {
                 SqlConnection conn = new SqlConnection(connectionString);
                 conn.Open();
-                using (conn)
-                {
+                using (conn) {
                     string query = "UPDATE Planes SET desc_plan = @PlanDescription, id_especialidad = @IdSpeciality WHERE id_plan = @IdPlan";
                     SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -40,24 +33,19 @@ namespace Servicios
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();
 
-                    if (rowsAffected == 0)
-                    {
+                    if (rowsAffected == 0) {
                         // No rows were updated, log or handle this case
                         Console.WriteLine("No se actualizó ninguna fila. Verifica que el IdPlan exista.");
                     }
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 // Log the exception or handle it as needed
                 Console.WriteLine($"Error al actualizar el plan: {ex.Message}");
             }
         }
 
-        public void DeletePlan(int id_plan)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
+        public void DeletePlan(int id_plan) {
+            using (SqlConnection conn = new SqlConnection(connectionString)) {
                 string query = "DELETE FROM Planes WHERE id_plan = @IdPlan";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -68,25 +56,26 @@ namespace Servicios
                 conn.Close();
             }
         }
-        public List<Plane> GetAllPlane()
-        {
+        public List<Plane> GetAllPlane() {
             List<Plane> plane = new List<Plane>();
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
+            using (SqlConnection conn = new SqlConnection(connectionString)) {
                 conn.Open();
-                using (SqlCommand comm = new SqlCommand())
-                {
+                using (SqlCommand comm = new SqlCommand()) {
                     comm.Connection = conn;
                     comm.CommandType = CommandType.Text;
-                    comm.CommandText = "SELECT pl.id_plan, pl.desc_plan, pl.id_especialidad, esp.desc_especialidad, COUNT(pe.id_persona) as cantidadAlumnos FROM Planes pl JOIN Especialidades esp on pl.id_especialidad = esp.id_especialidad LEFT JOIN personas pe on pl.id_plan = pe.id_plan WHERE pe.tipo_persona = 'Alumno' GROUP BY pl.id_plan, pl.desc_plan, pl.id_especialidad, esp.desc_especialidad";
-                    using (SqlDataReader dr = comm.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            Plane plan = new Plane { IdPlan = (int)dr["id_plan"], DescPlan = dr["desc_plan"].ToString(), IdEspecialidad = (int)dr["id_especialidad"], IdEspecialidadNavigation = new Especialidade {
+                    comm.CommandText = "SELECT pl.id_plan, pl.desc_plan, pl.id_especialidad, esp.desc_especialidad, COUNT(pe.id_persona) as cantidadAlumnos FROM Planes pl JOIN Especialidades esp on pl.id_especialidad = esp.id_especialidad LEFT JOIN personas pe on pl.id_plan = pe.id_plan AND pe.tipo_persona = 'Alumno' GROUP BY pl.id_plan, pl.desc_plan, pl.id_especialidad, esp.desc_especialidad";
+                    using (SqlDataReader dr = comm.ExecuteReader()) {
+                        while (dr.Read()) {
+                            Plane plan = new Plane {
+                                IdPlan = (int)dr["id_plan"],
+                                DescPlan = dr["desc_plan"].ToString(),
                                 IdEspecialidad = (int)dr["id_especialidad"],
-                                DescEspecialidad = dr["desc_especialidad"].ToString()
-                            }, CantidadAlumnos = (int)dr["cantidadAlumnos"] };
+                                IdEspecialidadNavigation = new Especialidade {
+                                    IdEspecialidad = (int)dr["id_especialidad"],
+                                    DescEspecialidad = dr["desc_especialidad"].ToString()
+                                },
+                                CantidadAlumnos = (int)dr["cantidadAlumnos"]
+                            };
                             plane.Add(plan);
                         }
                     }

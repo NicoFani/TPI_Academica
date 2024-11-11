@@ -11,88 +11,77 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using UI.Desktop.Clients;
 using Datos.Models;
 
-namespace UI.Desktop
-{
-    public partial class InscripcionesForm : Form
-    {
+namespace UI.Desktop {
+    public partial class InscripcionesForm : Form {
         private AlumnosInscripcione inscripciones;
         private ErrorProvider errorProvider = new ErrorProvider();
 
-        public AlumnosInscripcione AlumnosInscripcione
-        {
+        public AlumnosInscripcione AlumnosInscripcione {
             get { return inscripciones; }
-            set
-            {
+            set {
                 inscripciones = value;
                 this.SetInscripcion();
             }
         }
         public bool EditMode { get; set; } = false;
 
-        public InscripcionesForm()
-        {
+        public InscripcionesForm() {
             InitializeComponent();
         }
-        private async void acceptButton_Click(object sender, EventArgs e)
-        {
-            if (this.ValidateAlumnosInscripcione())
-            {
-                this.AlumnosInscripcione.IdAlumno = (int)comboBox1.SelectedValue;
-                this.AlumnosInscripcione.IdCurso = (int)comboBox2.SelectedValue;
-                this.AlumnosInscripcione.Condicion = textBox1.Text;
-                this.AlumnosInscripcione.IdCursoNavigation = null;
-                this.AlumnosInscripcione.IdAlumnoNavigation = null;
+        private async void acceptButton_Click(object sender, EventArgs e) {
+            this.AlumnosInscripcione.IdAlumno = (int)comboBox1.SelectedValue;
+            this.AlumnosInscripcione.IdCurso = (int)comboBox2.SelectedValue;
 
-                if (this.EditMode)
-                {
+            this.AlumnosInscripcione.IdCursoNavigation = null;
+            this.AlumnosInscripcione.IdAlumnoNavigation = null;
+            this.AlumnosInscripcione.Nota = null;
+
+            if (this.EditMode) {
+                if (this.ValidateAlumnosInscripcione()) {
+                    this.AlumnosInscripcione.Condicion = condicionCombobox.SelectedItem.ToString();
+
+                    if (this.AlumnosInscripcione.Condicion == "Aprobado") {
+                        this.AlumnosInscripcione.Nota = int.Parse(nota.Text);
+                    }
+
                     await AlumnosInscripcionesApiClient.UpdateAsync(AlumnosInscripcione);
+                    this.Close();
                 }
-                else
-                {
-                    await AlumnosInscripcionesApiClient.AddAsync(AlumnosInscripcione);
-                }
+            } else {
+                this.AlumnosInscripcione.Condicion = "Cursando";
+                await AlumnosInscripcionesApiClient.AddAsync(AlumnosInscripcione);
+                this.Close();
             }
-            this.Close();
         }
-        private void cancelButton_Click(object sender, EventArgs e)
-        {
+        private void cancelButton_Click(object sender, EventArgs e) {
             this.Close();
         }
 
-        private void SetInscripcion()
-        {
+        private void SetInscripcion() {
             this.comboBox1.SelectedValue = this.AlumnosInscripcione.IdAlumno;
             this.comboBox2.SelectedValue = this.AlumnosInscripcione.IdCurso;
-            this.textBox1.Text = this.AlumnosInscripcione.Condicion;
-       
+            this.condicionCombobox.SelectedItem = this.AlumnosInscripcione.Condicion;
+            this.nota.Text = this.AlumnosInscripcione.Nota.ToString();
         }
-        private bool ValidateAlumnosInscripcione()
-        {
-            bool isValid = true;
-
-            errorProvider.SetError(comboBox1, string.Empty);
-            errorProvider.SetError(comboBox2, string.Empty);
-            errorProvider.SetError(textBox1, string.Empty);
-
-            if (this.comboBox1.SelectedValue == null)
-            {
-                isValid = false;
-                errorProvider.SetError(comboBox1, "El alumno es requerido");
-            }
-            if (this.comboBox2.SelectedValue == null)
-            {
-                isValid = false;
-                errorProvider.SetError(comboBox2, "El curso es requerido");
-            }
-            if (this.textBox1.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(textBox1, "La condición es requerida");
+        private bool ValidateAlumnosInscripcione() {
+            bool isValid = false;
+            string condicion = condicionCombobox.SelectedItem.ToString();
+            if (condicion == "Cursando") {
+                MessageBox.Show("No se puede asignar la condición 'Cursando' a un alumno", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (condicion == "Aprobado" && nota.Text == "") {
+                MessageBox.Show("Debe asignar una nota al alumno para la condición 'Aprobado'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (condicion == "Regular" && nota.Text != "") {
+                MessageBox.Show("No se puede asignar una nota a un alumno con condición 'Regular'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (!int.TryParse(nota.Text, out int notaAlumno) && nota.Text != "") {
+                MessageBox.Show("La nota debe ser un número entero", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if ((notaAlumno < 0 || notaAlumno > 10) && nota.Text != "") {
+                MessageBox.Show("La nota debe ser un número entre 0 y 10", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+                isValid = true;
             }
             return isValid;
         }
-        private async void inscripcionesForm_Load(object sender, EventArgs e)
-        {
+        private async void inscripcionesForm_Load(object sender, EventArgs e) {
             string tipoPersona = "Alumno";
             var alumnos = await PersonasApiClient.GetPersonasByTipoAsync(tipoPersona);
             var cursos = await CursosApiClient.GetCursosAsync();
@@ -104,21 +93,29 @@ namespace UI.Desktop
             comboBox1.DisplayMember = "Alumno";
             comboBox1.ValueMember = "IdAlumno";
 
-            comboBox2.DataSource = cursos.Select(c=>new { 
+            comboBox2.DataSource = cursos.Select(c => new {
                 IdCurso = c.IdCurso,
                 Curso = $"Esp {c.IdMateriaNavigation!.IdPlanNavigation!.IdEspecialidadNavigation!.DescEspecialidad} Plan {c.IdMateriaNavigation!.IdPlanNavigation!.DescPlan} Com {c.IdComisionNavigation!.DescComision} Mat {c.IdMateriaNavigation!.DescMateria}"
             }).ToList();
             comboBox2.DisplayMember = "Curso";
             comboBox2.ValueMember = "IdCurso";
 
-            if (this.EditMode)
-            {
+            if (this.EditMode) {
                 comboBox1.Enabled = false;
                 comboBox2.Enabled = false;
-                comboBox1.SelectedValue = this.AlumnosInscripcione.IdAlumno;
-                comboBox2.SelectedValue = this.AlumnosInscripcione.IdCurso;
+                SetInscripcion();
+
+                if (AlumnosInscripcione.Condicion != "Aprobado") {
+                    condicionCombobox.Enabled = true;
+                    nota.Enabled = true;
+                    aceptarBtn.Enabled = true;
+                } else if (AlumnosInscripcione.Condicion == "Regular") {
+                    condicionCombobox.Items.Remove("Cursando");
+                }
+            } else {
+                condicionCombobox.SelectedItem = "Cursando";
+                aceptarBtn.Enabled = true;
             }
         }
-
     }
 }
