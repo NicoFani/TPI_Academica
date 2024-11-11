@@ -89,7 +89,7 @@ else
 @code {
     private clientSwagger.clientSwagger client;
 
-    private int idAlumnoLogueado = 6;
+    private int idAlumnoLogueado;
     private int idInscripcionSeleccionada;
     private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
     private bool bajaRealizada = false;
@@ -97,6 +97,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         client = ClientService.Client();
+
+        idAlumnoLogueado = int.Parse(ClientService.GetCurrentUser()!["IdPersona"]);
+        Console.WriteLine($"Id alumno logueado: {idAlumnoLogueado}");
+
         inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
     }
 

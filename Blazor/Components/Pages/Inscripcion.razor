@@ -88,10 +88,11 @@
 
 
 @inject Blazor.Services.ConnectionService ClientService
+
 @code {
     private clientSwagger.clientSwagger client;
 
-    private int idAlumnoLogueado = 6;
+    private int idAlumnoLogueado;
 
     private ICollection<clientSwagger.Materia> materias;
     private ICollection<clientSwagger.Curso> cursosDeMateria;
@@ -102,6 +103,9 @@
 
     protected override async Task OnInitializedAsync() {
         client = ClientService.Client();
+
+        idAlumnoLogueado = int.Parse(ClientService.GetCurrentUser()["IdPersona"]);
+
         materias = await client.Get_MateriasAsync();
     }
 
@@ -113,11 +117,6 @@
         Console.WriteLine(cursosDeMateria);
     }
 
-    // private async Task MostrarComsion()
-    // {
-    //     // Mostrar materia y comision seleccionadas
-    //     Console.WriteLine($"ID Materia: {idMateriaSeleccionada}, ID Curso: {idCursoSeleccionado}");
-    // }
     private async Task InscribirAlumno() {
         Console.WriteLine($"ID Alumno: {idAlumnoLogueado} - ID Curso: {idCursoSeleccionado}");
         if (idCursoSeleccionado != 0) {
@@ -142,26 +141,4 @@
         }
     }
 }
-
-
-@*     private async Task InscribirAlumno()
-    {
-        if (comisionSeleccionadaId.HasValue)
-        {
-            var inscripcion = new clientSwagger.AlumnosInscripcione
-                {
-                    IdAlumno = alumnoLogueadoId,
-                    IdCurso = comisionSeleccionadaId.Value,
-                    Condicion = "Inscripto",
-                    Nota = null
-                };
-
-            await client.Add_Alumno_InscripcionAsync(inscripcion);
-            Console.WriteLine("Inscripción realizada con éxito.");
-        }
-        else
-        {
-            Console.WriteLine("Seleccione una materia y una comisión para continuar.");
-        }
-    } *@
 

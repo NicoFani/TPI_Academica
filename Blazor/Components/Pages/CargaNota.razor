@@ -1,0 +1,226 @@
+﻿@page "/carga-nota"
+@rendermode InteractiveServer
+
+<PageTitle>Cargar Notas</PageTitle>
+
+<style>
+    /* Contenedor principal */
+    .cargar-notas-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Título */
+    .cargar-notas-title {
+        font-size: 24px;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Etiquetas y selects */
+    .cargar-notas-label {
+        display: block;
+        font-weight: bold;
+        margin-top: 15px;
+        color: #555;
+    }
+
+    .cargar-notas-select,
+    .cargar-notas-input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    /* Botón */
+    .cargar-notas-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .cargar-notas-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+    }
+
+    .cargar-notas-button:hover:enabled {
+            background-color: #45a049;
+    }
+
+    /* Mensaje de estado */
+    .cargar-notas-message {
+        margin-top: 20px;
+        font-size: 14px;
+        text-align: center;
+        color: #333;
+    }
+
+</style>
+
+<div class="cargar-notas-container">
+    <h1 class="cargar-notas-title">Cargar Notas</h1>
+
+    @if (profesor?.DocentesCursos != null && profesor.DocentesCursos.Any())
+    {
+        <label for="cursoSelect" class="cargar-notas-label">Seleccione un curso:</label>
+        <select id="cursoSelect" class="cargar-notas-select" @bind="cursoSeleccionado" @bind:after="OnCursoSelected">
+            <option value="0">Seleccione un curso</option>
+            @foreach (var docenteCurso in profesor.DocentesCursos)
+            {
+                var curso = docenteCurso.IdCursoNavigation;
+                if (curso != null)
+                {
+                    <option value="@curso.IdCurso">
+                        @curso.IdCurso - @curso.IdMateriaNavigation?.DescMateria - @curso.IdComisionNavigation?.DescComision
+                    </option>
+                }
+            }
+        </select>
+
+        @if (alumnosInscripciones != null && alumnosInscripciones.Any())
+        {
+            <label for="alumnoSelect" class="cargar-notas-label">Seleccione un alumno:</label>
+            <select id="alumnoSelect" class="cargar-notas-select" @bind="inscripcionSeleccionada" @bind:after="OnInscripcionSeleccionada">
+                <option value="0">Seleccione un alumno</option>
+                @foreach (var inscripcion in alumnosInscripciones)
+                {
+                    <option value="@inscripcion.IdInscripcion">@inscripcion.IdAlumnoNavigation?.Apellido, @inscripcion.IdAlumnoNavigation?.Nombre</option>
+                }
+            </select>
+
+            @if (inscripcionSeleccionada != null)
+            {
+                <div>
+                    <label for="condicionSelect" class="cargar-notas-label">Condición:</label>
+                    <select id="condicionSelect" class="cargar-notas-select" @bind="condicionSeleccionada">
+                        <option value="Regular">Regular</option>
+                        <option value="Aprobado">Aprobado</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="notaInput" class="cargar-notas-label">Nota:</label>
+                    <input id="notaInput" type="number" class="cargar-notas-input" @bind="nota" min="0" max="10" disabled="@(!EsCondicionAprobado())" />
+                </div>
+
+                <button class="cargar-notas-button" @onclick="GuardarNota" disabled="@(inscripcionSeleccionada == null || string.IsNullOrEmpty(condicionSeleccionada) || (condicionSeleccionada == "Aprobado" && nota == null))">
+                    Guardar Nota
+                </button>
+
+                @if (mensaje != null)
+                {
+                    <p class="cargar-notas-message">@mensaje</p>
+                }
+            }
+        }
+    }
+</div>
+
+
+@inject Blazor.Services.ConnectionService ClientService
+
+@code {
+    private clientSwagger.clientSwagger client;
+    private clientSwagger.Persona profesor;
+    private IEnumerable<clientSwagger.AlumnosInscripcione> alumnosInscripciones;
+    private clientSwagger.AlumnosInscripcione inscripcion;
+
+    private int idProfesorLogueado = 8;
+    private int cursoSeleccionado;
+    private int inscripcionSeleccionada;
+    private string condicionSeleccionada;
+    private int? nota;
+    private string? mensaje;
+
+    private int idAuxiliar = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        client = ClientService.Client();
+        profesor = await client.Get_PersonaAsync(idProfesorLogueado, false, true);
+
+        // Iteramos sobre cada curso del docente y mostramos en consola
+        if (profesor?.DocentesCursos != null)
+        {
+            foreach (var docenteCurso in profesor.DocentesCursos)
+            {
+                Console.WriteLine($"Curso ID: {docenteCurso.IdCursoNavigation?.IdCurso}, " +
+                                  $"Materia: {docenteCurso.IdCursoNavigation?.IdMateriaNavigation?.DescMateria}, " +
+                                  $"Comisión: {docenteCurso.IdCursoNavigation?.IdComisionNavigation?.DescComision}");
+            }
+        }
+    }
+    private async Task OnCursoSelected()
+    {
+        alumnosInscripciones = await client.Get_Alumnos_Inscripciones_By_CursoAsync(cursoSeleccionado);
+        if (alumnosInscripciones != null)
+        {
+            foreach (var inscripcion in alumnosInscripciones)
+            {
+                Console.WriteLine($"Alumno ID: {inscripcion.IdAlumno}, " +
+                                  $"Apellido: {inscripcion.IdAlumnoNavigation?.Apellido}, " +
+                                  $"Nombre: {inscripcion.IdAlumnoNavigation?.Nombre}");
+            }
+        }
+    }
+
+    private async Task OnInscripcionSeleccionada()
+    {
+        inscripcion = await client.Get_Alumno_InscripcionAsync(inscripcionSeleccionada);
+    }
+
+    private bool EsCondicionAprobado() => condicionSeleccionada == "Aprobado";
+
+    private async void GuardarNota()
+    {
+        if (inscripcionSeleccionada != null && EsCondicionAprobado() && nota != null)
+        {
+            Console.WriteLine($"ID Inscripcion: {inscripcion.IdInscripcion} - ID Alumno: {inscripcion.IdAlumno} - ID Curso: {cursoSeleccionado} - Nota: {nota} - Condicion: {condicionSeleccionada}");
+
+            var inscripcionModificada = new clientSwagger.AlumnosInscripcione
+                {
+                    IdInscripcion = inscripcion.IdInscripcion,
+                    IdAlumno = inscripcion.IdAlumno,
+                    IdCurso = cursoSeleccionado,
+                    Nota = nota,
+                    Condicion = condicionSeleccionada,
+                    IdAlumnoNavigation = null,
+                    IdCursoNavigation = null
+                };
+
+            try
+            {
+                await client.Update_Alumno_InscripcionAsync(inscripcion.IdInscripcion, inscripcionModificada);
+                mensaje = "Nota guardada correctamente.";
+            }
+            catch (Exception e)
+            {
+                mensaje = "Error al guardar la nota.";
+                Console.WriteLine($"Error: {e.Message}");
+                Console.WriteLine($"Detalles del error: {e}");
+            }
+        }
+    }
+
+}
+
+

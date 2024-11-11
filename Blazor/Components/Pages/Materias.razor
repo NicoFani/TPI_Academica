@@ -34,12 +34,14 @@ else
 @code {
     private clientSwagger.clientSwagger client;
 
-    private int idAlumnoLogueado = 6;
+    private int idAlumnoLogueado;
     private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
 
     protected override async Task OnInitializedAsync()
     {
         client = ClientService.Client();
+
+        idAlumnoLogueado = int.Parse(ClientService.GetCurrentUser()!["IdPersona"]);
         // Simulación de carga de datos
         await Task.Delay(1000);
         inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
