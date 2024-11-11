@@ -89,6 +89,7 @@ namespace UI.Desktop {
             if (this.EditMode) {
                 comboBox1.Enabled = false;
                 comboBox2.Enabled = false;
+                SetDocenteCurso();
             } else {
                 cargoComboBox.SelectedItem = "Profesor";
             }
