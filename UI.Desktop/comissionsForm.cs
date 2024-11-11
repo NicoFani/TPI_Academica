@@ -93,6 +93,8 @@ namespace UI.Desktop
             this.comboBox1.DataSource = planes.ToList();
             this.comboBox1.DisplayMember = "DescPlan";
             this.comboBox1.ValueMember = "IdPlan";
+
+            SetComission();
         }
 
         private void comissionsForm_Load(object sender, EventArgs e)
