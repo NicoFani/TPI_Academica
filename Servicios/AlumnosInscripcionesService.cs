@@ -17,8 +17,7 @@ namespace Servicios {
             return context.AlumnosInscripciones.Include(ai => ai.IdAlumnoNavigation).Where(ai => ai.IdCurso == idCurso).ToList();
         }
 
-        public IEnumerable<AlumnosInscripcione> GetAlumnosInscripcionesByAlumno(int idAlumno)
-        {
+        public IEnumerable<AlumnosInscripcione> GetAlumnosInscripcionesByAlumno(int idAlumno) {
             return context.AlumnosInscripciones
                 .Include(ai => ai.IdCursoNavigation)
                     .ThenInclude(curso => curso.IdMateriaNavigation)
@@ -39,6 +38,8 @@ namespace Servicios {
             } else {
                 int cantidad = context.AlumnosInscripciones.Count(ai => ai.IdCurso == curso.IdCurso);
                 if (curso.Cupo > cantidad) {
+                    alumnoInscripcion.Condicion = "Cursando";
+                    alumnoInscripcion.Nota = null;
                     context.AlumnosInscripciones.Add(alumnoInscripcion);
                     context.SaveChanges();
                     return true;
@@ -50,8 +51,8 @@ namespace Servicios {
 
         public bool UpdateAlumnoInscripcion(AlumnosInscripcione alIn) {
             AlumnosInscripcione? old = context.AlumnosInscripciones.Where(alumnInsc => alumnInsc.IdInscripcion == alIn.IdInscripcion).First();
-            // only can change the condition and the note
-            if (old == null || old.IdCurso != alIn.IdCurso || old.IdAlumno != alIn.IdAlumno) {
+            // only can change the condition and the note, note only can be changed if the condition is "Aprobado"
+            if (old == null || old.IdCurso != alIn.IdCurso || old.IdAlumno != alIn.IdAlumno || old.Condicion == "Aprobado" || (alIn.Nota != null && alIn.Condicion != "Aprobado") || (alIn.Condicion != "Regular" && alIn.Condicion != "Aprobado") || (alIn.Condicion == "Aprobado" && alIn.Nota == null) || (alIn.Nota < 0 && alIn.Nota != null) || (alIn.Nota > 10 && alIn.Nota != null)) {
                 return false;
             } else {
                 context.Entry(old).State = EntityState.Detached;

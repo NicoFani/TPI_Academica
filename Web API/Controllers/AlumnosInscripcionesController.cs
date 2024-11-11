@@ -47,7 +47,7 @@ namespace Web_API.Controllers {
                 return BadRequest();
             } else {
                 bool success = _alInService.UpdateAlumnoInscripcion(alIn);
-                return success ? NoContent() : NotFound();
+                return success ? NoContent() : BadRequest();
             }
         }
         [HttpDelete("{id}", Name = "Delete Alumno Inscripcion")]
