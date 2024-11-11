@@ -9,7 +9,7 @@ namespace Blazor.Services {
     public class ConnectionService {
         private readonly HttpClient _httpClient;
         private clientSwagger.clientSwagger _client;
-        private IDictionary<string, string>? _currentUser;
+        private static IDictionary<string, string>? _currentUser;
 
         public ConnectionService() {
             _httpClient = new HttpClient();
@@ -21,7 +21,7 @@ namespace Blazor.Services {
         }
 
         public IDictionary<string, string>? GetCurrentUser() {
-            return _currentUser;
+            return ConnectionService._currentUser;
         }
 
         private void SetClient() {
@@ -34,7 +34,7 @@ namespace Blazor.Services {
         }
 
         public void RemoveBearerToken() {
-            _currentUser = null;
+            ConnectionService._currentUser = null;
             _httpClient.DefaultRequestHeaders.Authorization = null;
             SetClient();
         }
@@ -49,7 +49,7 @@ namespace Blazor.Services {
                 var decoToken = JWTService.DecodeToken(token);
                 if (decoToken["valid"] == "true" && (decoToken["TipoPersona"] == "Alumno" || decoToken["TipoPersona"] == "Profesor")) {
                     SetBearerToken(token);
-                    _currentUser = decoToken;
+                    ConnectionService._currentUser = decoToken;
                     return decoToken;
                 } else {
                     return badSignIn;
