@@ -70,7 +70,7 @@ namespace UI.Desktop {
 
         private void cursosButton_Click(object sender, EventArgs e)
         {
-            cursosForm cursosList = new cursosForm();
+            cursosList cursosList = new cursosList();
             cursosList.ShowDialog();
         }
 
