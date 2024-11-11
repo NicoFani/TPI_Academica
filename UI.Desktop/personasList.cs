@@ -22,6 +22,7 @@ namespace UI.Desktop {
 
         private void addButton_Click(object sender, EventArgs e) {
             new personasForm(_tipoPersona).ShowDialog();
+            GetAllAndLoad();
         }
 
         private void updateButton_Click(object sender, EventArgs e) {

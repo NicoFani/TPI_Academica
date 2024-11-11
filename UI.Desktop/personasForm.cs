@@ -50,6 +50,9 @@ namespace UI.Desktop {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+            if (!validateInputs()) {
+                return;
+            }
             if (_idPersona == 0) {
                 _persona = new Persona();
                 setValues();
@@ -61,14 +64,26 @@ namespace UI.Desktop {
             this.Close();
         }
 
+        private bool validateInputs() {
+            if (nombreInput.Text == "" || apellidoInput.Text == "" || userInput.Text == "" || contraseñaInput.Text == "") {
+                MessageBox.Show("No completo campos obligatorios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
         private void setValues() {
+            if (int.TryParse(legajoInput.Text, out int legajo)) {
+                _persona.Legajo = legajo;
+            } else {
+                _persona.Legajo = null;
+            }
             _persona.Nombre = nombreInput.Text;
             _persona.Apellido = apellidoInput.Text;
             _persona.Direccion = direccionInput.Text;
             _persona.Email = emailInput.Text;
             _persona.Telefono = telefonoInput.Text;
             _persona.FechaNac = nacimientoInput.Value;
-            _persona.Legajo = int.Parse(legajoInput.Text);
             _persona.IdPlan = (int)planInput.SelectedValue;
             _persona.NombreUsuario = userInput.Text;
             _persona.Clave = contraseñaInput.Text;
