@@ -14,3 +14,7 @@
 > En este proyecto se debe definir la connectionString para la base de datos, esto permite una division de entornos sin afectar a la solucion
 >
 > Como alternativa tambien se puede editar el `appsettings.json` pero no lo recomendamos.
+
+
+> [!IMPORTANT]
+> Para blazor instalar mediante consola `dotnet tool install NSwag.ConsoleCore`
