@@ -28,7 +28,7 @@ namespace Web_API.Controllers {
             return Ok(_alInService.GetAlumnosInscripcionesByAlumno(idAlumno));
         }
         [HttpGet("{id}", Name = "Get Alumno Inscripcion")]
-        public IActionResult GetAlumnoInscripcion(int id) {
+        public ActionResult<AlumnosInscripcione> GetAlumnoInscripcion(int id) {
             var alIn = _alInService.GetAlumnoInscripcion(id);
             return alIn == null ? NotFound() : Ok(alIn);
         }
@@ -42,6 +42,7 @@ namespace Web_API.Controllers {
             }
         }
         [HttpPut("{id}", Name = "Update Alumno Inscripcion")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult UpdateAlumnoInscripcion(int id, AlumnosInscripcione alIn) {
             if (id != alIn.IdInscripcion) {
                 return BadRequest();

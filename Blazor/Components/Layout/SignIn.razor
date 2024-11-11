@@ -1,11 +1,13 @@
-﻿@page "/login"
+﻿@page "/"
+@rendermode InteractiveServer
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Iniciar Sesión</PageTitle>
 
 <!-- Login Styles -->
 <style>
     .login-container {
-        max-width: 400px;
+        width: 100%;
+        max-width: 600px;
         margin: 0 auto;
         padding: 2rem;
         border: 1px solid #ddd;
@@ -23,11 +25,11 @@
         margin-bottom: 1rem;
     }
 
-    .form-group label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
 
     .form-control {
         width: 100%;
@@ -49,9 +51,9 @@
         transition: background-color 0.3s;
     }
 
-    .btn-login:hover {
-         background-color: #0056b3;
-    }
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
 </style>
 
 <div class="login-container">
@@ -59,20 +61,41 @@
     <form>
         <div class="form-group">
             <label for="username">Usuario</label>
-            <input id="username" type="text" class="form-control" required />
+            <input id="username" type="text" class="form-control" required @bind="username" />
         </div>
 
         <div class="form-group">
             <label for="password">Contraseña</label>
-            <input id="password" type="password" class="form-control" required />
+            <input id="password" type="password" class="form-control" required @bind="password" />
         </div>
-
-        <button type="submit" class="btn-login">Iniciar sesión</button>
+        <button type="button" class="btn-login" @onclick="SignInFunction">Iniciar sesión</button>
     </form>
+
+    @if (errorMsg != "") {
+        <p style="color:red"> @errorMsg </p>
+    }
 </div>
 
-
-
+@inject Blazor.Services.ConnectionService ClientService
 @code {
+    private string username;
+    private string password;
 
+    private string errorMsg = "";
+
+    private async Task SignInFunction() {
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) {
+            errorMsg = "Debe completar todos los campos";
+            return;
+        } else {
+            var result = await ClientService.SignIn(username, password);
+            if (result["valid"] == "true" && result["TipoPersona"] == "Alumno") {
+                errorMsg = "Sos alumno";
+            } else if (result["valid"] == "true" && result["TipoPersona"] == "Profesor") {
+                errorMsg = "Sos profesor";
+            } else {
+               errorMsg =  "Usuario o contraseña inválido";
+            }
+        }
+    }
 }

@@ -52,7 +52,8 @@ namespace Web_API.Controllers {
             }
         }
         [HttpPost("signIn", Name = "SignIn")]
-        public IActionResult SignIn(string nombreUsuario, string clave) {
+        [Produces("text/plain")]
+        public ActionResult<string> SignIn(string nombreUsuario, string clave) {
             var persona = _personasService.SignIn(nombreUsuario, clave);
             if (persona != null) {
                 return Ok(JWTService.GenerateToken(persona));
