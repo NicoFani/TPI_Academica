@@ -144,7 +144,7 @@
     private IEnumerable<clientSwagger.AlumnosInscripcione> alumnosInscripciones;
     private clientSwagger.AlumnosInscripcione inscripcion;
 
-    private int idProfesorLogueado = 8;
+    private int idProfesorLogueado = 0;
     private int cursoSeleccionado;
     private int inscripcionSeleccionada;
     private string condicionSeleccionada;
@@ -155,6 +155,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        idProfesorLogueado = int.Parse(ClientService.GetCurrentUser()!["IdPersona"]);
         client = ClientService.Client();
         profesor = await client.Get_PersonaAsync(idProfesorLogueado, false, true);
 
