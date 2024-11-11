@@ -103,6 +103,8 @@ namespace UI.Desktop
             this.comboBox1.DataSource = specialities.ToList();
             this.comboBox1.DisplayMember = "DescEspecialidad";
             this.comboBox1.ValueMember = "IdEspecialidad";
+
+            SetPlan();
         }
 
         private void plansForm_Load(object sender, EventArgs e)
