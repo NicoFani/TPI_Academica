@@ -49,41 +49,54 @@
     }
 </style>
 
-@if (materias == null) {
-    <p><em>Loading...</em></p>
-} else {
-    <div class="container-inscripcion">
-        <div class="container">
-            <label for="materias">Elija una materia:</label>
-            <select id="materias" @bind="idMateriaSeleccionada" @bind:after="OnMateriaSelected">
-                <option value="0">-- Seleccione una materia --</option>
-                @foreach (var materia in materias) {
-                    <option value="@materia.IdMateria">@materia.DescMateria</option>
-                }
-            </select>
-        </div>
-
-        @if (idMateriaSeleccionada != 0 && cursosDeMateria != null) {
+@if (idAlumnoLogueado == 0)
+{
+    <p>Acceso denegado</p>
+} else
+{
+    @if (materias == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="container-inscripcion">
             <div class="container">
-                <label for="cursos">Elija un curso:</label>
-                <select id="cursos" @bind="idCursoSeleccionado">
-                    <option value="0">-- Seleccione un curso --</option>
-                    @foreach (var curso in cursosDeMateria) {
-                        <option value="@curso.IdCurso">
-                            ID Curso: @curso.IdCurso - Comisión: @curso.IdComisionNavigation.DescComision
-                        </option>
+                <label for="materias">Elija una materia:</label>
+                <select id="materias" @bind="idMateriaSeleccionada" @bind:after="OnMateriaSelected">
+                    <option value="0">-- Seleccione una materia --</option>
+                    @foreach (var materia in materias)
+                    {
+                        <option value="@materia.IdMateria">@materia.DescMateria</option>
                     }
                 </select>
             </div>
-        }
 
-        @if (inscripcionRealizada) {
-            <p>Inscripción realizada con éxito.</p>
-        }
+            @if (idMateriaSeleccionada != 0 && cursosDeMateria != null)
+            {
+                <div class="container">
+                    <label for="cursos">Elija un curso:</label>
+                    <select id="cursos" @bind="idCursoSeleccionado">
+                        <option value="0">-- Seleccione un curso --</option>
+                        @foreach (var curso in cursosDeMateria)
+                        {
+                            <option value="@curso.IdCurso">
+                                ID Curso: @curso.IdCurso - Comisión: @curso.IdComisionNavigation.DescComision
+                            </option>
+                        }
+                    </select>
+                </div>
+            }
 
-        <button type="submit" class="btn-inscripcion" @onclick="InscribirAlumno">Inscribirse</button>
+            @if (inscripcionRealizada)
+            {
+                <p>Inscripción realizada con éxito.</p>
+            }
 
-    </div>
+            <button type="submit" class="btn-inscripcion" @onclick="InscribirAlumno">Inscribirse</button>
+
+        </div>
+    }
 }
 
 
@@ -96,7 +109,7 @@
 
     private ICollection<clientSwagger.Materia> materias;
     private ICollection<clientSwagger.Curso> cursosDeMateria;
-
+    private IDictionary<string, string>? currentUser;
     private int idMateriaSeleccionada;
     private int idCursoSeleccionado;
     private bool inscripcionRealizada = false;
@@ -104,9 +117,23 @@
     protected override async Task OnInitializedAsync() {
         client = ClientService.Client();
 
-        idAlumnoLogueado = int.Parse(ClientService.GetCurrentUser()["IdPersona"]);
+        currentUser = ClientService.GetCurrentUser();
 
-        materias = await client.Get_MateriasAsync();
+        if (currentUser == null)
+        {
+            idAlumnoLogueado = 0;
+        }
+        else if (currentUser["TipoPersona"] != "Alumno")
+        {
+            idAlumnoLogueado = 0;
+        }
+        else
+        {
+            idAlumnoLogueado = int.Parse(currentUser["IdPersona"]);
+            materias = await client.Get_MateriasAsync();
+        }
+
+        
     }
 
     private async Task OnMateriaSelected() {

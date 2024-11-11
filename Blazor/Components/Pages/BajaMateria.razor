@@ -50,39 +50,48 @@
     }
 </style>
 
-@if (inscripciones == null)
+
+@if (idAlumnoLogueado == 0)
 {
-    <p><em>Loading...</em></p>
-}
-else
+    <p>Acceso denegado</p>
+} else
 {
-    <div class="container-baja">
-        <div class="container">
-            <label for="inscripciones">Elija una inscripción:</label>
-            <select id="inscripciones" @bind="idInscripcionSeleccionada">
-                <option value="0">-- Seleccione una inscripción --</option>
-                @foreach (var inscripcion in inscripciones)
-                {
-                    @if (inscripcion.Condicion == "Cursando")
+    @if (inscripciones == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="container-baja">
+            <div class="container">
+                <label for="inscripciones">Elija una inscripción:</label>
+                <select id="inscripciones" @bind="idInscripcionSeleccionada">
+                    <option value="0">-- Seleccione una inscripción --</option>
+                    @foreach (var inscripcion in inscripciones)
                     {
-                        <option value="@inscripcion.IdInscripcion">Materia: @inscripcion.IdCursoNavigation.IdMateriaNavigation.DescMateria 
-                                                                   Condición: @inscripcion.Condicion
-                        </option>
+                        @if (inscripcion.Condicion == "Cursando")
+                        {
+                            <option value="@inscripcion.IdInscripcion">
+                                Materia: @inscripcion.IdCursoNavigation.IdMateriaNavigation.DescMateria
+                                Condición: @inscripcion.Condicion
+                            </option>
+                        }
+
                     }
-                    
-                }
-            </select>
+                </select>
+            </div>
+
+            @if (bajaRealizada)
+            {
+                <p>Baja realizada con éxito.</p>
+            }
+
+            <button type="submit" class="btn-baja" @onclick="BajaAlumno">Dar de baja</button>
+
         </div>
-
-        @if (bajaRealizada)
-        {
-            <p>Baja realizada con éxito.</p>
-        }
-
-        <button type="submit" class="btn-baja" @onclick="BajaAlumno">Dar de baja</button>
-
-    </div>
+    }
 }
+
 
 
 @inject Blazor.Services.ConnectionService ClientService
@@ -93,15 +102,29 @@ else
     private int idInscripcionSeleccionada;
     private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
     private bool bajaRealizada = false;
+    private IDictionary<string, string>? currentUser;
 
     protected override async Task OnInitializedAsync()
     {
         client = ClientService.Client();
 
-        idAlumnoLogueado = int.Parse(ClientService.GetCurrentUser()!["IdPersona"]);
-        Console.WriteLine($"Id alumno logueado: {idAlumnoLogueado}");
+        currentUser = ClientService.GetCurrentUser();
 
-        inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
+        if (currentUser == null)
+        {
+            idAlumnoLogueado = 0;
+        }
+        else if (currentUser["TipoPersona"] != "Alumno")
+        {
+            idAlumnoLogueado = 0;
+        }
+        else
+        {
+            idAlumnoLogueado = int.Parse(currentUser["IdPersona"]);
+            inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
+        }
+
+        
     }
 
     private async Task BajaAlumno()

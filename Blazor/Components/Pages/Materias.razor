@@ -10,32 +10,43 @@
     }
 </style>
 
-<div class="container">
-    <h1>Materias</h1>
+@if (idAlumnoLogueado == 0)
+{
+    <p>Acceso denegado</p>
+} else
+{
+    <div class="container">
+        <h1>Materias</h1>
 
-    @if (inscripciones == null) {
-        <p><em>Loading...</em></p>
-    } else {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Materia</th>
-                    <th>Condicion</th>
-                    <th>Nota</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var inscripcion in inscripciones) {
+        @if (inscripciones == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@inscripcion.IdCursoNavigation.IdMateriaNavigation.DescMateria</td>
-                        <td>@inscripcion.Condicion</td>
-                        <td>@inscripcion.Nota</td>
+                        <th>Materia</th>
+                        <th>Condicion</th>
+                        <th>Nota</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    }
-</div>
+                </thead>
+                <tbody>
+                    @foreach (var inscripcion in inscripciones)
+                    {
+                        <tr>
+                            <td>@inscripcion.IdCursoNavigation.IdMateriaNavigation.DescMateria</td>
+                            <td>@inscripcion.Condicion</td>
+                            <td>@inscripcion.Nota</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+}
+
 
 @inject Blazor.Services.ConnectionService ClientService
 @code {
@@ -43,13 +54,24 @@
 
     private int idAlumnoLogueado;
     private ICollection<clientSwagger.AlumnosInscripcione> inscripciones;
+    private IDictionary<string, string>? currentUser;
 
     protected override async Task OnInitializedAsync() {
         client = ClientService.Client();
 
-        idAlumnoLogueado = int.Parse(ClientService.GetCurrentUser()!["IdPersona"]);
-        // Simulación de carga de datos
-        await Task.Delay(1000);
-        inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
+        currentUser = ClientService.GetCurrentUser();
+
+        if (currentUser == null)
+        {
+            idAlumnoLogueado = 0;
+        } else if (currentUser["TipoPersona"] != "Alumno")
+        {
+            idAlumnoLogueado = 0;
+        } else
+        {
+            idAlumnoLogueado = int.Parse(currentUser["IdPersona"]);
+            await Task.Delay(1000);
+            inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
+        }
     }
 }
