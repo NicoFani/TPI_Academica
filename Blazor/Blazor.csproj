@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="OpenAPIs\swagger.json" ClassName="clientSwagger" />
+    <OpenApiReference Include="OpenAPIs\swagger.json" CodeGenerator="NSwagCSharp" Namespace="clientSwagger" ClassName="clientSwagger">
+      <SourceUri>https://localhost:7039/swagger/v1/swagger.json</SourceUri>
+    </OpenApiReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -20,19 +22,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NSwag.MSBuild" Version="14.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Datos\Datos.csproj" />
     <ProjectReference Include="..\Servicios\Servicios.csproj" />
   </ItemGroup>
-
-	<Target Name="GenerateSwaggerClient" BeforeTargets="Build">
-		<Exec Command="dotnet tool run nswag run nswag.json" />
-	</Target>
 
 </Project>
