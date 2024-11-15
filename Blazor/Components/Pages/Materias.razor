@@ -70,7 +70,7 @@
         } else
         {
             idAlumnoLogueado = int.Parse(currentUser["IdPersona"]);
-            await Task.Delay(1000);
+            await Task.Delay(100);
             inscripciones = await client.Get_Alumnos_Inscripciones_By_AlumnoAsync(idAlumnoLogueado);
         }
     }

@@ -1,5 +1,6 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@layout EmptyLayout
 
 <PageTitle>Iniciar Sesión</PageTitle>
 
@@ -77,6 +78,8 @@
 </div>
 
 @inject Blazor.Services.ConnectionService ClientService
+@inject NavigationManager NavigationManager
+@using Layout
 @code {
     private string username;
     private string password;
@@ -90,11 +93,11 @@
         } else {
             var result = await ClientService.SignIn(username, password);
             if (result["valid"] == "true" && result["TipoPersona"] == "Alumno") {
-                errorMsg = "Sos alumno";
+                NavigationManager.NavigateTo("/alumno");
             } else if (result["valid"] == "true" && result["TipoPersona"] == "Profesor") {
-                errorMsg = "Sos profesor";
+                NavigationManager.NavigateTo("/profesor");
             } else {
-               errorMsg =  "Usuario o contraseña inválido";
+                errorMsg = "Usuario o contraseña inválido";
             }
         }
     }

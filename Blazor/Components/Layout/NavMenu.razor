@@ -1,42 +1,57 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@rendermode InteractiveServer
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Academica</a>
+        <span class="navbar-brand">¡Hola, @currentUser["NombreUsuario"]!</span>
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Iniciar Sesión
-            </NavLink>
-        </div>
+    <nav class="flex-column" style="min-height:85dvh">
+        @if (currentUser["TipoPersona"] == "Alumno") {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="alumno">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Inscripción
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="alta-materia">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Inscripción
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="baja-materia">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Dar de baja
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="baja-materia">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Dar de baja
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="materias">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Mis materias
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="carga-nota">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Cargar Notas
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="materias">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Mis materias
+                </NavLink>
+            </div>
+        }
+        @if (currentUser["TipoPersona"] == "Profesor") {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="profesor">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Cargar Notas
+                </NavLink>
+            </div>
+        }
     </nav>
+    <button type="button" class="btn btn-danger w-100" @onclick="SignOut">Cerrar sesión</button>
 </div>
 
+@inject Blazor.Services.ConnectionService ClientService
+@inject NavigationManager NavigationManager
+@code {
+    [CascadingParameter]
+    public IDictionary<string, string> currentUser { get; set; }
+
+    protected override void OnParametersSet() {
+        currentUser = ClientService.GetCurrentUser();
+    }
+
+    private async Task SignOut() {
+        NavigationManager.NavigateTo("/", true);
+        ClientService.RemoveBearerToken();
+    }
+}

@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-
 <style>
     .content {
         display: flex;
@@ -7,17 +6,35 @@
         align-items: center;
         justify-content: center;
         min-height: 100dvh;
+        text-align: center;
     }
 </style>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @if (currentUser != null) {
+        <div class="sidebar">
+            <CascadingValue Value="currentUser">
+                <NavMenu />
+            </CascadingValue>
+        </div>
 
-    <main>
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+        <main>
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    }
 </div>
+
+@inject Blazor.Services.ConnectionService ClientService
+@inject NavigationManager NavigationManager
+@code {
+    private IDictionary<string, string>? currentUser;
+
+    protected override void OnParametersSet() {
+        currentUser = ClientService.GetCurrentUser();
+        if (currentUser == null) {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}
