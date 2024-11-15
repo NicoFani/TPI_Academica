@@ -8,35 +8,36 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Iniciar Sesión
-            </NavLink>
-        </div>
+        @if (currentUser["TipoPersona"] == "Alumno") {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="alumno">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Inscripción
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="alta-materia">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Inscripción
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="baja-materia">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Dar de baja
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="baja-materia">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Dar de baja
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="materias">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Mis materias
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="carga-nota">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Cargar Notas
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="materias">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Mis materias
+                </NavLink>
+            </div>
+        }
+        @if (currentUser["TipoPersona"] == "Profesor") {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="profesor">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Cargar Notas
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
 
+@code {
+    [CascadingParameter]
+    public IDictionary<string, string> currentUser { get; set; }
+}
