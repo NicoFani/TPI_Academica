@@ -8,6 +8,9 @@
 
 ## Ejecución
 
+> [!NOTE]
+> Es importante cargar el `backup.bak` en una base de datos `sqlserver`
+
 > [!IMPORTANT]
 > Para uso local crear archivo `appsettings.Local.json` en la raiz del proyecto WEB API
 >
