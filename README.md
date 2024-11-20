@@ -10,6 +10,10 @@
 
 > [!NOTE]
 > Es importante cargar el `backup.bak` en una base de datos `sqlserver`
+>
+> Alternativa: tambien es posible utilizar los scripts de creacion e insercion de datos.
+>
+> Estos archivos se encuentran en la carpeta [Database](/Database)
 
 > [!IMPORTANT]
 > Para uso local crear archivo `appsettings.Local.json` en la raiz del proyecto WEB API
